@@ -1,4 +1,4 @@
-# HonGo Dynamic Pricing - Implementation Plan
+# HoneyGo Dynamic Pricing - Implementation Plan
 ## Team #1 Hackathon Project
 
 ---
@@ -6,10 +6,10 @@
 ## 1. Project Overview & Objectives
 
 ### Project Name
-**HonGo: Intelligent Ride-Sharing Platform with Dynamic Pricing**
+**HoneyGo: Intelligent Ride-Sharing Platform with Dynamic Pricing**
 
 ### Mission Statement
-Develop an innovative Agentic AI solution for dynamic pricing in a ride-sharing context (HonGo) that demonstrates reasoning applicable to Honeywell's catalog demand pricing, supply constraints, and customer tier management.
+Develop an innovative Agentic AI solution for dynamic pricing in a ride-sharing context (HoneyGo) that demonstrates reasoning applicable to Honeywell's catalog demand pricing, supply constraints, and customer tier management.
 
 ### Core Objectives
 - Build a full-stack dynamic pricing application using Next.js, FastAPI, LangChain, and n8n/MCP
@@ -460,7 +460,7 @@ graph TB
 
 ```mermaid
 gantt
-    title HonGo Hackathon Timeline
+    title HoneyGo Hackathon Timeline
     dateFormat  YYYY-MM-DD
     section Planning Phase
     Team Formation & Setup           :2025-11-20, 2d
@@ -552,6 +552,45 @@ gantt
 }
 ```
 
+#### Collection: `drivers`
+```javascript
+{
+  _id: ObjectId,
+  driver_id: String,
+  name: String,
+  status: String,                  // Active/Inactive/On-Break
+  vehicle_type: String,            // Economy/Premium
+  rating: Number,                  // Average driver rating (1-5)
+  total_rides_completed: Number,
+  total_earnings: Number,          // Lifetime earnings
+  current_location: String,        // Urban/Suburban/Rural
+  availability: {
+    is_available: Boolean,
+    last_active: ISODate
+  },
+  earnings_stats: {
+    today: Number,
+    this_week: Number,
+    this_month: Number,
+    average_per_ride: Number
+  },
+  incentives: {
+    surge_bonus_earned: Number,    // Extra earnings from surge pricing
+    peak_hour_bonus: Number,       // Bonus for working peak hours
+    quality_bonus: Number,         // Bonus for high ratings
+    retention_bonus: Number        // Loyalty bonus for active drivers
+  },
+  performance_metrics: {
+    acceptance_rate: Number,       // % of rides accepted
+    cancellation_rate: Number,     // % of rides cancelled
+    on_time_rate: Number,          // % of on-time pickups
+    customer_satisfaction: Number  // Average customer rating
+  },
+  joined_date: ISODate,
+  last_ride_date: ISODate
+}
+```
+
 #### Collection: `external_data`
 ```javascript
 {
@@ -589,6 +628,8 @@ gantt
 |-----------------|--------------------------------|
 | Number of Riders | Demand for HON catalog item |
 | Number of Drivers | HON supply (supply-constrained industry) |
+| **Driver Earnings & Incentives** | **Supplier/Partner compensation & retention** |
+| **Driver Retention Programs** | **Channel partner loyalty programs** |
 | Location Category | Geographic regions/markets |
 | Customer Loyalty Status | Customer tiers based on business volume |
 | Number of Past Rides | Customer buying history |
@@ -598,21 +639,25 @@ gantt
 | Expected Ride Duration | Service level/complexity |
 | Historical Cost | Previous HON catalog prices |
 
+**Key Insight:** Just as HoneyGo values driver earnings and retention, Honeywell must maintain strong relationships with channel partners (MROs, distributors) through fair pricing and incentive programs. Happy, well-compensated partners lead to better service and customer satisfaction.
+
 ---
 
 ## 4. Agentic AI Design
 
 ### Focus Area Selection
 
-**Primary Focus: "Targeting Profitability"**
+**Primary Focus: "Targeting Profitability with Driver Value"**
 
-*Problem Statement*: Maximize single-ride profitability during high-traffic hours without losing customers, considering competitor rates, historical route costs, and booking lead time.
+*Problem Statement*: Maximize single-ride profitability during high-traffic hours without losing customers, while ensuring fair driver compensation and retention. Consider competitor rates, historical route costs, booking lead time, and driver earnings optimization.
 
 **Why This Focus?**
 - Directly addresses revenue optimization (hackathon scenario)
+- **Differentiator**: Emphasizes driver welfare and retention - a key competitive advantage
 - Requires sophisticated multi-factor reasoning (creativity points)
 - Highly explainable to non-technical audience
-- Clear parallel to HON's catalog pricing optimization
+- Clear parallel to HON's catalog pricing AND channel partner relationships
+- **Social Impact**: Demonstrates corporate values and employee-first thinking
 
 ### Agent Architecture (LangChain)
 
@@ -657,6 +702,18 @@ def assess_customer_value(customer_id: str) -> dict:
 def validate_pricing_rules(price: float, context: dict) -> dict:
     """Ensure price maintains integrity constraints"""
     # Returns: Rule compliance, violations, adjustments
+
+# Tool 7: Driver Earnings Optimizer
+def optimize_driver_earnings(ride_params: dict, available_drivers: list) -> dict:
+    """Calculate fair driver compensation and match optimal driver"""
+    # Inputs: Ride details, available drivers in area
+    # Calculates:
+    #   - Base driver payment (60-70% of ride cost)
+    #   - Surge bonus for high-demand periods
+    #   - Peak hour incentives
+    #   - Quality bonuses for high-rated drivers
+    #   - Retention bonuses for active drivers
+    # Returns: Driver earnings breakdown, recommended driver match, incentive details
 ```
 
 #### Reasoning Chain Example
@@ -691,11 +748,22 @@ Agent Reasoning:
    → Action: calculate_profitability($300, costs)
    → Result: Margin = 35%, ROI = High
    
-7. "Validate against pricing rules"
+7. "What about driver earnings and incentives?"
+   → Action: optimize_driver_earnings(ride_params, available_drivers)
+   → Result: 
+      - Driver base pay: $210 (70% of $300)
+      - Surge bonus: $30 (high demand period)
+      - Total driver earnings: $240
+      - Recommended driver: Driver #4523 (4.9 rating, active 8hrs today)
+      - Driver retention: High earnings will keep drivers engaged
+   
+8. "Validate against pricing rules"
    → Action: validate_pricing_rules($300, context)
-   → Result: ✓ Within range, ✓ Competitive, ✓ Fair to customer
+   → Result: ✓ Within range, ✓ Competitive, ✓ Fair to customer, ✓ Fair to driver
 
 Final Decision: $300.00
+Driver Earnings: $240.00 (80% of fare)
+Platform Fee: $60.00 (20%)
 Confidence: 92%
 
 Reasoning Summary:
@@ -704,7 +772,13 @@ nearby concert event, and competitive market analysis, I recommend
 a price of $300. This is 5% above historical average but 3% below 
 top competitor, ensuring profitability while maintaining customer 
 retention. The Silver customer's low churn risk supports this 
-pricing strategy."
+pricing strategy.
+
+IMPORTANTLY: The driver will earn $240 (80% of fare) including a 
+$30 surge bonus, which is above market average and helps retain 
+our driver workforce. Fair driver compensation during high-demand 
+periods improves driver satisfaction, reduces churn, and ensures 
+reliable service availability."
 ```
 
 ### Explainability Mechanisms
@@ -1319,7 +1393,7 @@ pricing strategy."
 4. **Creative Features**
    - Predictive pricing: Forecast prices for future time slots
    - "What-if" scenarios: Let users explore pricing alternatives
-   - Competitive positioning: Show where HonGo stands vs. competitors
+   - Competitive positioning: Show where HoneyGo stands vs. competitors
    - Dynamic discounting: Loyalty rewards and retention strategies
 
 **Deliverables for Judges**:
@@ -1436,13 +1510,13 @@ pricing strategy."
 
 ## 9. HON Application Recommendations
 
-### How HonGo Solution Applies to Honeywell Aerospace Catalog Pricing
+### How HoneyGo Solution Applies to Honeywell Aerospace Catalog Pricing
 
 ---
 
 ### 9.1 Direct Parallels
 
-| HonGo Feature | HON Catalog Pricing Application |
+| HoneyGo Feature | HON Catalog Pricing Application |
 |---------------|----------------------------------|
 | **Dynamic Pricing Agent** | Automate catalog price adjustments based on market conditions |
 | **Demand/Supply Analysis** | Monitor part demand vs. inventory levels (supply constraints) |
@@ -1463,7 +1537,7 @@ pricing strategy."
 - Difficult to consider all factors (supply, demand, competition, contracts)
 - Price changes lag behind market conditions
 
-**HonGo Solution Applied**:
+**HoneyGo Solution Applied**:
 - Deploy LangChain-based agent to analyze catalog items continuously
 - Agent considers:
   - Current inventory levels (supply constraint)
@@ -1490,8 +1564,8 @@ pricing strategy."
 - Standard discounts don't account for customer lifetime value
 - Risk of losing high-value customers to competitors
 
-**HonGo Solution Applied**:
-- Implement "surge protection" logic for Gold-tier customers (like HonGo loyalty)
+**HoneyGo Solution Applied**:
+- Implement "surge protection" logic for Gold-tier customers (like HoneyGo loyalty)
 - Analyze customer buying history and lifetime value
 - Apply dynamic discounts to retain high-value relationships
 - Balance profitability with customer retention
@@ -1516,8 +1590,8 @@ pricing strategy."
 - Part availability varies (new spares vs. USM vs. R&O)
 - Pricing doesn't always reflect scarcity
 
-**HonGo Solution Applied**:
-- Model supply constraints like driver availability in HonGo
+**HoneyGo Solution Applied**:
+- Model supply constraints like driver availability in HoneyGo
 - Implement dynamic pricing based on inventory levels:
   - High inventory → Competitive pricing
   - Low inventory → Premium pricing (but within acceptable range)
@@ -1550,8 +1624,8 @@ USM (Used Serviceable Material - lowest price)
 - Economic factors (commodity prices, inflation) not systematically considered
 - Reactive rather than proactive pricing
 
-**HonGo Solution Applied**:
-- Integrate external data sources (like HonGo's weather/events APIs):
+**HoneyGo Solution Applied**:
+- Integrate external data sources (like HoneyGo's weather/events APIs):
   - **Commodity Prices**: Aluminum, titanium, electronics components
   - **Competitor Pricing**: USM market monitoring, competitor catalogs
   - **Economic Indicators**: Inflation, currency exchange rates
@@ -1575,7 +1649,7 @@ USM (Used Serviceable Material - lowest price)
 - Difficult to justify price increases
 - Internal stakeholders (finance, sales, operations) need transparency
 
-**HonGo Solution Applied**:
+**HoneyGo Solution Applied**:
 - Every price recommendation comes with natural language explanation
 - Visual dashboards showing factor contributions
 - Transparent reasoning accessible to non-technical users
@@ -1599,6 +1673,65 @@ maximizes profitability while retaining customer loyalty."
 - Better communication with customers
 - Increased trust in pricing system
 - Compliance and auditability
+
+---
+
+#### Recommendation 6: Channel Partner & Supplier Retention Programs
+
+**Current Challenge**:
+- MRO partners and distributors are critical to HON's supply chain
+- Partner churn leads to service disruptions and lost revenue
+- Difficult to balance profitability with partner satisfaction
+- Lack of systematic incentive programs for high-performing partners
+
+**HoneyGo Solution Applied (Driver Retention Model)**:
+- **Driver Earnings Optimization**: HoneyGo ensures drivers earn 70-80% of ride fares
+- **Surge Bonuses**: Extra compensation during high-demand periods
+- **Performance Incentives**: Bonuses for high ratings, reliability, and activity
+- **Retention Programs**: Loyalty bonuses for consistent availability
+- **Analytics Dashboard**: Track driver satisfaction, earnings, and retention metrics
+
+**Applied to HON Channel Partners**:
+
+```
+Partner Compensation Model:
+1. Base Margin: Fair profit margins on parts sales (similar to driver base pay)
+2. Volume Bonuses: Incentives for high-volume partners (like surge bonuses)
+3. Quality Bonuses: Rewards for fast turnaround, low defect rates (like driver ratings)
+4. Retention Programs: Loyalty bonuses for long-term partnerships
+5. Performance Dashboard: Real-time visibility into partner earnings and metrics
+```
+
+**Example Partner Incentive Structure**:
+```
+MRO Partner: "AeroTech Services"
+- Base Margin on Parts: 25%
+- Volume Bonus (>$1M/quarter): +3%
+- Quality Bonus (98% on-time, <1% defects): +2%
+- Retention Bonus (5+ years): +2%
+- Total Effective Margin: 32%
+
+This transparent, performance-based model:
+✓ Ensures fair partner compensation
+✓ Incentivizes quality and reliability
+✓ Reduces partner churn
+✓ Improves supply chain stability
+```
+
+**Expected Benefits**:
+- 20-30% reduction in partner churn
+- Improved partner satisfaction and loyalty
+- More reliable supply chain
+- Better service levels to end customers
+- Competitive advantage in partner relationships
+- Demonstrates HON values frontline partners (like HoneyGo values drivers)
+
+**Social Impact & Corporate Values**:
+- Shows HON values its entire ecosystem, not just end customers
+- Builds reputation as a fair, partner-friendly company
+- Attracts top-tier MRO partners and distributors
+- Aligns with modern ESG (Environmental, Social, Governance) expectations
+- **"A company that values its partners is a company worth partnering with"**
 
 ---
 
@@ -1878,14 +2011,14 @@ Hackathon/
 **Frontend (.env.local)**:
 ```bash
 NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_APP_NAME=HonGo
+NEXT_PUBLIC_APP_NAME=HoneyGo
 ```
 
 **Backend (.env)**:
 ```bash
 # MongoDB
 MONGODB_URL=mongodb://localhost:27017
-MONGODB_DB_NAME=hongo_pricing
+MONGODB_DB_NAME=HoneyGo_pricing
 
 # OpenAI
 OPENAI_API_KEY=sk-...
@@ -1990,7 +2123,7 @@ chore: Update dependencies
 
 ## 14. Conclusion
 
-This implementation plan provides a comprehensive roadmap for Team #1 to successfully complete the HonGo Dynamic Pricing Hackathon project. By following this structured approach, the team will:
+This implementation plan provides a comprehensive roadmap for Team #1 to successfully complete the HoneyGo Dynamic Pricing Hackathon project. By following this structured approach, the team will:
 
 ✅ Deliver a fully functional, innovative solution
 ✅ Demonstrate clear applicability to Honeywell's business needs
@@ -2015,7 +2148,7 @@ This implementation plan provides a comprehensive roadmap for Team #1 to success
 **Document Version**: 1.0  
 **Last Updated**: November 26, 2025  
 **Team**: #1 (4-5 members)  
-**Project**: HonGo Dynamic Pricing Hackathon  
+**Project**: HoneyGo Dynamic Pricing Hackathon  
 **Deadline**: Midday December 4, 2025  
 **Presentation**: December 5, 2025
 
