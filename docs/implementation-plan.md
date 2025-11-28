@@ -164,6 +164,7 @@ graph TB
         RuleTool[Rules Validator Tool]
         CustomerTool[Customer Value Tool]
         ProfitTool[Profitability Tool]
+        RAGTool[Semantic Context Tool]
     end
     
     subgraph "Orchestration Layer"
@@ -178,7 +179,13 @@ graph TB
         RidesDB[(Rides Collection)]
         PricingDB[(Pricing Decisions)]
         CustomersDB[(Customers)]
+        DriversDB[(Drivers)]
         ExternalDB[(External Data)]
+        
+        ChromaDB[(ChromaDB - RAG)]
+        PricingReasoningDB[(Pricing Reasoning)]
+        HONKnowledgeDB[(HON Knowledge)]
+        ContextsDB[(Similar Contexts)]
     end
     
     subgraph "External Services"
@@ -210,8 +217,10 @@ graph TB
     Agent --> RuleTool
     Agent --> CustomerTool
     Agent --> ProfitTool
+    Agent --> RAGTool
     
     DBTool --> MongoDB
+    RAGTool --> ChromaDB
     APITool --> N8N
     
     N8N --> WeatherWF
@@ -226,18 +235,25 @@ graph TB
     MongoDB --> RidesDB
     MongoDB --> PricingDB
     MongoDB --> CustomersDB
+    MongoDB --> DriversDB
     MongoDB --> ExternalDB
+    
+    ChromaDB --> PricingReasoningDB
+    ChromaDB --> HONKnowledgeDB
+    ChromaDB --> ContextsDB
     
     Weather --> ExternalDB
     Events --> ExternalDB
     Traffic --> ExternalDB
     Competitor --> ExternalDB
     
-    style UI fill:#e1f5ff
-    style API fill:#fff4e1
-    style Agent fill:#f0e1ff
-    style N8N fill:#e1ffe1
-    style MongoDB fill:#ffe1e1
+    style UI fill:#4A90E2,stroke:#2E5C8A,stroke-width:3px,color:#fff
+    style API fill:#F5A623,stroke:#C17D11,stroke-width:3px,color:#fff
+    style Agent fill:#9013FE,stroke:#6B0FB8,stroke-width:3px,color:#fff
+    style N8N fill:#50E3C2,stroke:#2BA88A,stroke-width:3px,color:#fff
+    style MongoDB fill:#00ED64,stroke:#00A847,stroke-width:3px,color:#fff
+    style ChromaDB fill:#FF6B6B,stroke:#CC5555,stroke-width:3px,color:#fff
+    style RAGTool fill:#FFD93D,stroke:#CCA600,stroke-width:2px
 ```
 
 #### Agent Reasoning Workflow
