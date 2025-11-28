@@ -253,7 +253,7 @@ graph TB
     style N8N fill:#50E3C2,stroke:#2BA88A,stroke-width:3px,color:#fff
     style MongoDB fill:#00ED64,stroke:#00A847,stroke-width:3px,color:#fff
     style ChromaDB fill:#FF6B6B,stroke:#CC5555,stroke-width:3px,color:#fff
-    style RAGTool fill:#FFD93D,stroke:#CCA600,stroke-width:2px
+    style RAGTool fill:#FFD93D,stroke:#CCA600,stroke-width:3px,color:#000
 ```
 
 #### Agent Reasoning Workflow
@@ -294,10 +294,10 @@ flowchart TD
     Explain --> Store[Store Decision<br/>in MongoDB]
     Store --> Return([Return Price<br/>to User])
     
-    style Start fill:#90EE90
-    style Return fill:#90EE90
-    style Pass fill:#FFD700
-    style Final fill:#87CEEB
+    style Start fill:#2ECC71,stroke:#27AE60,stroke-width:3px,color:#fff
+    style Return fill:#2ECC71,stroke:#27AE60,stroke-width:3px,color:#fff
+    style Pass fill:#F39C12,stroke:#D68910,stroke-width:3px,color:#000
+    style Final fill:#3498DB,stroke:#2874A6,stroke-width:3px,color:#fff
 ```
 
 #### Data Flow Diagram
