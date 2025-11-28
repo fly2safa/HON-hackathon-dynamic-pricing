@@ -1148,17 +1148,25 @@ churn, and ensures reliable service availability."
 
 ## 6. Team Structure & Responsibilities
 
-### Team Size: 4-6 Members
+### Team Size: 4-7 Members
 
 **Core Team (4 members minimum)**:
 1. Frontend Developer
 2. Backend/API Developer
 3. AI/ML Engineer
-4. Database Engineer
+4. MongoDB Database Engineer
 
-**Extended Team (5-6 members recommended)**:
-5. Workflow & Integration Engineer (n8n/MCP)
-6. Full-Stack/Integration Lead (optional)
+**Extended Team (5-7 members recommended)**:
+5. ChromaDB/Vector Database Engineer (can be combined with Role 4)
+6. Workflow & Integration Engineer (n8n/MCP)
+7. Full-Stack/Integration Lead (optional)
+
+**Flexible Combinations**:
+- **If 4 members**: Roles 1-4 (skip ChromaDB or add post-hackathon)
+- **If 5 members**: Roles 1-4 + Role 6 (n8n workflows)
+- **If 5 members with RAG**: Roles 1-3 + Combined Role 4&5 (one person does both databases)
+- **If 6 members**: Roles 1-6 (separate MongoDB and ChromaDB engineers)
+- **If 7 members**: All roles (maximum capability)
 
 ### Role Assignments
 
@@ -1231,35 +1239,65 @@ churn, and ensures reliable service availability."
 
 ---
 
-#### Role 4: Database Engineer (MongoDB/ChromaDB)
+#### Role 4: MongoDB Database Engineer
 **Primary Responsibilities**:
-- Design database schemas (MongoDB & ChromaDB)
-- Import and validate data
+- Design MongoDB database schemas
+- Import and validate CSV data (1000+ records)
 - Set up MongoDB collections (rides, customers, drivers, pricing_decisions, external_data)
-- Set up ChromaDB collections (pricing_reasoning, hon_knowledge, similar_contexts)
 - Create data import scripts
-- Configure indexes for performance
-- Seed HON knowledge base
-- Manage database connections
+- Configure indexes for query performance
+- Manage MongoDB connections and queries
+- Implement backup procedures
 
 **Key Deliverables**:
 - MongoDB database setup with 5 collections
-- ChromaDB setup with 3 collections
-- Data import scripts (1000+ records)
+- Data import scripts from CSV/TSV files
+- 1000+ records loaded and validated
 - Database indexes configured
-- HON knowledge base seeded (20+ items)
-- Database backup procedures
+- MongoDB connection utilities
+- Backup and recovery procedures
 
 **Skills Required**:
 - MongoDB expertise
-- ChromaDB/vector database basics
-- Data modeling
-- Python (PyMongo, ChromaDB client)
-- ETL processes
+- Data modeling and normalization
+- Python (PyMongo)
+- CSV/data processing
+- Database performance optimization
+
+**Can Be Combined With**: Role 5 (ChromaDB) if team member is comfortable with vector databases
 
 ---
 
-#### Role 5: Workflow & Integration Engineer (n8n/MCP)
+#### Role 5: ChromaDB/Vector Database Engineer
+**Primary Responsibilities**:
+- Set up ChromaDB for RAG (Retrieval Augmented Generation)
+- Create ChromaDB collections (pricing_reasoning, hon_knowledge, similar_contexts)
+- Seed HON knowledge base (20+ domain insights)
+- Implement embeddings pipeline (sentence-transformers)
+- Sync MongoDB pricing decisions to ChromaDB
+- Manage vector search and similarity queries
+
+**Key Deliverables**:
+- ChromaDB setup with 3 collections
+- HON knowledge base seeded (20+ items)
+- Embeddings pipeline for text-to-vector conversion
+- Sync scripts (MongoDB → ChromaDB)
+- Semantic search utilities
+
+**Skills Required**:
+- ChromaDB or vector database basics
+- Understanding of embeddings and RAG
+- Python (ChromaDB client, sentence-transformers)
+- Text processing
+- Semantic search concepts
+
+**Can Be Combined With**: Role 4 (MongoDB) if team member is comfortable with both databases
+
+**Note**: If team is unfamiliar with vector databases, this role can be skipped and ChromaDB can be added post-hackathon.
+
+---
+
+#### Role 6: Workflow & Integration Engineer (n8n/MCP)
 **Primary Responsibilities**:
 - Build n8n/MCP workflows
 - Integrate external APIs (weather, events, traffic, competitor)
@@ -1285,7 +1323,7 @@ churn, and ensures reliable service availability."
 
 ---
 
-#### Role 6: Full-Stack/Integration Lead (Optional for 5-6 person team)
+#### Role 7: Full-Stack/Integration Lead (Optional for 6-7 person team)
 **Primary Responsibilities**:
 - Coordinate between all teams
 - Ensure component integration
