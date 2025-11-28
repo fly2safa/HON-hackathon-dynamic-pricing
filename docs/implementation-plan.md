@@ -882,6 +882,8 @@ churn, and ensures reliable service availability."
 
 ### Phase 1: Planning & Setup (Nov 20 - Nov 30)
 
+**IMPORTANT NOTE**: Per hackathon rules, everything in Phase 1 (planning, database setup, data preparation, architecture design) can be completed before Dec 1. **Functional application code (Next.js frontend, FastAPI backend, LangChain agent implementation) must wait until Dec 1.**
+
 #### Week 1 Goals
 - ✅ Team formation and role assignment
 - ✅ Technology stack setup and environment configuration
@@ -893,31 +895,42 @@ churn, and ensures reliable service availability."
 #### Detailed Tasks
 
 **Days 1-2 (Nov 20-21): Project Kickoff**
-- [ ] Team meeting: Review hackathon requirements
-- [ ] Assign roles and responsibilities
-- [ ] Create GitHub repository with proper structure
-- [ ] Set up project management board (GitHub Projects)
-- [ ] Define coding standards and Git workflow
-- [ ] Create initial README.md
+- ✅ Team meeting: Review hackathon requirements
+- ✅ Create GitHub repository with proper structure
+- ✅ Set up project management board (GitHub Projects)
+- ✅ Define coding standards and Git workflow
+- ✅ Create initial README.md
+- 🔄 Assign roles and responsibilities (IN PROGRESS - finalizing)
 
 **Days 3-4 (Nov 22-23): Environment Setup**
-- [ ] Set up development environments for all team members
-- [ ] Install and configure:
+- ✅ Set up development environments for all team members
+- ✅ Install and configure:
   - Node.js 18+ and Next.js 14
   - Python 3.10+ and FastAPI
+- [ ] Install and configure:
   - MongoDB (local or Atlas)
+  - ChromaDB (for RAG)
   - n8n (self-hosted or cloud)
 - [ ] Create `.env` files with API keys (template)
 - [ ] Set up Docker containers (optional but recommended)
 - [ ] Test basic connectivity between components
 
-**Days 5-6 (Nov 24-25): Database & Data Preparation**
-- [ ] Design MongoDB schemas (rides, pricing_decisions, customers, external_data)
-- [ ] Create database initialization scripts
-- [ ] Import 1000 rows from CSV to MongoDB
-- [ ] Validate data integrity and create indexes
+**Days 5-6 (Nov 24-25): Database & Data Preparation - MongoDB**
+- ✅ Design MongoDB schemas (rides, pricing_decisions, customers, drivers, external_data)
+- ✅ Create database initialization scripts
+- ✅ Import 1000 rows from CSV to MongoDB
+- ✅ Validate data integrity
+- [ ] Create indexes for query performance
 - [ ] Write data access layer (Python/FastAPI)
-- [ ] Create mock external data for testing
+
+**Days 5-6 (Nov 24-25): Database & Data Preparation - ChromaDB (NEW)**
+- [ ] Install ChromaDB and sentence-transformers
+- [ ] Design ChromaDB collections (pricing_reasoning, hon_knowledge, similar_contexts)
+- [ ] Create ChromaDB initialization scripts
+- [ ] Seed HON knowledge base (20+ domain insights)
+- [ ] Create embeddings pipeline
+- [ ] Test semantic search functionality
+- [ ] Sync initial MongoDB data to ChromaDB
 
 **Days 7-8 (Nov 26-27): Architecture & API Design**
 - [ ] Finalize architecture diagram (use Lucidchart or draw.io)
@@ -1148,7 +1161,25 @@ churn, and ensures reliable service availability."
 
 ## 6. Team Structure & Responsibilities
 
-### Team Size: 4-5 Members
+### Team Size: 4-7 Members
+
+**Core Team (4 members minimum)**:
+1. Frontend Developer
+2. Backend/API Developer
+3. AI/ML Engineer
+4. MongoDB Database Engineer
+
+**Extended Team (5-7 members recommended)**:
+5. ChromaDB/Vector Database Engineer (can be combined with Role 4)
+6. Workflow & Integration Engineer (n8n/MCP)
+7. Full-Stack/Integration Lead (optional)
+
+**Flexible Combinations**:
+- **If 4 members**: Roles 1-4 (skip ChromaDB or add post-hackathon)
+- **If 5 members**: Roles 1-4 + Role 6 (n8n workflows)
+- **If 5 members with RAG**: Roles 1-3 + Combined Role 4&5 (one person does both databases)
+- **If 6 members**: Roles 1-6 (separate MongoDB and ChromaDB engineers)
+- **If 7 members**: All roles (maximum capability)
 
 ### Role Assignments
 
@@ -1221,30 +1252,91 @@ churn, and ensures reliable service availability."
 
 ---
 
-#### Role 4: Data Engineer (MongoDB/n8n)
+#### Role 4: MongoDB Database Engineer
 **Primary Responsibilities**:
-- Design database schemas
-- Import and validate data
-- Build n8n workflows
-- Integrate external APIs
-- Manage data enrichment
+- Design MongoDB database schemas
+- Import and validate CSV data (1000+ records)
+- Set up MongoDB collections (rides, customers, drivers, pricing_decisions, external_data)
+- Create data import scripts
+- Configure indexes for query performance
+- Manage MongoDB connections and queries
+- Implement backup procedures
 
 **Key Deliverables**:
-- MongoDB database setup
-- Data import scripts
-- n8n workflows
-- External API integrations
+- MongoDB database setup with 5 collections
+- Data import scripts from CSV/TSV files
+- 1000+ records loaded and validated
+- Database indexes configured
+- MongoDB connection utilities
+- Backup and recovery procedures
 
 **Skills Required**:
 - MongoDB expertise
-- n8n workflow design
-- API integration
-- Data modeling
-- ETL processes
+- Data modeling and normalization
+- Python (PyMongo)
+- CSV/data processing
+- Database performance optimization
+
+**Can Be Combined With**: Role 5 (ChromaDB) if team member is comfortable with vector databases
 
 ---
 
-#### Role 5: Full-Stack/Integration Lead (Optional for 5-person team)
+#### Role 5: ChromaDB/Vector Database Engineer
+**Primary Responsibilities**:
+- Set up ChromaDB for RAG (Retrieval Augmented Generation)
+- Create ChromaDB collections (pricing_reasoning, hon_knowledge, similar_contexts)
+- Seed HON knowledge base (20+ domain insights)
+- Implement embeddings pipeline (sentence-transformers)
+- Sync MongoDB pricing decisions to ChromaDB
+- Manage vector search and similarity queries
+
+**Key Deliverables**:
+- ChromaDB setup with 3 collections
+- HON knowledge base seeded (20+ items)
+- Embeddings pipeline for text-to-vector conversion
+- Sync scripts (MongoDB → ChromaDB)
+- Semantic search utilities
+
+**Skills Required**:
+- ChromaDB or vector database basics
+- Understanding of embeddings and RAG
+- Python (ChromaDB client, sentence-transformers)
+- Text processing
+- Semantic search concepts
+
+**Can Be Combined With**: Role 4 (MongoDB) if team member is comfortable with both databases
+
+**Note**: If team is unfamiliar with vector databases, this role can be skipped and ChromaDB can be added post-hackathon.
+
+---
+
+#### Role 6: Workflow & Integration Engineer (n8n/MCP)
+**Primary Responsibilities**:
+- Build n8n/MCP workflows
+- Integrate external APIs (weather, events, traffic, competitor)
+- Create data enrichment workflows
+- Set up scheduled jobs and triggers
+- Implement event-driven automation
+- Connect workflows to databases (MongoDB & ChromaDB)
+- Monitor and maintain workflows
+
+**Key Deliverables**:
+- n8n workflows (weather enrichment, event fetcher, scheduled updates)
+- External API integrations (4+ APIs)
+- Workflow documentation
+- Automated data enrichment pipelines
+- Error handling and notifications
+
+**Skills Required**:
+- n8n workflow design
+- API integration (REST, webhooks)
+- JSON data manipulation
+- Webhook configuration
+- Automation and orchestration patterns
+
+---
+
+#### Role 7: Full-Stack/Integration Lead (Optional for 6-7 person team)
 **Primary Responsibilities**:
 - Coordinate between all teams
 - Ensure component integration
