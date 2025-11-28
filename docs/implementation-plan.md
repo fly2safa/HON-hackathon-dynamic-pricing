@@ -882,6 +882,8 @@ churn, and ensures reliable service availability."
 
 ### Phase 1: Planning & Setup (Nov 20 - Nov 30)
 
+**IMPORTANT NOTE**: Per hackathon rules, everything in Phase 1 (planning, database setup, data preparation, architecture design) can be completed before Dec 1. **Functional application code (Next.js frontend, FastAPI backend, LangChain agent implementation) must wait until Dec 1.**
+
 #### Week 1 Goals
 - ✅ Team formation and role assignment
 - ✅ Technology stack setup and environment configuration
@@ -893,31 +895,42 @@ churn, and ensures reliable service availability."
 #### Detailed Tasks
 
 **Days 1-2 (Nov 20-21): Project Kickoff**
-- [ ] Team meeting: Review hackathon requirements
-- [ ] Assign roles and responsibilities
-- [ ] Create GitHub repository with proper structure
-- [ ] Set up project management board (GitHub Projects)
-- [ ] Define coding standards and Git workflow
-- [ ] Create initial README.md
+- ✅ Team meeting: Review hackathon requirements
+- ✅ Create GitHub repository with proper structure
+- ✅ Set up project management board (GitHub Projects)
+- ✅ Define coding standards and Git workflow
+- ✅ Create initial README.md
+- 🔄 Assign roles and responsibilities (IN PROGRESS - finalizing)
 
 **Days 3-4 (Nov 22-23): Environment Setup**
-- [ ] Set up development environments for all team members
-- [ ] Install and configure:
+- ✅ Set up development environments for all team members
+- ✅ Install and configure:
   - Node.js 18+ and Next.js 14
   - Python 3.10+ and FastAPI
+- [ ] Install and configure:
   - MongoDB (local or Atlas)
+  - ChromaDB (for RAG)
   - n8n (self-hosted or cloud)
 - [ ] Create `.env` files with API keys (template)
 - [ ] Set up Docker containers (optional but recommended)
 - [ ] Test basic connectivity between components
 
-**Days 5-6 (Nov 24-25): Database & Data Preparation**
-- [ ] Design MongoDB schemas (rides, pricing_decisions, customers, external_data)
-- [ ] Create database initialization scripts
-- [ ] Import 1000 rows from CSV to MongoDB
-- [ ] Validate data integrity and create indexes
+**Days 5-6 (Nov 24-25): Database & Data Preparation - MongoDB**
+- ✅ Design MongoDB schemas (rides, pricing_decisions, customers, drivers, external_data)
+- ✅ Create database initialization scripts
+- ✅ Import 1000 rows from CSV to MongoDB
+- ✅ Validate data integrity
+- [ ] Create indexes for query performance
 - [ ] Write data access layer (Python/FastAPI)
-- [ ] Create mock external data for testing
+
+**Days 5-6 (Nov 24-25): Database & Data Preparation - ChromaDB (NEW)**
+- [ ] Install ChromaDB and sentence-transformers
+- [ ] Design ChromaDB collections (pricing_reasoning, hon_knowledge, similar_contexts)
+- [ ] Create ChromaDB initialization scripts
+- [ ] Seed HON knowledge base (20+ domain insights)
+- [ ] Create embeddings pipeline
+- [ ] Test semantic search functionality
+- [ ] Sync initial MongoDB data to ChromaDB
 
 **Days 7-8 (Nov 26-27): Architecture & API Design**
 - [ ] Finalize architecture diagram (use Lucidchart or draw.io)
