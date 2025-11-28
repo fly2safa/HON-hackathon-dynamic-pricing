@@ -1148,7 +1148,17 @@ churn, and ensures reliable service availability."
 
 ## 6. Team Structure & Responsibilities
 
-### Team Size: 4-5 Members
+### Team Size: 4-6 Members
+
+**Core Team (4 members minimum)**:
+1. Frontend Developer
+2. Backend/API Developer
+3. AI/ML Engineer
+4. Database Engineer
+
+**Extended Team (5-6 members recommended)**:
+5. Workflow & Integration Engineer (n8n/MCP)
+6. Full-Stack/Integration Lead (optional)
 
 ### Role Assignments
 
@@ -1221,30 +1231,61 @@ churn, and ensures reliable service availability."
 
 ---
 
-#### Role 4: Data Engineer (MongoDB/n8n)
+#### Role 4: Database Engineer (MongoDB/ChromaDB)
 **Primary Responsibilities**:
-- Design database schemas
+- Design database schemas (MongoDB & ChromaDB)
 - Import and validate data
-- Build n8n workflows
-- Integrate external APIs
-- Manage data enrichment
+- Set up MongoDB collections (rides, customers, drivers, pricing_decisions, external_data)
+- Set up ChromaDB collections (pricing_reasoning, hon_knowledge, similar_contexts)
+- Create data import scripts
+- Configure indexes for performance
+- Seed HON knowledge base
+- Manage database connections
 
 **Key Deliverables**:
-- MongoDB database setup
-- Data import scripts
-- n8n workflows
-- External API integrations
+- MongoDB database setup with 5 collections
+- ChromaDB setup with 3 collections
+- Data import scripts (1000+ records)
+- Database indexes configured
+- HON knowledge base seeded (20+ items)
+- Database backup procedures
 
 **Skills Required**:
 - MongoDB expertise
-- n8n workflow design
-- API integration
+- ChromaDB/vector database basics
 - Data modeling
+- Python (PyMongo, ChromaDB client)
 - ETL processes
 
 ---
 
-#### Role 5: Full-Stack/Integration Lead (Optional for 5-person team)
+#### Role 5: Workflow & Integration Engineer (n8n/MCP)
+**Primary Responsibilities**:
+- Build n8n/MCP workflows
+- Integrate external APIs (weather, events, traffic, competitor)
+- Create data enrichment workflows
+- Set up scheduled jobs and triggers
+- Implement event-driven automation
+- Connect workflows to databases (MongoDB & ChromaDB)
+- Monitor and maintain workflows
+
+**Key Deliverables**:
+- n8n workflows (weather enrichment, event fetcher, scheduled updates)
+- External API integrations (4+ APIs)
+- Workflow documentation
+- Automated data enrichment pipelines
+- Error handling and notifications
+
+**Skills Required**:
+- n8n workflow design
+- API integration (REST, webhooks)
+- JSON data manipulation
+- Webhook configuration
+- Automation and orchestration patterns
+
+---
+
+#### Role 6: Full-Stack/Integration Lead (Optional for 5-6 person team)
 **Primary Responsibilities**:
 - Coordinate between all teams
 - Ensure component integration
