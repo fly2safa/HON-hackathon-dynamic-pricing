@@ -63,13 +63,23 @@ Develop an innovative Agentic AI solution for dynamic pricing in a ride-sharing 
   - Event-driven pricing updates
   - Notification triggers
 
-#### Database
-- **Primary DB**: MongoDB
-- **Collections**:
-  - `rides`: Historical ride data (1000 records from dataset)
-  - `pricing_decisions`: AI-generated pricing with reasoning
-  - `external_data`: Weather, events, competitor data
-  - `customers`: Customer profiles and loyalty tiers
+#### Database Layer
+- **Structured Data**: MongoDB
+  - **Collections**:
+    - `rides`: Historical ride data (1000 records from dataset)
+    - `pricing_decisions`: AI-generated pricing with reasoning
+    - `drivers`: Driver profiles, earnings, and performance metrics
+    - `customers`: Customer profiles and loyalty tiers
+    - `external_data`: Weather, events, competitor data
+
+- **Vector Database**: ChromaDB (RAG Enhancement)
+  - **Collections**:
+    - `pricing_reasoning`: Embeddings of historical pricing decisions and reasoning
+    - `hon_knowledge`: Honeywell domain knowledge and best practices
+    - `similar_contexts`: Semantic search for contextually similar situations
+  - **Purpose**: Enable RAG (Retrieval Augmented Generation) for intelligent agent reasoning
+  - **Embeddings Model**: sentence-transformers (all-MiniLM-L6-v2)
+  - **Benefit**: Agent finds semantically similar contexts beyond exact matches
 
 #### External Data Sources (Competitive Advantage)
 - **Weather API**: OpenWeatherMap or WeatherAPI (impacts demand)
@@ -714,6 +724,21 @@ def optimize_driver_earnings(ride_params: dict, available_drivers: list) -> dict
     #   - Quality bonuses for high-rated drivers
     #   - Retention bonuses for active drivers
     # Returns: Driver earnings breakdown, recommended driver match, incentive details
+
+# Tool 8: Semantic Context Retriever (ChromaDB RAG)
+def retrieve_semantic_context(query: str, collection: str = "pricing") -> dict:
+    """Retrieve semantically similar contexts using RAG and vector search"""
+    # Inputs: Natural language query, collection type
+    # ChromaDB Collections:
+    #   - "pricing": Historical pricing decisions and reasoning
+    #   - "hon": Honeywell domain knowledge and best practices
+    #   - "context": General pricing strategies and patterns
+    # Process:
+    #   - Convert query to embedding using sentence-transformers
+    #   - Perform semantic similarity search in ChromaDB
+    #   - Return top N most similar contexts
+    # Returns: Similar contexts, metadata, relevance scores, supporting evidence
+    # Benefit: Agent finds relevant knowledge beyond exact keyword matches
 ```
 
 #### Reasoning Chain Example
@@ -757,16 +782,32 @@ Agent Reasoning:
       - Recommended driver: Driver #4523 (4.9 rating, active 8hrs today)
       - Driver retention: High earnings will keep drivers engaged
    
-8. "Validate against pricing rules"
-   → Action: validate_pricing_rules($300, context)
-   → Result: ✓ Within range, ✓ Competitive, ✓ Fair to customer, ✓ Fair to driver
+8. "Are there similar past situations I can learn from?" (NEW - ChromaDB RAG)
+   → Action: retrieve_semantic_context("Urban night with rain and concert, high demand")
+   → Result: Found 5 semantically similar situations:
+      - "Downtown concert with rain: $320, 25% surge, successful outcome"
+      - "Sports event + weather: $310, driver earned $248, high satisfaction"
+      - "Festival with traffic: $295, transparent pricing, 4.5 rating"
+      - Patterns: 20-25% surge accepted, driver bonuses key to retention
+      - Success rate: 91% when reasoning is transparent
+   
+9. "What does HON recommend for this type of situation?" (NEW - ChromaDB HON Knowledge)
+   → Action: retrieve_semantic_context("balance profitability with partner retention", "hon")
+   → Result: HON best practices:
+      - "Fair partner compensation during high demand maintains relationships"
+      - "Transparent pricing builds trust - explain the 'why' clearly"
+      - "70-30 split recommended for sustainable partner economics"
+   
+10. "Validate against pricing rules"
+    → Action: validate_pricing_rules($300, context)
+    → Result: ✓ Within range, ✓ Competitive, ✓ Fair to customer, ✓ Fair to driver
 
 Final Decision: $300.00
 Driver Earnings: $240.00 (80% of fare)
 Platform Fee: $60.00 (20%)
-Confidence: 92%
+Confidence: 94% (increased from 92% due to supporting evidence from RAG)
 
-Reasoning Summary:
+Reasoning Summary (Enhanced with RAG):
 "Based on high demand (2:1 ratio), adverse weather conditions, 
 nearby concert event, and competitive market analysis, I recommend 
 a price of $300. This is 5% above historical average but 3% below 
@@ -774,11 +815,18 @@ top competitor, ensuring profitability while maintaining customer
 retention. The Silver customer's low churn risk supports this 
 pricing strategy.
 
+SUPPORTING EVIDENCE (ChromaDB RAG): I found 5 similar situations 
+where 20-25% surge pricing during events with weather issues was 
+successful, with 91% positive outcomes. In one case, a downtown 
+concert with rain used similar pricing and maintained 4.5 customer 
+satisfaction.
+
 IMPORTANTLY: The driver will earn $240 (80% of fare) including a 
 $30 surge bonus, which is above market average and helps retain 
-our driver workforce. Fair driver compensation during high-demand 
-periods improves driver satisfaction, reduces churn, and ensures 
-reliable service availability."
+our driver workforce. This follows Honeywell's principle (from HON 
+knowledge base) of fair partner compensation during high-demand 
+periods. Fair driver compensation improves satisfaction, reduces 
+churn, and ensures reliable service availability."
 ```
 
 ### Explainability Mechanisms
