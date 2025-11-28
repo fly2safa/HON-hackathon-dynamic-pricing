@@ -8,6 +8,70 @@
 
 ---
 
+## Quick Reference: Hybrid Architecture at a Glance
+
+### 🎯 Key Features of Hybrid Architecture
+
+#### MongoDB (Structured Data) 📊
+**Purpose**: Operational data storage and fast queries
+- **Collections**: rides, pricing_decisions, customers, drivers, external_data
+- **Query Type**: Exact matches, filters, aggregations
+- **Use Case**: "What are the facts?" - Get specific data points
+- **Example**: "Find all rides in Urban location at Night"
+- **Speed**: 5-10ms per query
+- **Best For**: Transactional data, customer profiles, ride history
+
+#### ChromaDB (Semantic Search & RAG) 🧠
+**Purpose**: Contextual understanding and knowledge retrieval
+- **Collections**: pricing_reasoning, hon_knowledge, similar_contexts
+- **Query Type**: Semantic similarity search using vector embeddings
+- **Use Case**: "What's similar?" - Find contextually relevant information
+- **Example**: "Find situations like: high demand during events with weather issues"
+- **Speed**: 20-50ms per query
+- **Best For**: Historical context, domain knowledge, learning from past decisions
+
+#### Together = Smarter Agent 🚀
+**Combined Power**:
+- ✅ **Facts** (MongoDB) + **Context** (ChromaDB) = **Intelligent Decisions**
+- ✅ Agent references similar past situations to support recommendations
+- ✅ Agent applies HON domain knowledge for better applicability
+- ✅ Explanations include supporting evidence from multiple sources
+- ✅ Confidence scores backed by historical success patterns
+
+---
+
+### 📊 Expected Impact on Judging
+
+| Judging Criteria | Without ChromaDB | With ChromaDB | Impact | Points Gain |
+|------------------|------------------|---------------|--------|-------------|
+| **Creativity (40%)** | MongoDB only, standard approach | MongoDB + ChromaDB RAG, advanced AI | 🌟🌟🌟🌟🌟 Major boost | **+5-8 points** |
+| **Explainability (30%)** | Basic reasoning with historical data | Rich contextual reasoning with similar situations | 🌟🌟🌟🌟 Significant | **+3-5 points** |
+| **Technical Implementation (20%)** | Solid database design | Production-ready hybrid architecture | 🌟🌟🌟 Strong | **+2-3 points** |
+| **Visualization (10%)** | Standard dashboards | Enhanced with "Similar Situations" panel | 🌟🌟 Moderate | **+1-2 points** |
+| **TOTAL (100%)** | ~75-80 points | ~85-95 points | 🏆 **Game Changer** | **+10-16 points** |
+
+**Bottom Line**: This enhancement could move you from **"good project"** to **"winning project"**! 🏆
+
+---
+
+### ⚡ Quick Decision Matrix
+
+**Implement ChromaDB if:**
+- ✅ Team has 1-2 members comfortable with vector databases
+- ✅ You want to maximize creativity and technical scores
+- ✅ You have 6-8 hours available (Dec 1-2)
+- ✅ You want a competitive edge over other teams
+
+**Skip ChromaDB if:**
+- ❌ Team is unfamiliar with embeddings/RAG
+- ❌ Timeline is too tight
+- ❌ Core features aren't complete yet
+- ❌ You want to minimize risk
+
+**Our Recommendation**: **Implement it!** The benefits far outweigh the 6-8 hour investment, and it demonstrates cutting-edge AI knowledge that judges will recognize and reward.
+
+---
+
 ## Table of Contents
 
 1. [Why Add ChromaDB?](#why-add-chromadb)
