@@ -81,6 +81,19 @@ Develop an innovative Agentic AI solution for dynamic pricing in a ride-sharing 
   - **Embeddings Model**: sentence-transformers (all-MiniLM-L6-v2)
   - **Benefit**: Agent finds semantically similar contexts beyond exact matches
 
+#### Observability & Monitoring Layer
+- **LangSmith**: AI Agent Observability Platform
+  - **Purpose**: Track, debug, and monitor LangChain agent decisions in real-time
+  - **Capabilities**:
+    - Visual traces of every agent reasoning step
+    - Performance metrics (timing, token usage, costs)
+    - Debugging tools for agent failures
+    - Production monitoring and audit trails
+  - **Integration**: Non-invasive callbacks to LangChain agent
+  - **Benefit**: Provides explainability and transparency for judges and Honeywell stakeholders
+  - **Cost**: Free tier (5,000 traces/month)
+  - **Demo Value**: Shows judges HOW the agent thinks, not just the final output
+
 #### External Data Sources (Competitive Advantage)
 - **Weather API**: OpenWeatherMap or WeatherAPI (impacts demand)
 - **Events API**: Ticketmaster or Eventbrite (surge pricing triggers)
@@ -195,6 +208,13 @@ graph TB
         Competitor[Competitor API]
     end
     
+    subgraph "Observability Layer"
+        LangSmith[LangSmith Platform]
+        Traces[Agent Traces]
+        Metrics[Performance Metrics]
+        Debugging[Debug Tools]
+    end
+    
     UI --> Dashboard
     UI --> Explainer
     UI --> Analytics
@@ -218,6 +238,7 @@ graph TB
     Agent --> CustomerTool
     Agent --> ProfitTool
     Agent --> RAGTool
+    Agent --> LangSmith
     
     DBTool --> MongoDB
     RAGTool --> ChromaDB
@@ -247,12 +268,17 @@ graph TB
     Traffic --> ExternalDB
     Competitor --> ExternalDB
     
+    LangSmith --> Traces
+    LangSmith --> Metrics
+    LangSmith --> Debugging
+    
     style UI fill:#4A90E2,stroke:#2E5C8A,stroke-width:3px,color:#fff
     style API fill:#F5A623,stroke:#C17D11,stroke-width:3px,color:#fff
     style Agent fill:#9013FE,stroke:#6B0FB8,stroke-width:3px,color:#fff
     style N8N fill:#50E3C2,stroke:#2BA88A,stroke-width:3px,color:#fff
     style MongoDB fill:#00ED64,stroke:#00A847,stroke-width:3px,color:#fff
     style ChromaDB fill:#FF6B6B,stroke:#CC5555,stroke-width:3px,color:#fff
+    style LangSmith fill:#7C3AED,stroke:#5B21B6,stroke-width:3px,color:#fff
     style RAGTool fill:#FFD93D,stroke:#CCA600,stroke-width:3px,color:#000
 ```
 
@@ -932,6 +958,14 @@ churn, and ensures reliable service availability."
 - [ ] Test semantic search functionality
 - [ ] Sync initial MongoDB data to ChromaDB
 
+**Days 5-6 (Nov 24-25): Observability Setup - LangSmith (NEW)**
+- [ ] Create free LangSmith account
+- [ ] Get LangSmith API key
+- [ ] Install LangSmith SDK: `pip install langsmith`
+- [ ] Configure environment variables (LANGCHAIN_API_KEY, LANGCHAIN_PROJECT)
+- [ ] Test LangSmith connection
+- [ ] Review LangSmith proposal document (docs/langsmith-observability-proposal.md)
+
 **Days 7-8 (Nov 26-27): Architecture & API Design**
 - [ ] Finalize architecture diagram (use Lucidchart or draw.io)
 - [ ] Define API endpoints and contracts
@@ -984,7 +1018,9 @@ churn, and ensures reliable service availability."
 - [ ] Set up LangChain project structure
 - [ ] Implement basic ReAct agent
 - [ ] Create first custom tool (database query)
+- [ ] Add LangSmith tracing callbacks to agent
 - [ ] Test agent with simple prompts
+- [ ] Verify traces appear in LangSmith dashboard
 - [ ] Document agent configuration
 
 *Afternoon (Integration Team)*
@@ -1015,11 +1051,13 @@ churn, and ensures reliable service availability."
 - [ ] Build basic charts for visualization
 
 *Afternoon (AI Team)*
-- [ ] Implement all 6 custom tools
+- [ ] Implement all 8 custom tools (including RAG tool)
 - [ ] Enhance agent reasoning logic
 - [ ] Add external API calls to tools
+- [ ] Add custom metadata to LangSmith traces (ride_id, customer_tier, location)
 - [ ] Implement explainability features
 - [ ] Test agent with diverse scenarios
+- [ ] Review traces in LangSmith for debugging
 
 *Afternoon (Integration Team)*
 - [ ] Create weather data enrichment workflow
@@ -1053,6 +1091,8 @@ churn, and ensures reliable service availability."
 - [ ] Implement confidence scoring
 - [ ] Add alternative pricing scenarios
 - [ ] Create detailed reasoning traces
+- [ ] Generate 10-20 sample traces in LangSmith for demo
+- [ ] Organize LangSmith dashboard (tags, filters)
 - [ ] Test edge cases and failure modes
 
 *Afternoon (Integration Team)*
@@ -1095,20 +1135,23 @@ churn, and ensures reliable service availability."
 - [ ] Record 10-minute demo video showing:
   - Application overview
   - Pricing calculation demo
+  - LangSmith agent reasoning traces (live)
   - Reasoning explanation
   - Analytics dashboard
   - HON applicability
 - [ ] Edit video with captions and highlights
 - [ ] Upload to YouTube/Google Drive
+- [ ] Prepare LangSmith dashboard for live demo
 
 **Presentation Team**:
 - [ ] Create presentation deck (10-15 slides):
   - Title slide with team info
   - Problem statement
   - Solution overview
-  - Architecture diagram
+  - Architecture diagram (include LangSmith)
   - Live demo (or video backup)
-  - AI reasoning example
+  - LangSmith agent trace walkthrough
+  - AI reasoning example with explainability
   - HON recommendations
   - Q&A preparation
 - [ ] Practice presentation timing (10 min)
