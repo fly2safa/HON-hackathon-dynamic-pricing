@@ -1204,134 +1204,193 @@ churn, and ensures reliable service availability."
 
 ## 6. Team Structure & Responsibilities
 
-### Team Size: 4-7 Members
+### Team Size: 5 Members (Team #1)
 
-**Core Team (4 members minimum)**:
-1. Frontend Developer
-2. Backend/API Developer
-3. AI/ML Engineer
-4. MongoDB Database Engineer
+---
 
-**Extended Team (5-7 members recommended)**:
-5. ChromaDB/Vector Database Engineer (can be combined with Role 4)
-6. Workflow & Integration Engineer (n8n/MCP)
-7. Full-Stack/Integration Lead (optional)
+### Current Team Assignments (as of Nov 30, 2025)
 
-**Flexible Combinations**:
-- **If 4 members**: Roles 1-4 (skip ChromaDB or add post-hackathon)
-- **If 5 members**: Roles 1-4 + Role 6 (n8n workflows)
-- **If 5 members with RAG**: Roles 1-3 + Combined Role 4&5 (one person does both databases)
-- **If 6 members**: Roles 1-6 (separate MongoDB and ChromaDB engineers)
-- **If 7 members**: All roles (maximum capability)
+| Role # | Role Title | Assigned To | Status |
+|--------|-----------|-------------|--------|
+| **Role 1** | Frontend Developer + Voice Features (E1, E2) | Jason (Primary), Safa (Backup) | ✅ Assigned |
+| **Role 2** | MongoDB Database Engineer | Jason | ✅ Assigned |
+| **Role 3** | Backend/FastAPI Engineer | Dari | ✅ Assigned |
+| **Role 4** | LangChain/Agent Engineer + LangSmith | OPEN (Safa can do if no one else interested) | ⏳ Open |
+| **Role 5** | ChromaDB/Vector Database Engineer | OPEN (Safa can do if no one else interested) | ⏳ Open |
+| **Role 6** | n8n/MCP Workflow Integration Engineer | Steve (will choose n8n or MCP) | ✅ Assigned |
+| **Role 7** | Project Lead/Integration Coordinator | OPEN (Safa is natural fit given planning work) | ⏳ Open |
+| **Role 8** | Presentation Slides Creator | Steve | ✅ Assigned |
+| **Role 9** | Live Demo Presenter | Dari (Primary), Team (Support) | ✅ Assigned |
+| **Role 10** | Demo Video Creator (Backup) | OPEN (TBD) | ⏳ Open |
+| **Extra 1** | Voice Input Feature (🎤 Mic Icon) | Jason | ✅ Assigned |
+| **Extra 2** | Voice Output Feature (🔊 Speaker Icon) | Jason | ✅ Assigned |
+| **Extra 3** | Testing Checklist/Application | Safa | ✅ Assigned |
+
+**Notes:**
+- Jason is handling both Frontend (Role 1) and MongoDB (Role 2)
+- Dari is handling both Backend (Role 3) and Live Demo Presentation (Role 9)
+- Steve is handling both n8n/MCP (Role 6) and Presentation Slides (Role 8)
+- Safa is available as Frontend backup, can take Roles 4 & 5 if no one else is interested, and is natural fit for Role 7 (Project Lead) given planning work done so far
+- Role 7 (Project Lead) can be informal or shared among team members
+
+---
+
+### Role Structure Overview
+
+**Development Roles (Dec 1-4)**:
+1. Frontend Developer + Voice Features
+2. MongoDB Database Engineer
+3. Backend/FastAPI Engineer
+4. LangChain/Agent Engineer + LangSmith
+5. ChromaDB/Vector Database Engineer
+6. n8n/MCP Workflow Integration Engineer
+
+**Coordination & Presentation Roles (Dec 1-5)**:
+7. Project Lead/Integration Coordinator
+8. Presentation Slides Creator
+9. Live Demo Presenter
+10. Demo Video Creator (Backup)
+
+**Extra Enhancement Features (If Time Permits)**:
+- E1: Voice Input Feature (Mic Icon)
+- E2: Voice Output Feature (Speaker Icon)
+- E3: Testing Checklist/Application
+
+---
 
 ### Role Assignments
 
-#### Role 1: Frontend Developer (Next.js/React)
+#### Role 1: Frontend Developer (Next.js/React) + Voice Features
+**Assigned to**: Jason (Primary), Safa (Backup)
+
 **Primary Responsibilities**:
-- Build and style all UI components
-- Implement responsive design
-- Create data visualizations
+- Build and style all UI components with Next.js/React
+- Implement responsive, modern design
+- Create data visualizations and pricing dashboard
 - Integrate with backend APIs
 - Ensure excellent UX
+- **Extra Features (E1 & E2)**: Implement voice input (🎤) and voice output (🔊) for AI Bot (Dec 3-4, if time permits)
 
 **Key Deliverables**:
-- Pricing dashboard
+- Pricing dashboard with real-time updates
 - Reasoning explainer interface
 - Analytics views
 - Mobile-responsive design
+- Voice interaction features (optional)
 
 **Skills Required**:
 - React/Next.js expertise
 - TypeScript
 - Tailwind CSS
-- Chart libraries
+- Chart libraries (Chart.js/Recharts)
 - API integration
+- Browser Web Speech API (for voice features)
+
+**Timeline**: Dec 1-4 (full-time), Voice features Dec 3-4 (3-5 hours)
 
 ---
 
-#### Role 2: Backend/API Developer (FastAPI/Python)
+#### Role 2: MongoDB Database Engineer
+**Assigned to**: Jason
+
 **Primary Responsibilities**:
-- Build RESTful API endpoints
-- Integrate LangChain agent
-- Manage database connections
-- Implement business logic
-- Handle error management
+- Set up MongoDB Atlas cluster (FREE M0 tier)
+- Design MongoDB database schemas
+- Import and validate CSV data (1000+ records)
+- Create MongoDB collections (rides, customers, drivers, pricing_decisions, external_data)
+- Populate database with initial/mock data
+- Configure indexes for query performance
+- Work with backend engineer for data integration
 
 **Key Deliverables**:
-- FastAPI application
-- API documentation
-- Database models
-- Integration tests
+- MongoDB Atlas cluster configured
+- 5 collections created and populated
+- Data import scripts
+- Database connection string shared with team
+- Query optimization and indexes
+
+**Skills Required**:
+- MongoDB expertise
+- Database design and data modeling
+- Python (for import scripts)
+- MongoDB Atlas setup
+- Data validation
+
+**Timeline**: Dec 1-2 (setup and population), Dec 2-3 (integration with backend)
+
+---
+
+#### Role 3: Backend/FastAPI Engineer
+**Assigned to**: Dari
+
+**Primary Responsibilities**:
+- Define API endpoints and contracts (collaborate with frontend)
+- Build FastAPI server with OpenAPI/Swagger documentation
+- Integrate MongoDB, LangChain agent, n8n/MCP workflows
+- Implement backend business logic
+- Handle error management and validation
+- Coordinate all component integration
+
+**Key Deliverables**:
+- FastAPI application with RESTful endpoints
+- OpenAPI/Swagger documentation (auto-generated)
+- Database connection and query logic
+- Integration with LangChain agent
+- Integration with n8n/MCP workflows
+- Error handling and logging
 
 **Skills Required**:
 - Python expertise
 - FastAPI framework
 - MongoDB/PyMongo
 - RESTful API design
-- Testing (pytest)
+- Integration and coordination skills
+
+**Timeline**: Dec 1-4 (full-time), API contracts Dec 1 morning, Integration Dec 2-3
 
 ---
 
-#### Role 3: AI/ML Engineer (LangChain/Agent)
+#### Role 4: LangChain/Agent Engineer + LangSmith Observability
+**Assigned to**: OPEN (Safa can do if no one else is interested)
+
 **Primary Responsibilities**:
-- Design and implement LangChain agent
-- Create custom tools for agent
-- Develop reasoning logic
-- Implement explainability features
-- Optimize agent performance
+- Design and implement ReAct agent with LangChain
+- Set up LangSmith for agent observability and explainability
+- Create custom tools for agent (pricing calculator, data retriever, etc.)
+- Develop reasoning logic and explainability features
+- Build agent with mock data initially, then integrate with real databases
+- Share LangSmith API key and dashboard access with team
+- Integrate with MongoDB and ChromaDB (Dec 3)
 
 **Key Deliverables**:
 - ReAct agent implementation
-- Custom tool library
-- Reasoning engine
-- Explainability module
+- LangSmith setup and team access
+- Custom tool library for agent
+- Reasoning engine with explainability
+- Agent traces visible in LangSmith dashboard
 
 **Skills Required**:
 - LangChain framework
 - LLM integration (OpenAI/Claude)
 - Python programming
-- AI/ML concepts
-- Prompt engineering
+- AI/ML concepts and prompt engineering
+- LangSmith setup (15-30 min)
 
----
-
-#### Role 4: MongoDB Database Engineer
-**Primary Responsibilities**:
-- Design MongoDB database schemas
-- Import and validate CSV data (1000+ records)
-- Set up MongoDB collections (rides, customers, drivers, pricing_decisions, external_data)
-- Create data import scripts
-- Configure indexes for query performance
-- Manage MongoDB connections and queries
-- Implement backup procedures
-
-**Key Deliverables**:
-- MongoDB database setup with 5 collections
-- Data import scripts from CSV/TSV files
-- 1000+ records loaded and validated
-- Database indexes configured
-- MongoDB connection utilities
-- Backup and recovery procedures
-
-**Skills Required**:
-- MongoDB expertise
-- Data modeling and normalization
-- Python (PyMongo)
-- CSV/data processing
-- Database performance optimization
-
-**Can Be Combined With**: Role 5 (ChromaDB) if team member is comfortable with vector databases
+**Timeline**: Dec 1-4 (full-time), LangSmith setup Dec 1 (30 min), Agent with mocks Dec 1-2, Integration Dec 3
 
 ---
 
 #### Role 5: ChromaDB/Vector Database Engineer
+**Assigned to**: OPEN (Safa can do if no one else is interested)
+
 **Primary Responsibilities**:
 - Set up ChromaDB for RAG (Retrieval Augmented Generation)
 - Create ChromaDB collections (pricing_reasoning, hon_knowledge, similar_contexts)
 - Seed HON knowledge base (20+ domain insights)
 - Implement embeddings pipeline (sentence-transformers)
-- Sync MongoDB pricing decisions to ChromaDB
+- Sync MongoDB pricing decisions to ChromaDB (coordinate with Role 2)
 - Manage vector search and similarity queries
+- Integrate with LangChain agent (Dec 3)
 
 **Key Deliverables**:
 - ChromaDB setup with 3 collections
@@ -1347,58 +1406,856 @@ churn, and ensures reliable service availability."
 - Text processing
 - Semantic search concepts
 
-**Can Be Combined With**: Role 4 (MongoDB) if team member is comfortable with both databases
+**Timeline**: Dec 1-3 (setup and population), Dec 3 (integration with agent)
 
-**Note**: If team is unfamiliar with vector databases, this role can be skipped and ChromaDB can be added post-hackathon.
+**Note**: ChromaDB works independently from MongoDB. Role 5 only needs to coordinate with Role 2 (MongoDB) for syncing pricing decisions to ChromaDB. Can be combined with Role 4 (LangChain) if the same person is comfortable with both.
 
 ---
 
-#### Role 6: Workflow & Integration Engineer (n8n/MCP)
+#### Role 6: n8n/MCP Workflow Integration Engineer
+**Assigned to**: Steve (will choose n8n or MCP approach)
+
 **Primary Responsibilities**:
-- Build n8n/MCP workflows
-- Integrate external APIs (weather, events, traffic, competitor)
+- Set up n8n (preferred) or MCP for workflow automation
+- Integrate external APIs (weather, events, traffic, competitor data)
 - Create data enrichment workflows
 - Set up scheduled jobs and triggers
 - Implement event-driven automation
-- Connect workflows to databases (MongoDB & ChromaDB)
+- Connect workflows to backend API and databases
 - Monitor and maintain workflows
 
 **Key Deliverables**:
-- n8n workflows (weather enrichment, event fetcher, scheduled updates)
-- External API integrations (4+ APIs)
+- Workflow automation setup (n8n or MCP)
+- External API integrations (weather, events, traffic)
+- Data enrichment pipelines
 - Workflow documentation
-- Automated data enrichment pipelines
 - Error handling and notifications
 
 **Skills Required**:
-- n8n workflow design
+- n8n workflow design OR MCP integration
 - API integration (REST, webhooks)
 - JSON data manipulation
-- Webhook configuration
 - Automation and orchestration patterns
+
+**Timeline**: Dec 1-3 (setup and workflows), Dec 3 (integration with backend)
+
+**Note**: Steve will decide whether to use n8n or MCP based on familiarity and project needs. Both are valid approaches.
 
 ---
 
-#### Role 7: Full-Stack/Integration Lead (Optional for 6-7 person team)
+#### Role 7: Project Lead/Integration Coordinator
+**Assigned to**: OPEN (can be informal/shared; Safa is natural fit given planning work done so far)
+
 **Primary Responsibilities**:
-- Coordinate between all teams
-- Ensure component integration
-- Manage GitHub repository
-- Lead architecture decisions
-- Oversee testing and deployment
+- Coordinate team integration and resolve blockers (Dec 1-5)
+- Ensure all components work together (Dec 3-4)
+- Review and test full system (Dec 4)
+- Help with final polish and bug fixes (Dec 4)
+- Facilitate communication and decision-making
+- Manage GitHub repository and pull requests
 
 **Key Deliverables**:
-- Integration testing
-- CI/CD setup (optional)
+- Integration testing and coordination
+- Component compatibility verification
 - Documentation coordination
-- Demo preparation
+- Demo preparation support
 
 **Skills Required**:
-- Full-stack development
-- DevOps basics
+- Technical leadership and communication
+- Full-stack understanding
+- Problem-solving and debugging
 - Project management
-- Technical writing
-- Presentation skills
+
+**Timeline**: Dec 1-5 (ongoing coordination)
+
+**Note**: This role can be informal or distributed among team members. Given the planning work done so far, Safa is a natural fit if the team agrees, but it can remain flexible.
+
+---
+
+#### Role 8: Presentation Slides Creator
+**Assigned to**: Steve
+
+**Primary Responsibilities**:
+- Create professional slide deck (PowerPoint/Google Slides)
+- Cover: Problem, Solution, Architecture, Demo, HON Applicability, Team
+- Include visuals: architecture diagrams, screenshots, LangSmith traces
+- Align with judging criteria (Innovation, Technical Depth, Presentation, HON Fit)
+- Keep it concise (10-15 slides for 10-15 min presentation)
+- Finalize with real screenshots and data (Dec 4 morning)
+- Submit to instructor by Dec 4 midday
+
+**Key Deliverables**:
+- Professional slide deck (10-15 slides)
+- Visual diagrams and screenshots
+- Alignment with judging criteria
+- Submitted by Dec 4 midday
+
+**Skills Required**:
+- Presentation design and storytelling
+- Visual communication
+- Understanding of project architecture
+
+**Timeline**: Dec 2-3 (draft slides), Dec 4 morning (finalize with real data)
+
+---
+
+#### Role 9: Live Demo Presenter
+**Assigned to**: Dari (Primary), with support from entire team
+
+**Primary Responsibilities**:
+- Practice live demo multiple times (Dec 3-4)
+- Prepare talking points for each feature
+- Present live demo during Dec 5 presentation
+- Demonstrate: Pricing calculation, agent reasoning, LangSmith traces, UI/UX
+- Answer judge questions about the application
+- Coordinate with team for demo support
+
+**Key Deliverables**:
+- Polished live demo presentation
+- Clear talking points and explanations
+- Confident responses to judge questions
+
+**Skills Required**:
+- Public speaking and presentation
+- Technical knowledge of the system
+- Confidence and clarity
+
+**Timeline**: Dec 3-4 (practice), Dec 5 (live presentation)
+
+**Note**: Entire team will support during demo, with Dari leading the presentation.
+
+---
+
+#### Role 10: Demo Video Creator (Backup Plan)
+**Assigned to**: OPEN (TBD)
+
+**Primary Responsibilities**:
+- Record 5-10 minute walkthrough of the application (Dec 4 morning)
+- Show: Live demo of pricing calculation, LangSmith traces, explainability
+- Include voiceover explaining what's happening
+- Simple editing (cuts, captions)
+- Upload to YouTube/Google Drive and share link
+
+**Key Deliverables**:
+- 5-10 minute demo video
+- Professional voiceover and editing
+- Uploaded and accessible link
+
+**Skills Required**:
+- Screen recording (OBS Studio, Loom)
+- Video editing (DaVinci Resolve, or simple tools)
+- Clear narration
+
+**Timeline**: Dec 4 morning (record after app is working), Dec 4 midday (finalize and upload)
+
+**Tools**: OBS Studio (FREE), Loom (easy), DaVinci Resolve (FREE editing)
+
+---
+
+### Extra Enhancement Features (If Time Permits)
+
+#### Extra 1 (E1): Voice Input Feature - Mic Icon 🎤
+**Assigned to**: Jason
+
+**Description**:
+- Add microphone icon to AI Bot interface
+- Implement speech-to-text using Browser Web Speech API
+- Allow users to speak their pricing queries instead of typing
+- Display transcribed text in input field
+
+**Technology**: Browser Web Speech API (FREE, no API key needed)
+
+**Timeline**: Dec 3-4 (if time permits, 2-3 hours)
+
+**Impact**: Impressive demo feature, shows modern AI UX thinking, accessibility benefit
+
+---
+
+#### Extra 2 (E2): Voice Output Feature - Speaker Icon 🔊
+**Assigned to**: Jason
+
+**Description**:
+- Add speaker icon to AI Bot responses
+- Implement text-to-speech using Browser Speech Synthesis API
+- Read AI Bot responses out loud to user/audience
+- Makes explainability more engaging during demo
+
+**Technology**: Browser Speech Synthesis API (FREE, no API key needed)
+
+**Timeline**: Dec 3-4 (if time permits, 1-2 hours)
+
+**Impact**: HUGE wow factor for judges, makes demo more engaging, accessibility benefit
+
+**Priority**: Do E2 (voice output) first if time is limited - easier and bigger impact!
+
+---
+
+#### Extra 3 (E3): Testing Checklist/Application
+**Assigned to**: Safa
+
+**Description**:
+- Create comprehensive test list for all features
+- Track what has been tested and what hasn't
+- Can be simple checklist (Markdown/Google Sheet) or automated Python script
+- Ensure all components work before demo
+
+**Timeline**: Dec 4 (2-4 hours depending on approach)
+
+**Recommendation**: Keep it simple - use Markdown checklist or Google Sheet rather than building automated testing app. Focus on manual testing of key scenarios.
+
+**Priority**: NICE-TO-HAVE - only if core features are complete and stable
+
+---
+
+### 6.5. Coordination & Dependencies Workflow
+
+This section outlines the critical path, integration dependencies, and coordination points for the 4-day sprint (Dec 1-4).
+
+---
+
+#### Critical Path Overview
+
+**Key Principle:** Some tasks can be done in parallel, but certain integrations MUST happen in sequence. Understanding these dependencies is critical for success.
+
+**Color Legend for Diagrams:**
+- 🔴 **Red boxes**: Critical path blockers (MUST complete to proceed)
+- 🟡 **Yellow diamond**: Decision points (go/no-go for extras)
+- 🟢 **Green boxes**: Extra features (if time permits)
+- ⚪ **White boxes**: Parallel work (no dependencies)
+
+---
+
+#### Coordination & Dependencies Workflow Diagram
+
+```mermaid
+graph TD
+    Start[Dec 1: 12:01 AM] --> API[🔴 BLOCKER 1: API Contract<br/>Dari + Jason<br/>2-3 hours<br/>MUST COMPLETE FIRST]
+    
+    API --> Parallel{✅ Everyone Works<br/>Independently<br/>Dec 1-2}
+    
+    Parallel --> FE[Frontend with Mock Data<br/>Jason - Day 1-2<br/>No dependencies]
+    Parallel --> Mongo[MongoDB Atlas Setup<br/>Jason - Day 1-2<br/>No dependencies]
+    Parallel --> BE[Backend API Skeleton<br/>Dari - Day 1-2<br/>No dependencies]
+    Parallel --> Agent[Agent with Mock Tools<br/>Safa - Day 1-2<br/>No dependencies]
+    Parallel --> Chroma[ChromaDB Setup<br/>Safa - Day 1-2<br/>No dependencies]
+    Parallel --> N8N[n8n/MCP Workflows<br/>Steve - Day 1-2<br/>No dependencies]
+    
+    Mongo --> MongoBackend[🔴 BLOCKER 2: MongoDB → Backend<br/>Jason + Dari<br/>Dec 2 PM - 2-3 hours]
+    Agent --> LangSmith[LangSmith Setup & Key Share<br/>Safa → Team<br/>Dec 2 - 30 min]
+    
+    MongoBackend --> AgentMongo[🔴 BLOCKER 4: Agent → MongoDB<br/>Safa + Jason<br/>Dec 3 AM - 2-3 hours]
+    Chroma --> AgentChroma[🔴 BLOCKER 5: Agent → ChromaDB<br/>Safa<br/>Dec 3 AM - 2-3 hours]
+    
+    AgentMongo --> BackendAgent[🔴 BLOCKER 6: Backend → Agent<br/>Dari + Safa<br/>Dec 3 PM - 2-3 hours]
+    AgentChroma --> BackendAgent
+    
+    N8N --> BackendN8N[🔴 BLOCKER 7: n8n/MCP → Backend<br/>Steve + Dari<br/>Dec 3 PM - 1-2 hours]
+    
+    BackendAgent --> FEBackend[🔴 BLOCKER 8: Frontend → Backend<br/>Jason + Dari<br/>Dec 3 Eve - 2-3 hours]
+    BackendN8N --> FEBackend
+    FE --> FEBackend
+    
+    FEBackend --> Decision{🟡 DECISION POINT<br/>Core Features Stable?<br/>Dec 3, 9 PM}
+    
+    Decision -->|✅ Yes - Proceed| VoiceOutput[🟢 E2: Voice Output 🔊<br/>Jason<br/>1-2 hours]
+    Decision -->|❌ No - Skip| Testing
+    
+    VoiceOutput --> VoiceInput[🟢 E1: Voice Input 🎤<br/>Jason<br/>2-3 hours]
+    
+    VoiceInput --> Testing[🔴 BLOCKER 9: E2E Testing<br/>All Team<br/>Dec 4 AM - 2-3 hours]
+    
+    Testing --> TestChecklist[🟢 E3: Testing Checklist<br/>Safa<br/>1 hour]
+    
+    TestChecklist --> BugFixes[Bug Fixes & Polish<br/>All Team<br/>Dec 4 AM - 2 hours]
+    
+    BugFixes --> Slides[🔴 BLOCKER 10: Final Slides<br/>Steve + Screenshots from All<br/>Dec 4 AM - 2 hours]
+    BugFixes --> Video[Demo Video Backup<br/>TBD<br/>Dec 4 AM - 1-2 hours]
+    
+    Slides --> Submit[📤 Submit Deliverables<br/>Dec 4 Midday]
+    Video --> Submit
+    
+    Submit --> Rehearsal[Final Rehearsal<br/>All Team<br/>Dec 4 PM]
+    
+    Rehearsal --> Present[🎤 Presentation<br/>Dec 5]
+    
+    style API fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    style MongoBackend fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    style AgentMongo fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    style BackendAgent fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    style FEBackend fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    style Decision fill:#ffd43b,stroke:#f59f00,stroke-width:3px,color:#000
+    style VoiceOutput fill:#51cf66,stroke:#2f9e44,stroke-width:2px,color:#000
+    style VoiceInput fill:#51cf66,stroke:#2f9e44,stroke-width:2px,color:#000
+    style TestChecklist fill:#51cf66,stroke:#2f9e44,stroke-width:2px,color:#000
+    style Testing fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    style Slides fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
+    style Submit fill:#fa5252,stroke:#c92a2a,stroke-width:4px,color:#fff
+    style Present fill:#228be6,stroke:#1864ab,stroke-width:4px,color:#fff
+```
+
+---
+
+#### Critical Blockers Explained
+
+##### 🔴 BLOCKER #1: API Contract Definition (Dec 1, 12:01 AM - 3:00 AM)
+**Who:** Role 3 (Dari - Backend) + Role 1 (Jason - Frontend)
+
+**Why Critical:** Everyone needs to know the API structure before they can build their components.
+
+**Process:**
+1. Dari drafts API endpoints (1-2 hours)
+2. Jason reviews and provides feedback (30 min)
+3. Both agree on final contract (30 min)
+4. Share with team in Slack
+
+**Deliverable:** API contract document or FastAPI skeleton with endpoint signatures
+
+**Blocks:** All integration work
+
+**Backup Plan:** Use OpenAPI spec, implement details later
+
+---
+
+##### 🔴 BLOCKER #2: MongoDB → Backend Connection (Dec 2 PM)
+**Who:** Role 2 (Jason - MongoDB) + Role 3 (Dari - Backend)
+
+**Prerequisites:**
+- ✅ MongoDB Atlas setup complete
+- ✅ Backend API skeleton ready
+
+**Process:**
+1. Jason shares MongoDB connection string
+2. Dari connects backend to MongoDB
+3. Test basic queries (rides, customers, drivers)
+4. Verify data flows correctly
+
+**Deliverable:** Backend can query MongoDB and return real data
+
+**Blocks:** Frontend getting real data, Agent accessing database
+
+**Backup Plan:** Use mock data in backend if connection fails
+
+---
+
+##### 🔴 BLOCKER #3: LangSmith Setup & API Key Sharing (Dec 2)
+**Who:** Role 4 (Safa - LangChain)
+
+**Prerequisites:**
+- ✅ Agent with mock tools working
+
+**Process:**
+1. Safa creates LangSmith account (5 min)
+2. Generate API key (5 min)
+3. Test locally (10 min)
+4. Share API key in Slack (immediate)
+5. Team adds to `.env` files (5 min each)
+
+**Deliverable:** LangSmith API key in shared `.env`, team has dashboard access
+
+**Blocks:** Agent observability for everyone
+
+**Backup Plan:** Skip LangSmith temporarily, add later
+
+---
+
+##### 🔴 BLOCKER #4: Agent → MongoDB Integration (Dec 3 AM)
+**Who:** Role 4 (Safa - LangChain) + Role 2 (Jason - MongoDB)
+
+**Prerequisites:**
+- ✅ Agent with mock tools working
+- ✅ MongoDB populated with data
+- ✅ Backend → MongoDB connection working
+
+**Process:**
+1. Safa creates MongoDB query tool for agent
+2. Test agent can retrieve ride data
+3. Test agent can query customer loyalty
+4. Verify agent uses real data in reasoning
+
+**Deliverable:** Agent can query real MongoDB data
+
+**Blocks:** Agent making real pricing decisions
+
+**Backup Plan:** Agent uses hardcoded data temporarily
+
+---
+
+##### 🔴 BLOCKER #5: Agent → ChromaDB Integration (Dec 3 AM)
+**Who:** Role 4 (Safa - LangChain) + Role 5 (Safa - ChromaDB)
+
+**Prerequisites:**
+- ✅ ChromaDB populated with embeddings
+- ✅ Agent working with MongoDB
+
+**Process:**
+1. Safa creates ChromaDB retrieval tool for agent
+2. Test semantic search for similar contexts
+3. Test HON knowledge retrieval
+4. Verify RAG enhances agent reasoning
+
+**Deliverable:** Agent can do semantic search for similar contexts
+
+**Blocks:** RAG-enhanced reasoning
+
+**Backup Plan:** Skip ChromaDB, use MongoDB only
+
+**Note:** If Safa does both Roles 4 & 5, this is easier (same person). If split, requires coordination.
+
+---
+
+##### 🔴 BLOCKER #6: Backend → Agent Integration (Dec 3 PM)
+**Who:** Role 3 (Dari - Backend) + Role 4 (Safa - LangChain)
+
+**Prerequisites:**
+- ✅ Agent working with MongoDB & ChromaDB
+- ✅ Backend API endpoints ready
+
+**Process:**
+1. Dari imports Safa's agent into backend
+2. Create API endpoint that calls agent
+3. Test agent returns pricing decisions
+4. Verify LangSmith traces are captured
+5. Handle errors gracefully
+
+**Deliverable:** Backend API can call agent and return pricing decisions
+
+**Blocks:** Frontend getting AI-powered pricing
+
+**Backup Plan:** Backend returns hardcoded pricing temporarily
+
+---
+
+##### 🔴 BLOCKER #7: n8n/MCP → Backend Integration (Dec 3 PM)
+**Who:** Role 6 (Steve - n8n/MCP) + Role 3 (Dari - Backend)
+
+**Prerequisites:**
+- ✅ n8n/MCP workflows working
+- ✅ Backend API ready
+
+**Process:**
+1. Steve configures n8n/MCP to call backend API
+2. Test external data flows into MongoDB or backend
+3. Verify weather/events/traffic data enriches pricing
+4. Set up scheduled triggers (if applicable)
+
+**Deliverable:** External data flows into system
+
+**Blocks:** Real-time data enrichment
+
+**Backup Plan:** Use static external data
+
+---
+
+##### 🔴 BLOCKER #8: Frontend → Backend Integration (Dec 3 Evening)
+**Who:** Role 1 (Jason - Frontend) + Role 3 (Dari - Backend)
+
+**Prerequisites:**
+- ✅ Backend API working with agent
+- ✅ Frontend UI complete with mock data
+
+**Process:**
+1. Jason replaces mock API calls with real backend calls
+2. Test full flow: User input → Backend → Agent → Response
+3. Verify pricing displays correctly
+4. Test LangSmith trace links work
+5. Handle loading states and errors
+
+**Deliverable:** Frontend displays real AI pricing decisions
+
+**Blocks:** Full end-to-end demo
+
+**Backup Plan:** Demo backend with Postman/Swagger if frontend fails
+
+---
+
+##### 🔴 BLOCKER #9: End-to-End Testing (Dec 4 AM)
+**Who:** Role 7 (Safa - Project Lead) coordinates, everyone tests
+
+**Prerequisites:**
+- ✅ All integrations complete
+- ✅ Voice features complete (if implemented)
+
+**Process:**
+1. Test full chain: Frontend → Backend → Agent → MongoDB → ChromaDB
+2. Test external data (n8n/MCP) → Backend → Frontend
+3. Verify LangSmith traces visible for all agent calls
+4. Test voice features (if implemented)
+5. Test all edge cases and error handling
+6. Document bugs and prioritize fixes
+
+**Deliverable:** All features working, bugs identified and fixed
+
+**Blocks:** Final deliverables (slides, video)
+
+**Backup Plan:** Document known bugs as "future enhancements"
+
+---
+
+##### 🔴 BLOCKER #10: Presentation Materials (Dec 4 AM)
+**Who:** Role 8 (Steve - Slides) needs screenshots/data from everyone
+
+**Prerequisites:**
+- ✅ Application working
+- ✅ All features tested
+
+**Process:**
+1. Everyone takes screenshots of their components
+2. Capture LangSmith trace examples
+3. Record metrics (response times, accuracy, etc.)
+4. Steve adds to slide deck
+5. Finalize presentation flow
+
+**Deliverable:** Final slide deck with real screenshots
+
+**Blocks:** Submission deadline
+
+**Backup Plan:** Use mockups if real screenshots unavailable
+
+---
+
+#### Decision Point: Extra Features (Dec 3, 9 PM)
+
+**Status Check Questions:**
+- ✅ Is Frontend → Backend integration complete?
+- ✅ Are all core features working?
+- ✅ Are there any critical bugs?
+- ✅ Does Jason have energy/time for extras?
+
+**✅ GO (Proceed with Extras) IF:**
+- Core features are stable
+- No critical bugs remain
+- Jason has 3-5 hours available
+- Team agrees demo would benefit from wow factor
+
+**❌ NO-GO (Skip Extras) IF:**
+- Core features have bugs
+- Integration issues remain
+- Team is exhausted
+- Risk of breaking working features
+
+**If GO:**
+- **Priority 1:** E2 (Voice Output 🔊) - 1-2 hours, biggest impact, lowest risk
+- **Priority 2:** E1 (Voice Input 🎤) - 2-3 hours, impressive but higher risk
+- **Priority 3:** E3 (Testing Checklist) - 1 hour, organizational benefit
+
+**If NO-GO:**
+- Focus on bug fixes and polish
+- Final E2E testing
+- Early sleep for fresh Dec 4 start
+
+---
+
+#### Daily Coordination Checklists
+
+##### **Dec 1 (Sunday) - Parallel Development Day**
+
+**12:01 AM - 3:00 AM: CRITICAL WINDOW**
+- [ ] **12:01 AM:** Dari starts drafting API contract
+- [ ] **2:00 AM:** Dari shares draft with Jason
+- [ ] **2:30 AM:** Jason provides feedback
+- [ ] **3:00 AM:** API contract finalized and shared in Slack
+
+**3:00 AM - 9:00 AM: Independent Work Begins**
+- [ ] Jason: Start frontend with mock data
+- [ ] Jason: Start MongoDB Atlas setup
+- [ ] Dari: Implement FastAPI skeleton
+- [ ] Safa: Build agent with mock tools
+- [ ] Safa: Set up ChromaDB
+- [ ] Steve: Set up n8n/MCP workflows
+
+**9:00 AM: Morning Standup (15 min)**
+- Everyone reports progress
+- Identify any early blockers
+- Confirm API contract is clear
+
+**9:00 AM - 6:00 PM: Continued Independent Work**
+- All roles continue building their components
+- No dependencies yet - everyone works in parallel
+
+**6:00 PM: Evening Standup (15 min)**
+- Progress check
+- Prepare for Dec 2 integrations
+- Identify who's ready for integration tomorrow
+
+**11:00 PM: Optional Check-in**
+- Safa shares LangSmith API key (if ready)
+- Team adds to `.env` files
+
+---
+
+##### **Dec 2 (Monday) - First Integration Wave**
+
+**9:00 AM: Morning Standup (15 min)**
+- Integration readiness check
+- Who's ready for MongoDB → Backend integration?
+- Any blockers from Day 1?
+
+**12:00 PM - 3:00 PM: MongoDB → Backend Integration**
+- [ ] Jason shares MongoDB connection string
+- [ ] Dari connects backend to MongoDB
+- [ ] Test basic queries together
+- [ ] Verify data flows correctly
+
+**3:00 PM: Integration Checkpoint**
+- [ ] MongoDB → Backend integration complete?
+- [ ] Backend can query and return data?
+- [ ] Any issues to resolve?
+
+**3:00 PM - 6:00 PM: Continued Development**
+- Jason: Continue frontend development
+- Dari: Build out API endpoints with real data
+- Safa: Continue agent development
+- Safa: Populate ChromaDB
+- Steve: Continue n8n/MCP workflows
+
+**6:00 PM: Evening Standup (15 min)**
+- Day 2 progress review
+- Plan for Dec 3 integrations (CRITICAL DAY)
+- Confirm everyone understands Dec 3 sequence
+
+---
+
+##### **Dec 3 (Tuesday) - CRITICAL INTEGRATION DAY**
+
+**9:00 AM: Morning Standup (15 min)**
+- Integration priority order review
+- Confirm who's working with whom
+- Set integration deadlines
+
+**9:00 AM - 12:00 PM: Agent Integrations**
+- [ ] **Safa + Jason:** Agent → MongoDB integration (2-3 hours)
+- [ ] **Safa:** Agent → ChromaDB integration (2-3 hours, can overlap)
+- [ ] Test agent can query both databases
+- [ ] Verify agent reasoning uses real data
+
+**12:00 PM: Integration Checkpoint #1**
+- [ ] Agent → MongoDB complete?
+- [ ] Agent → ChromaDB complete?
+- [ ] Any blockers for Backend → Agent integration?
+
+**12:00 PM - 3:00 PM: Backend Integrations**
+- [ ] **Dari + Safa:** Backend → Agent integration (2-3 hours)
+- [ ] **Steve + Dari:** n8n/MCP → Backend integration (1-2 hours, can overlap)
+- [ ] Test backend can call agent
+- [ ] Test external data flows in
+
+**3:00 PM: Integration Checkpoint #2**
+- [ ] Backend → Agent complete?
+- [ ] n8n/MCP → Backend complete?
+- [ ] Ready for Frontend → Backend integration?
+
+**3:00 PM - 6:00 PM: Frontend Integration Prep**
+- Jason: Prepare frontend for real API calls
+- Dari: Ensure backend API is stable
+- Safa: Monitor LangSmith traces
+
+**6:00 PM - 9:00 PM: Frontend → Backend Integration**
+- [ ] **Jason + Dari:** Frontend → Backend integration (2-3 hours)
+- [ ] Test full E2E flow
+- [ ] Fix any integration bugs
+- [ ] Verify LangSmith traces work
+
+**9:00 PM: DECISION POINT - Extra Features**
+- [ ] Core features stable? ✅ / ❌
+- [ ] Critical bugs remaining? ✅ / ❌
+- [ ] Jason has energy for extras? ✅ / ❌
+- [ ] **DECISION:** GO / NO-GO for voice features
+
+**If GO (9:00 PM - 3:00 AM):**
+- [ ] **9:30 PM:** Jason starts Voice Output (E2) - 1-2 hours
+- [ ] **11:30 PM:** Test voice output with real AI responses
+- [ ] **12:00 AM (Dec 4):** Jason starts Voice Input (E1) - 2-3 hours
+- [ ] **3:00 AM:** Both voice features complete and tested
+
+**If NO-GO (9:00 PM - 12:00 AM):**
+- [ ] **9:30 PM:** Team focuses on bug fixes and polish
+- [ ] **11:00 PM:** Final E2E testing
+- [ ] **12:00 AM:** Everyone gets sleep for Dec 4
+
+---
+
+##### **Dec 4 (Wednesday) - TESTING, POLISH & DELIVERABLES**
+
+**9:00 AM: Morning Standup (15 min)**
+- Testing assignments
+- Screenshot responsibilities
+- Deliverable deadlines review
+
+**9:00 AM - 10:00 AM: Testing Checklist Creation**
+- [ ] **Safa:** Create testing checklist (E3) - 1 hour
+  - Markdown checklist or Google Sheet
+  - Key scenarios to test
+  - Bug tracking template
+
+**10:00 AM - 12:00 PM: Team Testing**
+- [ ] Everyone executes test checklist
+- [ ] Safa tracks results
+- [ ] Identify critical vs. nice-to-have bugs
+- [ ] Fix critical bugs immediately
+
+**12:00 PM - 1:00 PM: Bug Fixes**
+- [ ] All critical bugs fixed
+- [ ] Nice-to-have bugs documented for "future enhancements"
+- [ ] Final E2E smoke test
+
+**1:00 PM - 2:00 PM: Screenshots & Content**
+- [ ] Everyone takes screenshots of their components
+- [ ] Capture LangSmith trace examples
+- [ ] Record demo video (backup)
+- [ ] Steve collects all materials
+
+**2:00 PM - 3:00 PM: Final Deliverables**
+- [ ] **Steve:** Finalize slide deck with real screenshots
+- [ ] **TBD:** Upload demo video backup
+- [ ] **All:** Review GitHub repository (clean, documented)
+- [ ] **All:** Review presentation flow
+
+**3:00 PM - 4:00 PM: Final Rehearsal**
+- [ ] Dari practices live demo
+- [ ] Team provides feedback
+- [ ] Test backup video playback
+- [ ] Confirm all tech works (projector, audio, etc.)
+
+**4:00 PM: SUBMIT DELIVERABLES**
+- [ ] Slide deck uploaded
+- [ ] GitHub repository link shared
+- [ ] Demo video uploaded
+- [ ] All materials submitted to instructor
+
+**4:00 PM - 11:59 PM: Rest & Prepare**
+- Get good sleep for Dec 5 presentation!
+
+---
+
+##### **Dec 5 (Thursday) - PRESENTATION DAY**
+
+**Pre-Presentation:**
+- [ ] Arrive early to test equipment
+- [ ] Load slide deck and backup video
+- [ ] Test live demo on presentation machine
+- [ ] Team pep talk
+
+**During Presentation:**
+- [ ] Dari leads presentation
+- [ ] Team supports during demo
+- [ ] Use backup video if needed
+- [ ] Answer judge questions confidently
+
+**Post-Presentation:**
+- [ ] Celebrate! 🎉
+- [ ] Gather feedback from judges
+- [ ] Team retrospective (what went well, what to improve)
+
+---
+
+#### Communication Protocol
+
+##### **Slack Channels:**
+- **#general** - Team-wide updates and announcements
+- **#blockers** - Immediate help needed (@ mention person)
+- **#integration** - Coordination for integration work
+- **#demo-prep** - Presentation and demo planning
+- **#screenshots** - Share screenshots for slides here
+
+##### **When You're Blocked:**
+1. Post in `#blockers` immediately
+2. @ mention the person you need
+3. Provide context: "I need X from Y to proceed with Z"
+4. Estimate how long you're blocked
+5. Work on something else while waiting
+
+##### **Daily Standups Format (15 min, 9 AM & 6 PM):**
+- ✅ **What I completed** since last standup
+- 🔄 **What I'm working on now**
+- ⏳ **What I need from others** (dependencies)
+- 🚫 **Any blockers** (immediate help needed)
+
+##### **Integration Coordination:**
+When two people need to integrate:
+1. Agree on time in advance (e.g., "2 PM today")
+2. Both be available for 2-3 hours
+3. Use Zoom/Teams for screen sharing
+4. Test together, don't hand off and hope
+5. Confirm integration works before moving on
+
+---
+
+#### Risk Mitigation Strategies
+
+##### **If API Contract is Delayed:**
+- **Backup:** Use OpenAPI spec, implement details later
+- **Impact:** Delays all integration by a few hours
+- **Mitigation:** Dari prioritizes this first thing Dec 1
+
+##### **If MongoDB Connection Fails:**
+- **Backup:** Use mock data in backend
+- **Impact:** No real data, but demo still works
+- **Mitigation:** Jason tests connection early Dec 2
+
+##### **If Agent Integration Fails:**
+- **Backup:** Hardcode pricing logic temporarily
+- **Impact:** No AI reasoning, but pricing still works
+- **Mitigation:** Safa builds agent with mocks first (tested independently)
+
+##### **If ChromaDB Integration Fails:**
+- **Backup:** Skip RAG, use MongoDB only
+- **Impact:** No semantic search, but core features work
+- **Mitigation:** ChromaDB is enhancement, not critical path
+
+##### **If n8n/MCP Integration Fails:**
+- **Backup:** Use static external data
+- **Impact:** No real-time data, but pricing logic works
+- **Mitigation:** Steve prepares static data as fallback
+
+##### **If Frontend-Backend Integration Fails:**
+- **Backup:** Demo backend with Postman/Swagger
+- **Impact:** Less polished, but shows functionality
+- **Mitigation:** Jason builds frontend with mock data (works independently)
+
+##### **If Voice Features Break:**
+- **Backup:** Skip them, use keyboard input only
+- **Impact:** Less impressive, but core demo works
+- **Mitigation:** Voice features are extras, not critical
+
+##### **If Demo Video Not Ready:**
+- **Backup:** Live demo only
+- **Impact:** Higher risk if live demo fails
+- **Mitigation:** Practice live demo multiple times
+
+---
+
+#### Extra Features Coordination
+
+##### **Extra 1 (E1): Voice Input 🎤**
+- **Assigned to:** Jason
+- **Dependencies:** Frontend UI functional, Backend API working
+- **Timeline:** Dec 3 PM or Dec 4 AM (after core features work)
+- **Duration:** 2-3 hours
+- **Risk Level:** MEDIUM (microphone issues, browser compatibility)
+- **Demo Impact:** HIGH (judges can speak to AI)
+- **Mitigation:** Have keyboard input as fallback
+- **Decision Point:** Dec 3, 9 PM (GO if core features stable)
+
+##### **Extra 2 (E2): Voice Output 🔊**
+- **Assigned to:** Jason
+- **Dependencies:** Frontend UI functional, Backend returning AI responses
+- **Timeline:** Dec 3 PM or Dec 4 AM (after core features work)
+- **Duration:** 1-2 hours
+- **Risk Level:** LOW (text-to-speech is very stable)
+- **Demo Impact:** VERY HIGH (AI speaks its reasoning)
+- **Mitigation:** Can mute if audio issues during demo
+- **Decision Point:** Dec 3, 9 PM (GO if core features stable)
+- **Priority:** Do E2 FIRST if doing extras (biggest impact, lowest risk)
+
+##### **Extra 3 (E3): Testing Checklist**
+- **Assigned to:** Safa
+- **Dependencies:** All integrations complete
+- **Timeline:** Dec 4 AM (during testing phase)
+- **Duration:** 1-2 hours (keep it simple)
+- **Risk Level:** VERY LOW (just documentation)
+- **Demo Impact:** LOW (internal tool, but shows process)
+- **Mitigation:** Use Markdown or Google Sheet (don't build automated app)
+- **Priority:** Do this for organization (helps catch bugs)
 
 ---
 
@@ -1426,6 +2283,376 @@ churn, and ensures reliable service availability."
 - Feature branches: `feature/pricing-dashboard`
 - Pull requests required for all merges
 - At least 1 reviewer per PR
+
+---
+
+## 6.6. Presentation Slide Content Guide
+
+This section provides detailed guidance for Role 8 (Steve - Presentation Slides Creator) on what content to include in the slide deck.
+
+---
+
+### Recommended Slide Structure (15-16 slides)
+
+#### **Slide 1: Title Slide**
+- **Title:** HoneyGo: Intelligent Dynamic Pricing with Agentic AI
+- **Subtitle:** Team #1 - Honeywell Hackathon 2025
+- **Team Members:** Jason, Dari, Safa, Steve, [others]
+- **Visual:** HoneyGo logo
+
+---
+
+#### **Slide 2: Problem Statement**
+- **Title:** The Dynamic Pricing Challenge
+- **Content:**
+  - Ride-sharing requires real-time pricing decisions
+  - Must balance: demand, supply, customer satisfaction, driver earnings
+  - Traditional rules-based systems can't handle complexity
+  - Need: Explainable AI that adapts to context
+- **Visual:** Problem illustration (supply/demand imbalance)
+
+---
+
+#### **Slide 3: MongoDB Schema Decision** ⭐ (NEW - Decision Slide)
+- **Title:** Database Architecture: Multi-Collection Design
+- **Content:**
+  - **Two Approaches Considered:**
+    - Single Collection (all data in one place)
+    - Multi-Collection (separate collections per entity) ✅ **CHOSEN**
+  
+  - **Why Multi-Collection?**
+    - ✅ Better query performance (targeted queries)
+    - ✅ Clear data separation (rides, customers, drivers, pricing_decisions, external_data)
+    - ✅ Scalability for production
+    - ✅ Easier maintenance and debugging
+  
+  - **Trade-off:** Slightly more complex setup, but worth it for performance
+
+- **Visual:** Side-by-side comparison table:
+
+| Aspect | Single Collection | Multi-Collection ✅ |
+|--------|------------------|---------------------|
+| Query Performance | ❌ Slow (scan all docs) | ✅ Fast (targeted) |
+| Data Separation | ❌ Mixed together | ✅ Clear boundaries |
+| Scalability | ❌ Limited | ✅ Excellent |
+| Maintenance | ❌ Complex | ✅ Easier |
+| Setup Complexity | ✅ Simple | ⚠️ More setup |
+
+- **Source:** See `docs/mongoDB-design-decision.md` for full analysis
+
+---
+
+#### **Slide 4: Hybrid Database Strategy** ⭐ (NEW - Decision Slide)
+- **Title:** Hybrid Architecture: MongoDB + ChromaDB
+- **Content:**
+  - **Three Approaches Considered:**
+    1. **MongoDB Only** - Structured data, exact matches
+    2. **ChromaDB Only** - Not feasible for operational data
+    3. **Hybrid: MongoDB + ChromaDB** ✅ **CHOSEN**
+  
+  - **Why Hybrid?**
+    - **MongoDB:** Fast operational queries (rides, customers, pricing)
+    - **ChromaDB:** Semantic search & RAG (similar contexts, HON knowledge)
+    - **Together:** AI agent gets both exact matches AND contextual reasoning
+  
+  - **Competitive Advantage:**
+    - Agent finds semantically similar pricing scenarios beyond exact matches
+    - Retrieves Honeywell domain knowledge for better decisions
+    - RAG enhances reasoning with historical context
+
+- **Visual:** Architecture diagram showing:
+```
+┌─────────────┐         ┌──────────────┐
+│   MongoDB   │         │  ChromaDB    │
+│ (Structured)│         │  (Semantic)  │
+└──────┬──────┘         └──────┬───────┘
+       │                       │
+       └───────→ Agent ←───────┘
+                   ↓
+         Intelligent Pricing
+```
+
+- **Source:** See `docs/chromadb-rag-design.md` for full analysis
+
+---
+
+#### **Slide 5: Planning-First Approach** ⭐ (NEW - Decision Slide)
+- **Title:** Comprehensive Planning Before Coding
+- **Content:**
+  - **150+ Page Implementation Plan** created before Dec 1 coding start
+  
+  - **Plan Includes:**
+    - ✅ Complete technical architecture
+    - ✅ Database schemas and design decisions
+    - ✅ Team roles and responsibilities (10 roles defined)
+    - ✅ Phase-by-phase timeline with dependencies
+    - ✅ Mermaid architecture diagrams (6 diagrams)
+    - ✅ Coordination workflow and integration sequence
+    - ✅ Risk mitigation strategies
+  
+  - **Why This Matters:**
+    - Clear roadmap for 4-day sprint
+    - Team alignment from Day 1
+    - Reduced integration issues
+    - Professional software engineering practice
+    - Demonstrates thoughtful approach, not just coding
+  
+  - **Result:** Team hit the ground running on Dec 1, no confusion
+
+- **Visual:** Screenshot of `implementation-plan.md` table of contents or key Mermaid diagram
+
+- **Source:** See `docs/implementation-plan.md` (this document!)
+
+---
+
+#### **Slide 6: Solution Overview**
+- **Title:** HoneyGo: Agentic AI for Dynamic Pricing
+- **Content:**
+  - **Core Innovation:** ReAct agent that reasons about pricing decisions
+  - **Key Features:**
+    - Real-time pricing calculation
+    - Explainable AI reasoning (LangSmith traces)
+    - Driver earnings optimization
+    - External data integration (weather, events, traffic)
+    - Semantic search for similar contexts (RAG)
+  - **Tech Stack:** Next.js, FastAPI, LangChain, MongoDB, ChromaDB, n8n/MCP
+- **Visual:** High-level solution diagram
+
+---
+
+#### **Slide 7: System Architecture**
+- **Title:** Technical Architecture
+- **Content:**
+  - **Frontend:** Next.js with real-time updates
+  - **Backend:** FastAPI with RESTful endpoints
+  - **AI Layer:** LangChain ReAct agent
+  - **Databases:** MongoDB (operational) + ChromaDB (semantic)
+  - **Workflows:** n8n/MCP for external data
+  - **Observability:** LangSmith for agent traces
+- **Visual:** System Architecture Flow diagram from implementation plan
+
+---
+
+#### **Slide 8: Agentic AI Design**
+- **Title:** ReAct Agent: Reasoning + Acting
+- **Content:**
+  - **Agent Workflow:**
+    1. Receive pricing request
+    2. Reason about context (demand, supply, events)
+    3. Query MongoDB for operational data
+    4. Query ChromaDB for similar contexts (RAG)
+    5. Calculate pricing with explainable reasoning
+    6. Return decision with trace URL
+  - **Custom Tools:**
+    - MongoDB query tool
+    - ChromaDB semantic search tool
+    - Pricing calculator tool
+    - External data retriever tool
+- **Visual:** Agent Reasoning Workflow diagram from implementation plan
+
+---
+
+#### **Slide 9: LangSmith Explainability** (Key Innovation #1)
+- **Title:** Transparent AI: LangSmith Observability
+- **Content:**
+  - **Challenge:** Black-box AI decisions are not acceptable for pricing
+  - **Solution:** LangSmith provides visual traces of every reasoning step
+  - **Benefits:**
+    - See exactly how agent reached pricing decision
+    - Debug agent behavior in real-time
+    - Audit trail for compliance
+    - Builds trust with customers and drivers
+  - **Demo Value:** Judges can see agent thinking, not just output
+- **Visual:** Screenshot of LangSmith trace showing agent reasoning steps
+
+---
+
+#### **Slide 10: Driver Incentive Optimization** (Key Innovation #2)
+- **Title:** Fair Pricing for Drivers & Customers
+- **Content:**
+  - **Challenge:** Dynamic pricing must benefit both riders AND drivers
+  - **Solution:** Agent optimizes for driver earnings and retention
+  - **Features:**
+    - Driver earnings tracking in MongoDB
+    - Fair surge pricing that rewards drivers
+    - Loyalty incentives for consistent drivers
+    - Prevents race-to-the-bottom pricing
+  - **HON Applicability:** Partner/supplier retention strategies
+- **Visual:** Driver earnings dashboard or chart
+
+---
+
+#### **Slide 11: Hybrid Database Benefits** (Key Innovation #3)
+- **Title:** MongoDB + ChromaDB: Best of Both Worlds
+- **Content:**
+  - **MongoDB:** Fast exact queries (customer ID, ride history)
+  - **ChromaDB:** Semantic search (similar pricing scenarios)
+  - **Example:** "Find pricing for similar Friday evening concerts"
+    - MongoDB: Exact match for "Friday 6 PM, Concert"
+    - ChromaDB: Semantically similar contexts (sports games, festivals)
+    - Agent: Uses both for informed decision
+  - **Result:** Smarter pricing than rules-based systems
+- **Visual:** Example query showing MongoDB vs ChromaDB results
+
+---
+
+#### **Slide 12: Demo Slide**
+- **Title:** Let's See HoneyGo in Action!
+- **Content:**
+  - "Live demo of intelligent pricing calculation"
+  - (This is where Dari or one of us does the live demo)
+  - Backup: Play demo video if technical issues
+- **Visual:** Screenshot of HoneyGo UI ready for demo
+
+---
+
+#### **Slide 13: HON Applicability**
+- **Title:** How This Applies to Honeywell
+- **Content:**
+  - **Honeywell Challenge:** Catalog demand pricing with supply constraints
+  - **HoneyGo Parallels:**
+    - Dynamic demand (rides ↔ aerospace parts)
+    - Supply constraints (drivers ↔ inventory)
+    - Customer tiers (loyalty ↔ contract levels)
+    - External factors (events ↔ market conditions)
+  - **Transferable Innovations:**
+    - Explainable AI for pricing decisions
+    - Hybrid database for operational + semantic data
+    - Partner/supplier retention optimization
+    - Real-time data integration
+- **Visual:** Side-by-side comparison table (HoneyGo ↔ Honeywell)
+
+---
+
+#### **Slide 14: Technical Challenges Solved**
+- **Title:** What We Overcame
+- **Content:**
+  - **Challenge 1:** Integrating 6 technologies in 4 days
+    - Solution: Clear coordination workflow and dependencies
+  - **Challenge 2:** Making AI decisions explainable
+    - Solution: LangSmith observability platform
+  - **Challenge 3:** Balancing speed and context
+    - Solution: Hybrid MongoDB + ChromaDB architecture
+  - **Challenge 4:** Ensuring fair driver earnings
+    - Solution: Driver data in MongoDB + agent optimization
+- **Visual:** Before/After or Problem/Solution graphics
+
+---
+
+#### **Slide 15: Results & Impact**
+- **Title:** What We Achieved
+- **Content:**
+  - **Metrics:**
+    - Full-stack application in 4 days
+    - 6 technologies integrated seamlessly
+    - 100% explainable AI decisions (LangSmith traces)
+    - 5 MongoDB collections with 1000+ records
+    - 3 ChromaDB collections with semantic search
+    - Real-time external data integration
+  - **Impact:**
+    - Smarter pricing than rules-based systems
+    - Transparent AI builds trust
+    - Driver retention through fair earnings
+    - Scalable architecture for production
+- **Visual:** Metrics dashboard or infographic
+
+---
+
+#### **Slide 16: Team & Thank You**
+- **Title:** Team #1 - HoneyGo
+- **Content:**
+  - **Team Members & Roles:**
+    - Jason: Frontend + MongoDB + Voice Features
+    - Dari: Backend + Live Demo Presentation
+    - Safa: LangChain + ChromaDB + Project Coordination
+    - Steve: n8n/MCP + Presentation Slides
+    - [Others if applicable]
+  - **Thank You:**
+    - Honeywell for the opportunity
+    - Instructors for guidance
+    - Judges for your time and feedback
+  - **Questions?**
+- **Visual:** Team photo or HoneyGo logo
+
+---
+
+### Visual Design Guidelines
+
+**Color Scheme:**
+- Primary: HoneyGo brand colors (yellow/gold + black)
+- Accent: Blue for technical elements
+- Backgrounds: Clean white or light gray
+
+**Typography:**
+- Headings: Bold, clear, large (32-36pt)
+- Body: Readable, concise (18-24pt)
+- Code/Technical: Monospace font
+
+**Diagrams:**
+- Use Mermaid diagrams from implementation-plan.md
+- Export as PNG or embed as SVG
+- Ensure text is readable on projector
+
+**Screenshots:**
+- High resolution (at least 1920x1080)
+- Annotate key features with arrows/callouts
+- Crop to show relevant parts only
+
+**Consistency:**
+- Same layout template for all slides
+- Consistent icon style
+- Aligned elements
+
+---
+
+### Content Collection Timeline
+
+**Dec 2-3 (Draft Slides):**
+- Steve creates slide template and structure
+- Adds content for Slides 1-7 (static content)
+- Prepares placeholders for screenshots
+
+**Dec 4 Morning (Finalize with Real Data):**
+- **9:00 AM:** Collect screenshots from team
+  - Jason: Frontend UI screenshots
+  - Dari: Backend API (Swagger docs)
+  - Safa: LangSmith traces, ChromaDB queries
+  - Steve: n8n/MCP workflows
+- **10:00 AM:** Add screenshots to slides
+- **11:00 AM:** Record metrics and results
+- **12:00 PM:** Finalize all content
+- **1:00 PM:** Team review and feedback
+- **2:00 PM:** Final version ready
+
+**Dec 4 Midday:**
+- Submit slide deck to instructor
+- Export backup PDF version
+- Test slide deck on presentation machine
+
+---
+
+### Presentation Delivery Tips
+
+**For Dari (Live Demo Presenter):**
+- Practice demo at least 3 times
+- Have talking points for each slide
+- Speak clearly and confidently
+- Make eye contact with judges
+- Explain WHY, not just WHAT
+- Show enthusiasm for the project
+
+**For Team (Demo Support):**
+- Be ready to answer technical questions
+- Support Dari during demo
+- Have backup video ready
+- Stay engaged and attentive
+
+**Timing:**
+- Total presentation: 10-15 minutes
+- Slides 1-11: 7-8 minutes (45 sec per slide)
+- Live demo: 3-5 minutes
+- Slides 12-16: 2-3 minutes
+- Q&A: 5-10 minutes (judge questions)
 
 ---
 
