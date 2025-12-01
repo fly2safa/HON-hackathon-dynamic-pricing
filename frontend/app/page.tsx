@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import HeroSection from '@/components/HeroSection';
 import RideRequestCard from '@/components/RideRequestCard';
@@ -20,34 +20,27 @@ export default function Home() {
   const [pricingResult, setPricingResult] = useState<PricingResult | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [rides, setRides] = useState<RideRequest[]>(mockRideRequests);
+  const resultsSectionRef = useRef<HTMLDivElement>(null);
+
+  // Scroll when processing starts
+  useEffect(() => {
+    if (isProcessing && resultsSectionRef.current) {
+      const yOffset = -120; // Extra space above
+      const element = resultsSectionRef.current;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }, [isProcessing]);
 
   const handleCalculatePrice = async (ride: RideRequest) => {
     setSelectedRide(ride);
     setPricingResult(null);
     setIsProcessing(true);
 
-    // Scroll to results section smoothly - use 'start' to show from top
-    setTimeout(() => {
-      const resultsSection = document.getElementById('results-section');
-      if (resultsSection) {
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Add extra offset to show more above
-        window.scrollBy({ top: -100, behavior: 'smooth' });
-      }
-    }, 100);
-
     try {
       const result = await simulateAIPricing(ride.id, ride);
       setPricingResult(result);
-      
-      // Scroll again after results are ready to ensure visibility
-      setTimeout(() => {
-        const resultsSection = document.getElementById('results-section');
-        if (resultsSection) {
-          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          window.scrollBy({ top: -100, behavior: 'smooth' });
-        }
-      }, 100);
     } catch (error) {
       console.error('Error calculating price:', error);
     } finally {
@@ -195,7 +188,7 @@ export default function Home() {
           </div>
 
           {/* Right Column: AI Processing & Results */}
-          <div id="results-section" className="space-y-6">
+          <div ref={resultsSectionRef} className="space-y-6">
             {isProcessing && (
               <AIThinkingAnimation isThinking={isProcessing} />
             )}
