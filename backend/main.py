@@ -10,6 +10,7 @@ Created: Dec 1, 2024
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from utils.config import settings
+from services import mongodb_service as mongo_module
 import logging
 
 # Configure logging
@@ -51,8 +52,18 @@ async def startup_event():
     logger.info(f"Debug mode: {settings.debug}")
     logger.info(f"Frontend URL: {settings.frontend_url}")
     
-    # TODO: Initialize database connections (Dec 2-3)
-    # - MongoDB connection
+    # Initialize MongoDB connection
+    try:
+        logger.info("🔗 Connecting to MongoDB...")
+        mongo_module.mongodb_service = mongo_module.MongoDBService(settings.mongodb_uri)
+        await mongo_module.mongodb_service.connect()
+        logger.info("✅ MongoDB connected and ready")
+    except Exception as e:
+        logger.error(f"❌ MongoDB connection failed: {e}")
+        logger.warning("⚠️  API will run in degraded mode (without database persistence)")
+        mongo_module.mongodb_service = None
+    
+    # TODO: Initialize other services (Dec 3)
     # - ChromaDB connection
     # - LangChain agent initialization
 
@@ -61,7 +72,16 @@ async def startup_event():
 async def shutdown_event():
     """Run on application shutdown"""
     logger.info("Shutting down HoneyGo API")
-    # TODO: Close database connections
+    
+    # Close MongoDB connection
+    if mongo_module.mongodb_service:
+        try:
+            await mongo_module.mongodb_service.disconnect()
+            logger.info("✅ MongoDB connection closed")
+        except Exception as e:
+            logger.error(f"Error closing MongoDB connection: {e}")
+    
+    # TODO: Close other connections (Dec 3)
 
 
 @app.get("/")
