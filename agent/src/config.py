@@ -1,16 +1,29 @@
 """
 Configuration for HoneyGo LangChain Agent
+Reads from root .env file (shared across all services)
 """
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load .env from project root (two levels up from this file)
+root_dir = Path(__file__).parent.parent.parent
+env_path = root_dir / '.env'
+load_dotenv(dotenv_path=env_path)
+
+print(f"📁 Loading environment from: {env_path}")
 
 # LLM Configuration
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")  # "openai" or "google"
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")  # "openai", "google", or "anthropic"
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
+
+# Validate that required API key is present
+if LLM_PROVIDER == "openai" and not OPENAI_API_KEY:
+    print("⚠️  WARNING: OPENAI_API_KEY not found in .env")
+elif LLM_PROVIDER == "google" and not GOOGLE_API_KEY:
+    print("⚠️  WARNING: GOOGLE_API_KEY not found in .env")
 
 # Model selection based on provider
 if LLM_PROVIDER == "google":
