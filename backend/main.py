@@ -96,9 +96,12 @@ async def health_check():
 
 
 # Import and include routers
-# These will be added in subsequent commits
-# from routers import health, pricing, rides
-# app.include_router(health.router)
+from routers import health
+
+app.include_router(health.router)
+
+# Additional routers to be added in subsequent commits
+# from routers import pricing, rides
 # app.include_router(pricing.router)
 # app.include_router(rides.router)
 
