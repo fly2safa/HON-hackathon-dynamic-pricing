@@ -7,5 +7,6 @@ Models:
 - ride: Ride data models
 - pricing: Pricing request/response models
 - customer: Customer data models
+- driver: Driver data models
 """
 

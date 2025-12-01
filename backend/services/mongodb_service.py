@@ -443,6 +443,189 @@ class MongoDBService:
         except Exception as e:
             logger.error(f"Error fetching pricing history: {e}")
             return []
+    
+    # Driver Operations
+    
+    async def get_driver(self, driver_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Get driver data by ID
+        
+        Args:
+            driver_id: Driver identifier
+            
+        Returns:
+            Driver data dict or None if not found
+        """
+        try:
+            driver = self.db.drivers.find_one(
+                {"driver_id": driver_id},
+                {"_id": 0}
+            )
+            return driver
+        except Exception as e:
+            logger.error(f"Error fetching driver {driver_id}: {e}")
+            return None
+    
+    async def get_drivers(
+        self,
+        limit: int = 20,
+        skip: int = 0,
+        filter_query: Optional[Dict[str, Any]] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        Get all drivers with pagination
+        
+        Args:
+            limit: Maximum number of drivers to return
+            skip: Number of drivers to skip
+            filter_query: MongoDB filter query (e.g., {"status": "Active"})
+            
+        Returns:
+            List of driver data dicts
+        """
+        try:
+            query = filter_query or {}
+            drivers = list(self.db.drivers.find(
+                query,
+                {"_id": 0}
+            ).sort("name", 1).skip(skip).limit(limit))
+            
+            return drivers
+        except Exception as e:
+            logger.error(f"Error fetching drivers: {e}")
+            return []
+    
+    async def get_active_drivers(
+        self,
+        location: Optional[str] = None,
+        limit: int = 20
+    ) -> List[Dict[str, Any]]:
+        """
+        Get active drivers, optionally filtered by location
+        
+        Args:
+            location: Filter by current location
+            limit: Maximum number of drivers to return
+            
+        Returns:
+            List of active driver data dicts
+        """
+        try:
+            query = {"status": "Active"}
+            if location:
+                query["current_location"] = location
+            
+            drivers = list(self.db.drivers.find(
+                query,
+                {"_id": 0}
+            ).sort("rating", -1).limit(limit))
+            
+            return drivers
+        except Exception as e:
+            logger.error(f"Error fetching active drivers: {e}")
+            return []
+    
+    async def create_driver(self, driver_data: Dict[str, Any]) -> str:
+        """
+        Create new driver record
+        
+        Args:
+            driver_data: Driver information
+            
+        Returns:
+            Created driver ID
+        """
+        try:
+            driver_data["joined_date"] = datetime.now()
+            
+            result = self.db.drivers.insert_one(driver_data)
+            logger.info(f"Driver created: {driver_data['driver_id']}")
+            return driver_data["driver_id"]
+            
+        except DuplicateKeyError:
+            logger.warning(f"Driver already exists: {driver_data.get('driver_id')}")
+            return driver_data.get('driver_id')
+        except Exception as e:
+            logger.error(f"Error creating driver: {e}")
+            raise
+    
+    async def update_driver(self, driver_id: str, update_data: Dict[str, Any]) -> bool:
+        """
+        Update driver information
+        
+        Args:
+            driver_id: Driver identifier
+            update_data: Fields to update
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            result = self.db.drivers.update_one(
+                {"driver_id": driver_id},
+                {"$set": update_data}
+            )
+            
+            return result.modified_count > 0
+        except Exception as e:
+            logger.error(f"Error updating driver {driver_id}: {e}")
+            return False
+    
+    async def get_driver_statistics(self) -> Dict[str, Any]:
+        """
+        Get driver statistics using aggregation
+        
+        Returns:
+            Dict containing driver statistics
+        """
+        try:
+            pipeline = [
+                {
+                    "$group": {
+                        "_id": None,
+                        "total_drivers": {"$sum": 1},
+                        "active_drivers": {
+                            "$sum": {"$cond": [{"$eq": ["$status", "Active"]}, 1, 0]}
+                        },
+                        "total_rides_completed": {"$sum": "$total_rides_completed"},
+                        "total_earnings": {"$sum": "$total_earnings"},
+                        "average_rating": {"$avg": "$rating"},
+                        "average_earnings": {"$avg": "$total_earnings"}
+                    }
+                }
+            ]
+            
+            result = list(self.db.drivers.aggregate(pipeline))
+            
+            if result:
+                stats = result[0]
+                return {
+                    "total_drivers": stats.get("total_drivers", 0),
+                    "active_drivers": stats.get("active_drivers", 0),
+                    "total_rides_completed": stats.get("total_rides_completed", 0),
+                    "total_earnings": round(stats.get("total_earnings", 0), 2),
+                    "average_rating": round(stats.get("average_rating", 0), 2),
+                    "average_earnings_per_driver": round(stats.get("average_earnings", 0), 2)
+                }
+            
+            return {
+                "total_drivers": 0,
+                "active_drivers": 0,
+                "total_rides_completed": 0,
+                "total_earnings": 0.0,
+                "average_rating": 0.0,
+                "average_earnings_per_driver": 0.0
+            }
+        except Exception as e:
+            logger.error(f"Error calculating driver statistics: {e}")
+            return {
+                "total_drivers": 0,
+                "active_drivers": 0,
+                "total_rides_completed": 0,
+                "total_earnings": 0.0,
+                "average_rating": 0.0,
+                "average_earnings_per_driver": 0.0
+            }
 
 
 # Global instance (will be initialized in main.py startup event)
