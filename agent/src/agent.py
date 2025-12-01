@@ -83,24 +83,84 @@ Thought: {agent_scratchpad}
 class HoneyGoPricingAgent:
     """Main pricing agent with LangSmith observability"""
     
+    def _initialize_llm_with_fallback(self):
+        """
+        Initialize LLM with automatic fallback chain for resilience.
+        Tries providers in order: OpenAI → Google AI → Anthropic
+        Uses whichever API key is available and working.
+        """
+        errors = []
+        
+        # Strategy 1: Try explicit LLM_PROVIDER first if set
+        if LLM_PROVIDER == "google" and GOOGLE_API_KEY:
+            try:
+                llm = ChatGoogleGenerativeAI(
+                    model=AGENT_MODEL,
+                    temperature=AGENT_TEMPERATURE,
+                    google_api_key=GOOGLE_API_KEY
+                )
+                print(f"✅ Using Google AI (Gemini): {AGENT_MODEL}")
+                return llm
+            except Exception as e:
+                errors.append(f"Google AI failed: {str(e)}")
+                print(f"⚠️  Google AI failed, trying fallback...")
+        
+        # Strategy 2: Try OpenAI (most common for hackathons)
+        if OPENAI_API_KEY:
+            try:
+                llm = ChatOpenAI(
+                    model=AGENT_MODEL if LLM_PROVIDER == "openai" else "gpt-4-turbo-preview",
+                    temperature=AGENT_TEMPERATURE,
+                    openai_api_key=OPENAI_API_KEY
+                )
+                print(f"✅ Using OpenAI: {llm.model_name}")
+                return llm
+            except Exception as e:
+                errors.append(f"OpenAI failed: {str(e)}")
+                print(f"⚠️  OpenAI failed, trying fallback...")
+        
+        # Strategy 3: Fallback to Google AI if not tried yet
+        if LLM_PROVIDER != "google" and GOOGLE_API_KEY:
+            try:
+                llm = ChatGoogleGenerativeAI(
+                    model="gemini-pro",
+                    temperature=AGENT_TEMPERATURE,
+                    google_api_key=GOOGLE_API_KEY
+                )
+                print(f"✅ Using Google AI (fallback): gemini-pro")
+                return llm
+            except Exception as e:
+                errors.append(f"Google AI (fallback) failed: {str(e)}")
+                print(f"⚠️  Google AI failed, trying Anthropic...")
+        
+        # Strategy 4: Final fallback to Anthropic
+        if ANTHROPIC_API_KEY:
+            try:
+                from langchain_anthropic import ChatAnthropic
+                llm = ChatAnthropic(
+                    model="claude-3-sonnet-20240229",
+                    temperature=AGENT_TEMPERATURE,
+                    anthropic_api_key=ANTHROPIC_API_KEY
+                )
+                print(f"✅ Using Anthropic Claude (fallback): claude-3-sonnet")
+                return llm
+            except Exception as e:
+                errors.append(f"Anthropic failed: {str(e)}")
+        
+        # All providers failed
+        error_msg = "❌ No LLM provider available!\n"
+        error_msg += "Tried: " + " → ".join(errors) + "\n"
+        error_msg += "Please add at least one API key to .env:\n"
+        error_msg += "  - OPENAI_API_KEY (recommended)\n"
+        error_msg += "  - GOOGLE_API_KEY (free/cheap)\n"
+        error_msg += "  - ANTHROPIC_API_KEY (alternative)\n"
+        raise RuntimeError(error_msg)
+    
     def __init__(self):
         """Initialize the agent with tools and LLM"""
         
-        # Initialize LLM based on provider
-        if LLM_PROVIDER == "google":
-            self.llm = ChatGoogleGenerativeAI(
-                model=AGENT_MODEL,
-                temperature=AGENT_TEMPERATURE,
-                google_api_key=GOOGLE_API_KEY
-            )
-            print(f"🤖 Using Google AI (Gemini): {AGENT_MODEL}")
-        else:
-            self.llm = ChatOpenAI(
-                model=AGENT_MODEL,
-                temperature=AGENT_TEMPERATURE,
-                openai_api_key=OPENAI_API_KEY
-            )
-            print(f"🤖 Using OpenAI: {AGENT_MODEL}")
+        # Initialize LLM with fallback chain for resilience
+        self.llm = self._initialize_llm_with_fallback()
         
         # Initialize tools
         self.tools = [

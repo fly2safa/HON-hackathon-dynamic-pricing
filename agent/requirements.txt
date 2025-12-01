@@ -2,11 +2,13 @@
 langchain==0.1.0
 langchain-openai==0.0.2
 langchain-google-genai==0.0.5
+langchain-anthropic==0.0.1
 langsmith==0.0.77
 
-# LLM Providers (use either OpenAI or Google AI)
+# LLM Providers (agent uses fallback chain: OpenAI → Google → Anthropic)
 openai==1.6.1
 google-generativeai==0.3.2
+anthropic==0.8.1
 
 # Database
 pymongo==4.6.1
