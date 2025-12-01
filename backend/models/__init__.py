@@ -8,5 +8,6 @@ Models:
 - pricing: Pricing request/response models
 - customer: Customer data models
 - driver: Driver data models
+- external_data: External data models (weather, traffic, events)
 """
 

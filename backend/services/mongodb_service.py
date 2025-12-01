@@ -626,6 +626,204 @@ class MongoDBService:
                 "average_rating": 0.0,
                 "average_earnings_per_driver": 0.0
             }
+    
+    # External Data Operations
+    
+    async def create_external_data(self, external_data: Dict[str, Any]) -> str:
+        """
+        Create external data record (weather, traffic, events)
+        
+        Args:
+            external_data: External data information
+            
+        Returns:
+            Created record ID
+        """
+        try:
+            external_data["timestamp"] = datetime.now()
+            
+            # Set TTL if not provided (default: 6 hours from now)
+            if "ttl" not in external_data or not external_data["ttl"]:
+                from datetime import timedelta
+                external_data["ttl"] = datetime.now() + timedelta(hours=6)
+            
+            result = self.db.external_data.insert_one(external_data)
+            logger.info(f"External data created: {external_data.get('data_type')} for {external_data.get('location')}")
+            return str(result.inserted_id)
+            
+        except Exception as e:
+            logger.error(f"Error creating external data: {e}")
+            raise
+    
+    async def get_external_data(
+        self,
+        data_type: Optional[str] = None,
+        location: Optional[str] = None,
+        limit: int = 10
+    ) -> List[Dict[str, Any]]:
+        """
+        Get external data with optional filters
+        
+        Args:
+            data_type: Filter by data type (weather, traffic, events)
+            location: Filter by location
+            limit: Maximum number of records to return
+            
+        Returns:
+            List of external data records
+        """
+        try:
+            query = {}
+            if data_type:
+                query["data_type"] = data_type
+            if location:
+                query["location"] = location
+            
+            # Only return non-expired data
+            query["ttl"] = {"$gt": datetime.now()}
+            
+            data = list(self.db.external_data.find(
+                query,
+                {"_id": 0}
+            ).sort("timestamp", -1).limit(limit))
+            
+            return data
+        except Exception as e:
+            logger.error(f"Error fetching external data: {e}")
+            return []
+    
+    async def get_latest_external_data(
+        self,
+        data_type: str,
+        location: str
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Get the most recent external data for a type and location
+        
+        Args:
+            data_type: Type of data (weather, traffic, events)
+            location: Location/zone
+            
+        Returns:
+            Latest external data record or None
+        """
+        try:
+            data = self.db.external_data.find_one(
+                {
+                    "data_type": data_type,
+                    "location": location,
+                    "ttl": {"$gt": datetime.now()}
+                },
+                {"_id": 0},
+                sort=[("timestamp", -1)]
+            )
+            return data
+        except Exception as e:
+            logger.error(f"Error fetching latest external data: {e}")
+            return None
+    
+    async def get_weather_data(self, location: str) -> Optional[Dict[str, Any]]:
+        """
+        Get latest weather data for a location
+        
+        Args:
+            location: Location/zone
+            
+        Returns:
+            Weather data dict or None
+        """
+        return await self.get_latest_external_data("weather", location)
+    
+    async def get_traffic_data(self, location: str) -> Optional[Dict[str, Any]]:
+        """
+        Get latest traffic data for a location
+        
+        Args:
+            location: Location/zone
+            
+        Returns:
+            Traffic data dict or None
+        """
+        return await self.get_latest_external_data("traffic", location)
+    
+    async def get_events_data(self, location: str) -> Optional[Dict[str, Any]]:
+        """
+        Get latest events data for a location
+        
+        Args:
+            location: Location/zone
+            
+        Returns:
+            Events data dict or None
+        """
+        return await self.get_latest_external_data("events", location)
+    
+    async def cleanup_expired_external_data(self) -> int:
+        """
+        Remove expired external data based on TTL
+        
+        Returns:
+            Number of records deleted
+        """
+        try:
+            result = self.db.external_data.delete_many({
+                "ttl": {"$lte": datetime.now()}
+            })
+            
+            deleted_count = result.deleted_count
+            if deleted_count > 0:
+                logger.info(f"Cleaned up {deleted_count} expired external data records")
+            
+            return deleted_count
+        except Exception as e:
+            logger.error(f"Error cleaning up external data: {e}")
+            return 0
+    
+    async def get_external_data_summary(self) -> List[Dict[str, Any]]:
+        """
+        Get summary of external data by type and location
+        
+        Returns:
+            List of summaries with counts and latest timestamps
+        """
+        try:
+            pipeline = [
+                {
+                    "$match": {
+                        "ttl": {"$gt": datetime.now()}
+                    }
+                },
+                {
+                    "$group": {
+                        "_id": {
+                            "data_type": "$data_type",
+                            "location": "$location"
+                        },
+                        "record_count": {"$sum": 1},
+                        "latest_timestamp": {"$max": "$timestamp"},
+                        "oldest_timestamp": {"$min": "$timestamp"}
+                    }
+                },
+                {
+                    "$project": {
+                        "_id": 0,
+                        "data_type": "$_id.data_type",
+                        "location": "$_id.location",
+                        "record_count": 1,
+                        "latest_timestamp": 1,
+                        "oldest_timestamp": 1
+                    }
+                },
+                {
+                    "$sort": {"data_type": 1, "location": 1}
+                }
+            ]
+            
+            summary = list(self.db.external_data.aggregate(pipeline))
+            return summary
+        except Exception as e:
+            logger.error(f"Error getting external data summary: {e}")
+            return []
 
 
 # Global instance (will be initialized in main.py startup event)
