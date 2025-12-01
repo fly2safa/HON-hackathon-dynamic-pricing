@@ -9,6 +9,8 @@ export interface RideRequest {
   estimatedDuration: number; // in minutes
   requestTime: string;
   passengerCount: number;
+  isScheduled?: boolean;
+  scheduledTime?: string;
 }
 
 export interface PricingResult {
@@ -169,7 +171,7 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
 };
 
 // Generate random ride request
-export const generateRandomRide = (): RideRequest => {
+export const generateRandomRide = (scheduled: boolean = false): RideRequest => {
   const locations = [
     { pickup: 'Downtown Phoenix', dropoff: 'Camelback Mountain' },
     { pickup: 'Mesa Riverview', dropoff: 'Tempe Marketplace' },
@@ -181,7 +183,7 @@ export const generateRandomRide = (): RideRequest => {
   const distance = 3 + Math.random() * 15;
   const duration = Math.ceil(distance * 2.5);
   
-  return {
+  const ride: RideRequest = {
     id: `ride-${Date.now()}`,
     pickupLocation: location.pickup,
     dropoffLocation: location.dropoff,
@@ -190,5 +192,16 @@ export const generateRandomRide = (): RideRequest => {
     requestTime: new Date().toISOString(),
     passengerCount: Math.floor(Math.random() * 4) + 1,
   };
+  
+  // If scheduled, add a future time (1-6 hours from now)
+  if (scheduled) {
+    const hoursAhead = 1 + Math.floor(Math.random() * 5);
+    const scheduledDate = new Date();
+    scheduledDate.setHours(scheduledDate.getHours() + hoursAhead);
+    ride.isScheduled = true;
+    ride.scheduledTime = scheduledDate.toISOString();
+  }
+  
+  return ride;
 };
 

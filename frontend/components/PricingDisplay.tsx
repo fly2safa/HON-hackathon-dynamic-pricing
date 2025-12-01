@@ -16,7 +16,24 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
     <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200 animate-fadeIn">
       {/* Ride Info Banner */}
       <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 mb-6 border border-blue-200">
-        <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-2">Calculating for</p>
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide">Calculation for</p>
+          {ride.isScheduled ? (
+            <span className="px-3 py-1 bg-purple-600 text-white text-xs font-bold rounded-full flex items-center gap-1">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Scheduled: {new Date(ride.scheduledTime!).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </span>
+          ) : (
+            <span className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full flex items-center gap-1">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+              </svg>
+              Pickup Now
+            </span>
+          )}
+        </div>
         <div className="flex items-center gap-2 text-sm">
           <span className="font-bold text-gray-900">Ride #{ride.id.split('-')[1]}</span>
           <span className="text-gray-400">•</span>

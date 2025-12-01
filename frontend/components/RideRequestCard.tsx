@@ -29,12 +29,29 @@ export default function RideRequestCard({
             <h3 className="text-xl font-bold text-gray-900">
               Ride #{ride.id.split('-')[1]}
             </h3>
-            <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">
-              NEW
-            </span>
+            {ride.isScheduled ? (
+              <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full flex items-center gap-1">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                SCHEDULED
+              </span>
+            ) : (
+              <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">
+                NOW
+              </span>
+            )}
           </div>
           <p className="text-sm text-gray-500">
-            {new Date(ride.requestTime).toLocaleTimeString()}
+            {ride.isScheduled && ride.scheduledTime 
+              ? `Scheduled for ${new Date(ride.scheduledTime).toLocaleString([], { 
+                  month: 'short', 
+                  day: 'numeric', 
+                  hour: '2-digit', 
+                  minute: '2-digit' 
+                })}`
+              : `Requested ${new Date(ride.requestTime).toLocaleTimeString()}`
+            }
           </p>
         </div>
         <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg">

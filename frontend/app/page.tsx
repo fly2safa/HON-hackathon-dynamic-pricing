@@ -52,8 +52,8 @@ export default function Home() {
     }
   };
 
-  const handleAddRandomRide = () => {
-    const newRide = generateRandomRide();
+  const handleAddRandomRide = (scheduled: boolean = false) => {
+    const newRide = generateRandomRide(scheduled);
     setRides([newRide, ...rides]);
   };
 
@@ -158,12 +158,26 @@ export default function Home() {
               <h2 className="text-2xl font-bold text-gray-900">
                 Ride Requests
               </h2>
-              <button
-                onClick={handleAddRandomRide}
-                className="px-5 py-2.5 bg-gradient-to-r from-[#FF6A13] to-[#E55A0A] hover:from-[#E55A0A] hover:to-[#D54A00] text-white rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
-              >
-                + Add Ride
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleAddRandomRide(false)}
+                  className="px-4 py-2.5 bg-gradient-to-r from-[#FF6A13] to-[#E55A0A] hover:from-[#E55A0A] hover:to-[#D54A00] text-white rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                  </svg>
+                  Now
+                </button>
+                <button
+                  onClick={() => handleAddRandomRide(true)}
+                  className="px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 border-2 border-gray-300 hover:border-[#FF6A13] rounded-xl font-semibold transition-all duration-300 shadow-sm hover:shadow-md transform hover:scale-105 flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Schedule
+                </button>
+              </div>
             </div>
             <div className="space-y-4">
               {rides.map((ride) => (
