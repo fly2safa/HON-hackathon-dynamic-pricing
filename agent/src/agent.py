@@ -11,6 +11,7 @@ This agent makes intelligent pricing decisions by:
 
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.prompts import PromptTemplate
 from langchain.callbacks import LangChainTracer
 from langsmith import Client
@@ -18,7 +19,9 @@ import os
 from typing import Dict, Any
 
 from config import (
+    LLM_PROVIDER,
     OPENAI_API_KEY,
+    GOOGLE_API_KEY,
     AGENT_MODEL,
     AGENT_TEMPERATURE,
     AGENT_MAX_ITERATIONS,
@@ -83,12 +86,21 @@ class HoneyGoPricingAgent:
     def __init__(self):
         """Initialize the agent with tools and LLM"""
         
-        # Initialize LLM
-        self.llm = ChatOpenAI(
-            model=AGENT_MODEL,
-            temperature=AGENT_TEMPERATURE,
-            openai_api_key=OPENAI_API_KEY
-        )
+        # Initialize LLM based on provider
+        if LLM_PROVIDER == "google":
+            self.llm = ChatGoogleGenerativeAI(
+                model=AGENT_MODEL,
+                temperature=AGENT_TEMPERATURE,
+                google_api_key=GOOGLE_API_KEY
+            )
+            print(f"🤖 Using Google AI (Gemini): {AGENT_MODEL}")
+        else:
+            self.llm = ChatOpenAI(
+                model=AGENT_MODEL,
+                temperature=AGENT_TEMPERATURE,
+                openai_api_key=OPENAI_API_KEY
+            )
+            print(f"🤖 Using OpenAI: {AGENT_MODEL}")
         
         # Initialize tools
         self.tools = [

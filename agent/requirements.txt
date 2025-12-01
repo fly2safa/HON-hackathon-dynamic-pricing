@@ -1,10 +1,12 @@
 # LangChain and LangSmith
 langchain==0.1.0
 langchain-openai==0.0.2
+langchain-google-genai==0.0.5
 langsmith==0.0.77
 
-# LLM Providers
+# LLM Providers (use either OpenAI or Google AI)
 openai==1.6.1
+google-generativeai==0.3.2
 
 # Database
 pymongo==4.6.1
