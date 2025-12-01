@@ -5,6 +5,7 @@ export interface RideRequest {
   id: string;
   pickupLocation: string;
   dropoffLocation: string;
+  city: string; // City/market for location-specific pricing
   distance: number; // in miles
   estimatedDuration: number; // in minutes
   requestTime: string;
@@ -33,12 +34,13 @@ export interface MarketConditions {
   trafficLevel: 'light' | 'moderate' | 'heavy';
 }
 
-// Sample ride requests
+// Sample ride requests - Multi-city for demo
 export const mockRideRequests: RideRequest[] = [
   {
     id: 'ride-001',
     pickupLocation: 'Phoenix Sky Harbor Airport',
     dropoffLocation: 'Arizona State University',
+    city: 'Phoenix',
     distance: 8.5,
     estimatedDuration: 18,
     requestTime: new Date().toISOString(),
@@ -46,19 +48,21 @@ export const mockRideRequests: RideRequest[] = [
   },
   {
     id: 'ride-002',
-    pickupLocation: 'Scottsdale Fashion Square',
-    dropoffLocation: 'Old Town Scottsdale',
-    distance: 2.3,
-    estimatedDuration: 8,
+    pickupLocation: 'Times Square',
+    dropoffLocation: 'JFK Airport',
+    city: 'New York',
+    distance: 16.2,
+    estimatedDuration: 35,
     requestTime: new Date().toISOString(),
     passengerCount: 2,
   },
   {
     id: 'ride-003',
-    pickupLocation: 'Tempe Town Lake',
-    dropoffLocation: 'Chase Field',
-    distance: 5.7,
-    estimatedDuration: 15,
+    pickupLocation: 'Golden Gate Bridge',
+    dropoffLocation: 'San Francisco Airport',
+    city: 'San Francisco',
+    distance: 12.4,
+    estimatedDuration: 28,
     requestTime: new Date().toISOString(),
     passengerCount: 4,
   },
@@ -189,7 +193,16 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
   
   // Otherwise, generate dynamic pricing based on ride characteristics
   if (ride) {
-    const basePrice = 5 + (ride.distance * 2.5) + (ride.passengerCount * 1.5);
+    // City-based pricing multipliers (cost of living, demand)
+    const cityMultipliers: Record<string, number> = {
+      'Phoenix': 1.0,
+      'New York': 1.4,
+      'San Francisco': 1.5,
+      'Chicago': 1.2,
+    };
+    
+    const cityMultiplier = cityMultipliers[ride.city] || 1.0;
+    const basePrice = (5 + (ride.distance * 2.5) + (ride.passengerCount * 1.5)) * cityMultiplier;
     
     // Random surge multiplier based on "market conditions"
     const baseSurge = 1.0 + (Math.random() * 0.5); // 1.0x to 1.5x
@@ -231,13 +244,20 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       rideWeather.type === 'fog' ? weatherPrefix + 'Dense fog - reduced visibility increases risk' :
       weatherPrefix + 'Clear conditions - standard pricing';
     
+    const cityPricingNote = 
+      ride.city === 'New York' ? 'NYC market: Higher base rates due to cost of living' :
+      ride.city === 'San Francisco' ? 'SF market: Premium pricing for high-demand area' :
+      ride.city === 'Chicago' ? 'Chicago market: Moderate pricing adjustment' :
+      'Phoenix market: Standard base rates';
+    
     const reasoning = [
-      `${demandLevel} demand detected in the area`,
+      `${ride.city} - ${demandLevel} demand detected`,
+      cityPricingNote,
       `Distance: ${ride.distance} miles requires ${ride.estimatedDuration} minutes`,
       `${ride.passengerCount} passenger${ride.passengerCount > 1 ? 's' : ''} - ${ride.passengerCount > 2 ? 'larger vehicle needed' : 'standard vehicle'}`,
       weatherImpact,
       isPeakHour ? 'Peak travel hours detected' : 'Off-peak hours - moderate demand',
-      surgeMultiplier > 1.3 ? `Total surge: ${surgeMultiplier.toFixed(2)}x (includes weather adjustment)` : 'Minimal surge - stable conditions',
+      surgeMultiplier > 1.3 ? `Total surge: ${surgeMultiplier.toFixed(2)}x (includes weather + market)` : 'Minimal surge - stable conditions',
     ];
     
     return {
@@ -255,14 +275,40 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
   return mockPricingResults['ride-001'];
 };
 
-// Generate random ride request
-export const generateRandomRide = (scheduled: boolean = false): RideRequest => {
-  const locations = [
+// City-specific locations for realistic multi-market demo
+const cityLocations = {
+  'Phoenix': [
     { pickup: 'Downtown Phoenix', dropoff: 'Camelback Mountain' },
     { pickup: 'Mesa Riverview', dropoff: 'Tempe Marketplace' },
     { pickup: 'Glendale Arena', dropoff: 'Westgate Entertainment' },
     { pickup: 'Chandler Fashion Center', dropoff: 'Intel Campus' },
-  ];
+  ],
+  'New York': [
+    { pickup: 'Central Park', dropoff: 'Brooklyn Bridge' },
+    { pickup: 'LaGuardia Airport', dropoff: 'Manhattan' },
+    { pickup: 'Statue of Liberty', dropoff: 'Empire State Building' },
+    { pickup: 'Broadway Theater District', dropoff: 'Wall Street' },
+  ],
+  'San Francisco': [
+    { pickup: 'Fisherman\'s Wharf', dropoff: 'Silicon Valley' },
+    { pickup: 'Alcatraz Ferry', dropoff: 'Downtown SF' },
+    { pickup: 'Golden Gate Park', dropoff: 'Oakland Bay Bridge' },
+    { pickup: 'Union Square', dropoff: 'Nob Hill' },
+  ],
+  'Chicago': [
+    { pickup: 'Navy Pier', dropoff: 'O\'Hare Airport' },
+    { pickup: 'Millennium Park', dropoff: 'Willis Tower' },
+    { pickup: 'Wrigley Field', dropoff: 'The Loop' },
+    { pickup: 'Lincoln Park', dropoff: 'Michigan Avenue' },
+  ],
+};
+
+// Generate random ride request
+export const generateRandomRide = (scheduled: boolean = false): RideRequest => {
+  // Randomly select a city
+  const cities = Object.keys(cityLocations);
+  const city = cities[Math.floor(Math.random() * cities.length)];
+  const locations = cityLocations[city as keyof typeof cityLocations];
   
   const location = locations[Math.floor(Math.random() * locations.length)];
   const distance = 3 + Math.random() * 15;
@@ -272,6 +318,7 @@ export const generateRandomRide = (scheduled: boolean = false): RideRequest => {
     id: `ride-${Date.now()}`,
     pickupLocation: location.pickup,
     dropoffLocation: location.dropoff,
+    city: city,
     distance: parseFloat(distance.toFixed(1)),
     estimatedDuration: duration,
     requestTime: new Date().toISOString(),

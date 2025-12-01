@@ -25,10 +25,13 @@ export default function RideRequestCard({
       {/* Header */}
       <div className="flex items-start justify-between mb-6">
         <div>
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-1 flex-wrap">
             <h3 className="text-xl font-bold text-gray-900">
               Ride #{ride.id.split('-')[1]}
             </h3>
+            <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full flex items-center gap-1">
+              📍 {ride.city}
+            </span>
             {ride.isScheduled ? (
               <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full flex items-center gap-1">
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
