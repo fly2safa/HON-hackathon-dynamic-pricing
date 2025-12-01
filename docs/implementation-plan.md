@@ -1066,6 +1066,13 @@ churn, and ensures reliable service availability."
 - [ ] Implement error notifications
 - [ ] Test end-to-end data flow
 
+*Afternoon (Docker/DevOps Team)*
+- [ ] Create Dockerfile.backend for FastAPI
+- [ ] Create Dockerfile.frontend for Next.js
+- [ ] Create basic docker-compose.yml
+- [ ] Create .dockerignore files
+- [ ] Test local Docker builds
+
 *End of Day 2 Milestone*: Basic pricing functionality working end-to-end
 
 ---
@@ -1102,6 +1109,13 @@ churn, and ensures reliable service availability."
 - [ ] Test system under load
 - [ ] Document all workflows
 
+*Afternoon (Docker/DevOps Team)*
+- [ ] Add MongoDB and ChromaDB to docker-compose.yml
+- [ ] Configure environment variables for containers
+- [ ] Set up networking between containers
+- [ ] Test full docker-compose deployment
+- [ ] Document Docker setup in README
+
 *Evening (Full Team)*
 - [ ] Integration testing across all components
 - [ ] Bug fixing and issue resolution
@@ -1122,6 +1136,7 @@ churn, and ensures reliable service availability."
 - [ ] Code cleanup and comments
 - [ ] Update README with setup instructions
 - [ ] Ensure all environment variables documented
+- [ ] Finalize Docker setup and test deployment
 - [ ] Push final code to GitHub
 
 **Documentation Team**:
@@ -1222,6 +1237,7 @@ churn, and ensures reliable service availability."
 | **Role 8** | Presentation Slides Creator | Steve | ✅ Assigned |
 | **Role 9** | Live Demo Presenter | Dari (Primary), Team (Support) | ✅ Assigned |
 | **Role 10** | Demo Video Creator (Backup) | OPEN (TBD) | ⏳ Open |
+| **Role 11** | Docker/DevOps Engineer | OPEN (Safa can do if no one else interested) | ⏳ Open |
 | **Extra 1** | Voice Input Feature (🎤 Mic Icon) | Jason | ✅ Assigned |
 | **Extra 2** | Voice Output Feature (🔊 Speaker Icon) | Jason | ✅ Assigned |
 | **Extra 3** | Testing Checklist/Application | Safa | ✅ Assigned |
@@ -1250,6 +1266,7 @@ churn, and ensures reliable service availability."
 8. Presentation Slides Creator
 9. Live Demo Presenter
 10. Demo Video Creator (Backup)
+11. Docker/DevOps Engineer
 
 **Extra Enhancement Features (If Time Permits)**:
 - E1: Voice Input Feature (Mic Icon)
@@ -1549,6 +1566,43 @@ churn, and ensures reliable service availability."
 **Timeline**: Dec 4 morning (record after app is working), Dec 4 midday (finalize and upload)
 
 **Tools**: OBS Studio (FREE), Loom (easy), DaVinci Resolve (FREE editing)
+
+---
+
+#### Role 11: Docker/DevOps Engineer
+**Assigned to**: OPEN (Safa can do if no one else is interested)
+
+**Primary Responsibilities**:
+- Create Dockerfiles for backend (FastAPI) and frontend (Next.js)
+- Set up docker-compose.yml for multi-container orchestration
+- Configure environment variables and networking between containers
+- Create .dockerignore for optimized builds
+- Document Docker setup and deployment process
+- Test containerized deployment locally
+- Optional: Prepare for cloud deployment (if time permits)
+
+**Key Deliverables**:
+- `Dockerfile.backend` - Backend containerization
+- `Dockerfile.frontend` - Frontend containerization
+- `docker-compose.yml` - Multi-service orchestration (backend, frontend, MongoDB, ChromaDB)
+- `.dockerignore` - Exclude unnecessary files from Docker builds
+- Docker setup documentation in README
+
+**Skills Required**:
+- Docker and Docker Compose basics
+- Understanding of multi-container networking
+- Environment variable management
+- Basic DevOps concepts
+
+**Timeline**: Dec 2-3 (create Dockerfiles and docker-compose), Dec 4 (test and finalize)
+
+**Why This Matters**:
+- **Easy Deployment**: One-command setup for judges/reviewers
+- **Consistency**: Same environment across all team members
+- **Professionalism**: Shows production-ready thinking
+- **Bonus Points**: Demonstrates DevOps best practices
+
+**Tools**: Docker Desktop (FREE), Docker Compose (included)
 
 ---
 
