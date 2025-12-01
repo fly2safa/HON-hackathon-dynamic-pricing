@@ -114,7 +114,7 @@ export const mockPricingResults: Record<string, PricingResult> = {
 };
 
 // Generate random weather conditions
-const generateWeatherConditions = () => {
+const generateWeatherConditions = (forScheduled: boolean = false) => {
   const weatherOptions = [
     { type: 'clear' as const, severity: 'none' as const, display: 'Clear, 72°F', multiplier: 1.0 },
     { type: 'rain' as const, severity: 'light' as const, display: 'Light Rain, 65°F', multiplier: 1.1 },
@@ -124,9 +124,12 @@ const generateWeatherConditions = () => {
     { type: 'fog' as const, severity: 'moderate' as const, display: 'Dense Fog, 50°F', multiplier: 1.2 },
   ];
   
-  // Weight towards clear weather (70% clear, 30% other)
+  // For scheduled rides: 50/50 chance of weather changes
+  // For current weather: 70% clear, 30% other (more stable)
+  const clearThreshold = forScheduled ? 0.5 : 0.7;
   const random = Math.random();
-  if (random < 0.7) {
+  
+  if (random < clearThreshold) {
     return weatherOptions[0]; // Clear
   } else {
     return weatherOptions[Math.floor(Math.random() * (weatherOptions.length - 1)) + 1];
@@ -166,9 +169,15 @@ export const getWeatherMultiplier = () => {
 // - MongoDB will store historical pricing decisions
 // - ChromaDB will provide similar context for better AI reasoning
 export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Promise<PricingResult> => {
+  // Record actual start time
+  const startTime = Date.now();
+  
   // Simulate processing time (2-4 seconds)
   const processingTime = 2000 + Math.random() * 2000;
   await new Promise(resolve => setTimeout(resolve, processingTime));
+  
+  // Calculate actual elapsed time
+  const actualProcessingTime = (Date.now() - startTime) / 1000;
   
   // If we have a predefined result, use it
   if (mockPricingResults[rideId]) {
@@ -185,8 +194,8 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
     // Determine weather for this specific ride
     let rideWeather;
     if (ride.isScheduled) {
-      // Scheduled rides: predict future weather (different from current)
-      rideWeather = generateWeatherConditions();
+      // Scheduled rides: predict future weather (50% chance of change)
+      rideWeather = generateWeatherConditions(true);
     } else {
       // Immediate rides: use current weather
       rideWeather = {
@@ -235,7 +244,7 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       driverEarnings: parseFloat(driverEarnings.toFixed(2)),
       reasoning,
       confidence: 0.82 + (Math.random() * 0.15), // 82-97% confidence
-      processingTime: parseFloat((processingTime / 1000).toFixed(1)),
+      processingTime: parseFloat(actualProcessingTime.toFixed(1)), // Use actual elapsed time
     };
   }
   
