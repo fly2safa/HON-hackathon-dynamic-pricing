@@ -16,7 +16,7 @@ export default function RideRequestCard({
 }: RideRequestCardProps) {
   return (
     <div 
-      className={`bg-white rounded-2xl shadow-sm p-6 border-2 transition-all duration-300 hover:shadow-md ${
+      className={`bg-white rounded-2xl shadow-sm p-6 border-2 transition-all duration-300 hover:shadow-md animate-slideIn ${
         isSelected 
           ? 'border-[#FF6A13] shadow-lg scale-[1.02]' 
           : 'border-gray-200 hover:border-gray-300'

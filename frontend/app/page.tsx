@@ -53,6 +53,12 @@ export default function Home() {
     setRides([newRide, ...rides]);
   };
 
+  const handleClearAllRides = () => {
+    setRides(mockRideRequests); // Reset to original 3 rides
+    setSelectedRide(null);
+    setPricingResult(null);
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
       {/* Header */}
@@ -163,15 +169,15 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Two Column Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Two Column Layout - Responsive */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
           {/* Left Column: Ride Requests */}
           <div>
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
               <h2 className="text-2xl font-bold text-gray-900">
-                Ride Requests
+                Ride Requests ({rides.length})
               </h2>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <button
                   onClick={() => handleAddRandomRide(false)}
                   className="px-4 py-2.5 bg-gradient-to-r from-[#FF6A13] to-[#E55A0A] hover:from-[#E55A0A] hover:to-[#D54A00] text-white rounded-xl font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 flex items-center gap-2"
@@ -190,6 +196,17 @@ export default function Home() {
                   </svg>
                   Schedule
                 </button>
+                {rides.length > 3 && (
+                  <button
+                    onClick={handleClearAllRides}
+                    className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 border border-gray-300 rounded-xl font-semibold transition-all duration-300 shadow-sm hover:shadow-md flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Clear
+                  </button>
+                )}
               </div>
             </div>
             <div className="space-y-4">
