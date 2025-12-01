@@ -26,9 +26,25 @@ export default function Home() {
     setPricingResult(null);
     setIsProcessing(true);
 
+    // Scroll to results section smoothly
+    setTimeout(() => {
+      const resultsSection = document.getElementById('results-section');
+      if (resultsSection) {
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 100);
+
     try {
       const result = await simulateAIPricing(ride.id, ride);
       setPricingResult(result);
+      
+      // Scroll again after results are ready to ensure visibility
+      setTimeout(() => {
+        const resultsSection = document.getElementById('results-section');
+        if (resultsSection) {
+          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
     } catch (error) {
       console.error('Error calculating price:', error);
     } finally {
@@ -162,7 +178,7 @@ export default function Home() {
           </div>
 
           {/* Right Column: AI Processing & Results */}
-          <div className="space-y-6">
+          <div id="results-section" className="space-y-6">
             {isProcessing && (
               <AIThinkingAnimation isThinking={isProcessing} />
             )}

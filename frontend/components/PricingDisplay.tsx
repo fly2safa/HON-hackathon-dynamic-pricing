@@ -14,6 +14,20 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200 animate-fadeIn">
+      {/* Ride Info Banner */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 mb-6 border border-blue-200">
+        <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-2">Calculating for</p>
+        <div className="flex items-center gap-2 text-sm">
+          <span className="font-bold text-gray-900">Ride #{ride.id.split('-')[1]}</span>
+          <span className="text-gray-400">•</span>
+          <span className="text-gray-700">{ride.pickupLocation}</span>
+          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+          <span className="text-gray-700">{ride.dropoffLocation}</span>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
