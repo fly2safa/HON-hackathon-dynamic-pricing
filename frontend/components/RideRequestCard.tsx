@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { type RideRequest } from '@/lib/mockData';
+import { type RideRequest, getLoyaltyBadge } from '@/lib/mockData';
 
 interface RideRequestCardProps {
   ride: RideRequest;
@@ -32,6 +32,16 @@ export default function RideRequestCard({
             <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full flex items-center gap-1">
               📍 {ride.city}
             </span>
+            {ride.loyaltyTier && ride.loyaltyTier !== 'new' && (
+              <span className={`px-2 py-1 text-xs font-semibold rounded-full flex items-center gap-1 ${
+                ride.loyaltyTier === 'platinum' ? 'bg-purple-100 text-purple-700' :
+                ride.loyaltyTier === 'gold' ? 'bg-yellow-100 text-yellow-700' :
+                ride.loyaltyTier === 'silver' ? 'bg-gray-200 text-gray-700' :
+                'bg-orange-100 text-orange-700'
+              }`}>
+                {getLoyaltyBadge(ride.loyaltyTier)} {ride.loyaltyTier.toUpperCase()}
+              </span>
+            )}
             {ride.isScheduled ? (
               <span className="px-2 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full flex items-center gap-1">
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

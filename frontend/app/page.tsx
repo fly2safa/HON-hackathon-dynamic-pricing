@@ -11,9 +11,11 @@ import {
   generateMarketConditions,
   simulateAIPricing,
   generateRandomRide,
+  getLoyaltyBadge,
   type RideRequest,
   type PricingResult,
-  type MarketConditions
+  type MarketConditions,
+  type LoyaltyTier
 } from '@/lib/mockData';
 
 export default function Home() {
@@ -22,6 +24,7 @@ export default function Home() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [rides, setRides] = useState<RideRequest[]>(mockRideRequests);
   const [selectedCity, setSelectedCity] = useState<string>('Phoenix');
+  const [selectedLoyaltyTier, setSelectedLoyaltyTier] = useState<LoyaltyTier>('new');
   const [marketConditions, setMarketConditions] = useState<MarketConditions>(generateMarketConditions('Phoenix'));
   const resultsSectionRef = useRef<HTMLDivElement>(null);
 
@@ -58,7 +61,7 @@ export default function Home() {
   };
 
   const handleAddRandomRide = (scheduled: boolean = false) => {
-    const newRide = generateRandomRide(scheduled, selectedCity);
+    const newRide = generateRandomRide(scheduled, selectedCity, selectedLoyaltyTier);
     setRides([newRide, ...rides]);
   };
 
@@ -106,9 +109,11 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* City Selector */}
-        <div className="mb-6">
-          <label className="block text-sm font-semibold text-gray-700 mb-3">Select Market</label>
+        {/* City and Loyalty Selectors */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          {/* City Selector */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">Select Market</label>
           <div className="flex gap-3 flex-wrap">
             {['Phoenix', 'New York', 'San Francisco', 'Chicago', 'Tampa'].map((city) => (
               <button
@@ -127,6 +132,32 @@ export default function Home() {
                  '🏜️'} {city}
               </button>
             ))}
+          </div>
+          </div>
+
+          {/* Loyalty Tier Selector */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">Customer Loyalty Tier</label>
+            <div className="flex gap-2 flex-wrap">
+              {(['new', 'bronze', 'silver', 'gold', 'platinum'] as LoyaltyTier[]).map((tier) => (
+                <button
+                  key={tier}
+                  onClick={() => setSelectedLoyaltyTier(tier)}
+                  className={`px-4 py-3 rounded-xl font-semibold transition-all duration-300 text-sm ${
+                    selectedLoyaltyTier === tier
+                      ? tier === 'platinum' ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg scale-105' :
+                        tier === 'gold' ? 'bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg scale-105' :
+                        tier === 'silver' ? 'bg-gradient-to-r from-gray-400 to-gray-500 text-white shadow-lg scale-105' :
+                        tier === 'bronze' ? 'bg-gradient-to-r from-orange-700 to-orange-800 text-white shadow-lg scale-105' :
+                        'bg-gray-600 text-white shadow-lg scale-105'
+                      : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#FF6A13] hover:shadow-md'
+                  }`}
+                >
+                  {getLoyaltyBadge(tier)} {tier.charAt(0).toUpperCase() + tier.slice(1)}
+                  {tier !== 'new' && <span className="ml-1 text-xs">({tier === 'platinum' ? '20' : tier === 'gold' ? '15' : tier === 'silver' ? '10' : '5'}% off)</span>}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

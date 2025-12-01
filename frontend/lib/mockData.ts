@@ -1,6 +1,8 @@
 // Mock data for HoneyGo frontend development
 // This allows frontend development to proceed independently of backend
 
+export type LoyaltyTier = 'new' | 'bronze' | 'silver' | 'gold' | 'platinum';
+
 export interface RideRequest {
   id: string;
   pickupLocation: string;
@@ -12,6 +14,7 @@ export interface RideRequest {
   passengerCount: number;
   isScheduled?: boolean;
   scheduledTime?: string;
+  loyaltyTier?: LoyaltyTier;
 }
 
 export interface PricingResult {
@@ -243,9 +246,13 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
     const weatherMultiplier = rideWeather.multiplier;
     const surgeMultiplier = baseSurge * weatherMultiplier;
     
-    const dynamicPrice = basePrice * surgeMultiplier;
+    const priceBeforeDiscount = basePrice * surgeMultiplier;
     
-    // Driver gets 80% of dynamic price
+    // Apply loyalty discount
+    const loyaltyDiscount = ride.loyaltyTier ? getLoyaltyDiscount(ride.loyaltyTier) : 0;
+    const dynamicPrice = priceBeforeDiscount * (1 - loyaltyDiscount);
+    
+    // Driver gets 80% of dynamic price (company absorbs loyalty discount)
     const driverEarnings = dynamicPrice * 0.8;
     
     // Generate realistic reasoning
@@ -269,6 +276,10 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       ride.city === 'Tampa' ? 'Tampa market: Competitive pricing, lower cost of living' :
       'Phoenix market: Standard base rates';
     
+    const loyaltyNote = ride.loyaltyTier && ride.loyaltyTier !== 'new'
+      ? `${getLoyaltyBadge(ride.loyaltyTier)} ${ride.loyaltyTier.toUpperCase()} member: ${(loyaltyDiscount * 100).toFixed(0)}% loyalty discount applied ($${(priceBeforeDiscount - dynamicPrice).toFixed(2)} saved)`
+      : null;
+    
     const reasoning = [
       `${ride.city} - ${demandLevel} demand detected`,
       cityPricingNote,
@@ -277,6 +288,7 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       weatherImpact,
       isPeakHour ? 'Peak travel hours detected' : 'Off-peak hours - moderate demand',
       surgeMultiplier > 1.3 ? `Total surge: ${surgeMultiplier.toFixed(2)}x (includes weather + market)` : 'Minimal surge - stable conditions',
+      ...(loyaltyNote ? [loyaltyNote] : []),
     ];
     
     return {
@@ -328,8 +340,31 @@ const cityLocations = {
   ],
 };
 
+// Loyalty tier discounts
+export const getLoyaltyDiscount = (tier: LoyaltyTier): number => {
+  const discounts: Record<LoyaltyTier, number> = {
+    'new': 0,        // No discount
+    'bronze': 0.05,  // 5% off
+    'silver': 0.10,  // 10% off
+    'gold': 0.15,    // 15% off
+    'platinum': 0.20, // 20% off
+  };
+  return discounts[tier];
+};
+
+export const getLoyaltyBadge = (tier: LoyaltyTier): string => {
+  const badges: Record<LoyaltyTier, string> = {
+    'new': '👤',
+    'bronze': '🥉',
+    'silver': '🥈',
+    'gold': '🥇',
+    'platinum': '💎',
+  };
+  return badges[tier];
+};
+
 // Generate random ride request
-export const generateRandomRide = (scheduled: boolean = false, city?: string): RideRequest => {
+export const generateRandomRide = (scheduled: boolean = false, city?: string, loyaltyTier: LoyaltyTier = 'new'): RideRequest => {
   // Use provided city or randomly select
   const selectedCity = city || Object.keys(cityLocations)[Math.floor(Math.random() * Object.keys(cityLocations).length)];
   const locations = cityLocations[selectedCity as keyof typeof cityLocations];
@@ -347,6 +382,7 @@ export const generateRandomRide = (scheduled: boolean = false, city?: string): R
     estimatedDuration: duration,
     requestTime: new Date().toISOString(),
     passengerCount: Math.floor(Math.random() * 4) + 1,
+    loyaltyTier: loyaltyTier,
   };
   
   // If scheduled, add a future time (1-6 hours from now)
