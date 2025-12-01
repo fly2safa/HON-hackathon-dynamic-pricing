@@ -753,6 +753,185 @@ n8n start
 
 ---
 
+## 7. Docker Setup (Optional but Recommended)
+
+**Owner:** Role 11 (OPEN - Safa can do if no one else is interested)
+
+**Purpose:** Containerize the application for easy deployment and consistent environments
+
+### Files to Create:
+
+#### `Dockerfile.backend`
+```dockerfile
+# Backend Dockerfile for FastAPI
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# Install dependencies
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY backend/ .
+
+# Expose port
+EXPOSE 8000
+
+# Run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```
+
+#### `Dockerfile.frontend`
+```dockerfile
+# Frontend Dockerfile for Next.js
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install dependencies
+COPY frontend/package*.json ./
+RUN npm ci
+
+# Copy application code
+COPY frontend/ .
+
+# Build the application
+RUN npm run build
+
+# Expose port
+EXPOSE 3000
+
+# Run the application
+CMD ["npm", "start"]
+```
+
+#### `docker-compose.yml`
+```yaml
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+      - LANGCHAIN_PROJECT=${LANGCHAIN_PROJECT}
+    depends_on:
+      - chromadb
+    networks:
+      - honeygo-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000
+    depends_on:
+      - backend
+    networks:
+      - honeygo-network
+
+  chromadb:
+    image: chromadb/chroma:latest
+    ports:
+      - "8001:8000"
+    volumes:
+      - chromadb-data:/chroma/chroma
+    networks:
+      - honeygo-network
+
+networks:
+  honeygo-network:
+    driver: bridge
+
+volumes:
+  chromadb-data:
+```
+
+#### `.dockerignore`
+```
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Environment
+.env
+.env.local
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+docs/
+project-spec/
+*.md
+
+# Build outputs
+.next/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+```
+
+### Docker Commands:
+
+```bash
+# Build and run all services
+docker-compose up --build
+
+# Run in detached mode (background)
+docker-compose up -d
+
+# Stop all services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# Rebuild a specific service
+docker-compose build backend
+docker-compose up backend
+```
+
+### Timeline:
+- **Dec 2 Afternoon**: Create Dockerfiles and basic docker-compose.yml
+- **Dec 3 Afternoon**: Add MongoDB and ChromaDB to docker-compose, test full deployment
+- **Dec 4 Morning**: Finalize and document Docker setup
+
+### Benefits:
+- ✅ One-command deployment for judges/reviewers
+- ✅ Consistent environment across team members
+- ✅ Production-ready containerization
+- ✅ Easy to demonstrate DevOps best practices
+
+---
+
 ## Troubleshooting
 
 ### "Module not found" errors
