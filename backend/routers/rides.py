@@ -60,8 +60,44 @@ async def create_ride(ride: RideRequest) -> RideResponse:
         
         final_price = base_price * surge_multiplier
         
-        # Create ride data
-        ride_data = {
+        # Create pricing decision data (matches pricing_decisions collection schema)
+        pricing_decision_data = {
+            "ride_id": ride_id,
+            "calculated_price": round(final_price, 2),
+            "base_price": round(base_price, 2),
+            "surge_multiplier": surge_multiplier,
+            "reasoning": {
+                "method": "mock",
+                "factors": {
+                    "time_of_day": ride.time_of_day,
+                    "weather": ride.weather_condition,
+                    "base_rate_per_km": 2.5
+                },
+                "explanation": f"Ride at {ride.time_of_day}, {ride.distance_km}km. Mock pricing (AI agent coming Dec 3)."
+            },
+            "agent_trace": [],
+            "applied": False,
+            "customer_id": ride.customer_id,
+            "pickup_location": ride.pickup_location,
+            "dropoff_location": ride.dropoff_location,
+            "distance_km": ride.distance_km,
+            "time_of_day": ride.time_of_day,
+            "weather_condition": ride.weather_condition,
+            "confidence_score": 0.75
+        }
+        
+        # Save to MongoDB (pricing_decisions collection)
+        try:
+            db_service = get_mongodb_service()
+            await db_service.create_pricing_decision(pricing_decision_data)
+            logger.info(f"✅ Pricing decision saved to MongoDB: {ride_id} - ${final_price:.2f}")
+        except RuntimeError as db_error:
+            logger.warning(f"⚠️  MongoDB not available: {db_error}. Returning pricing without persistence.")
+        except Exception as db_error:
+            logger.error(f"❌ MongoDB save failed: {db_error}. Returning pricing without persistence.")
+        
+        # Convert to RideResponse format for API response
+        response_data = {
             "ride_id": ride_id,
             "pickup_location": ride.pickup_location,
             "dropoff_location": ride.dropoff_location,
@@ -70,25 +106,11 @@ async def create_ride(ride: RideRequest) -> RideResponse:
             "base_price": round(base_price, 2),
             "surge_multiplier": surge_multiplier,
             "final_price": round(final_price, 2),
-            "reasoning": f"Ride at {ride.time_of_day}, {ride.distance_km}km. Mock pricing (AI agent coming Dec 3).",
+            "reasoning": pricing_decision_data["reasoning"]["explanation"],
             "confidence_score": 0.75,
-            "time_of_day": ride.time_of_day,
-            "weather_condition": ride.weather_condition
+            "created_at": datetime.now()
         }
-        
-        # Save to MongoDB
-        try:
-            db_service = get_mongodb_service()
-            await db_service.create_ride(ride_data)
-            logger.info(f"✅ Ride saved to MongoDB: {ride_id} - ${final_price:.2f}")
-        except RuntimeError as db_error:
-            logger.warning(f"⚠️  MongoDB not available: {db_error}. Returning ride without persistence.")
-        except Exception as db_error:
-            logger.error(f"❌ MongoDB save failed: {db_error}. Returning ride without persistence.")
-        
-        # Return response (include created_at from MongoDB or set it now)
-        ride_data["created_at"] = ride_data.get("created_at", datetime.now())
-        response = RideResponse(**ride_data)
+        response = RideResponse(**response_data)
         
         return response
         
@@ -105,30 +127,45 @@ async def create_ride(ride: RideRequest) -> RideResponse:
 @router.get("/{ride_id}", response_model=RideResponse)
 async def get_ride(ride_id: str) -> RideResponse:
     """
-    Get ride details by ID from MongoDB
+    Get pricing decision by ID from MongoDB
     
     Args:
         ride_id: Unique ride identifier
         
     Returns:
-        RideResponse with ride details
+        RideResponse with pricing details
         
     Raises:
         HTTPException: If ride not found or query fails
     """
-    logger.info(f"Fetching ride: {ride_id}")
+    logger.info(f"Fetching pricing decision: {ride_id}")
     
     try:
         db_service = get_mongodb_service()
-        ride_data = await db_service.get_ride(ride_id)
+        pricing_data = await db_service.get_pricing_decision(ride_id)
         
-        if not ride_data:
+        if not pricing_data:
             raise HTTPException(
                 status_code=404,
-                detail=f"Ride not found: {ride_id}"
+                detail=f"Pricing decision not found: {ride_id}"
             )
         
-        return RideResponse(**ride_data)
+        # Convert pricing_decision format to RideResponse format
+        response_data = {
+            "ride_id": pricing_data.get("ride_id"),
+            "pickup_location": pricing_data.get("pickup_location", ""),
+            "dropoff_location": pricing_data.get("dropoff_location", ""),
+            "distance_km": pricing_data.get("distance_km", 0),
+            "customer_id": pricing_data.get("customer_id", ""),
+            "base_price": pricing_data.get("base_price", 0),
+            "surge_multiplier": pricing_data.get("surge_multiplier", 1.0),
+            "final_price": pricing_data.get("calculated_price", 0),
+            "reasoning": pricing_data.get("reasoning", {}).get("explanation", "No reasoning available") if isinstance(pricing_data.get("reasoning"), dict) else str(pricing_data.get("reasoning", "")),
+            "confidence_score": pricing_data.get("confidence_score", 0.5),
+            "created_at": pricing_data.get("timestamp", datetime.now())
+        }
+        
+        return RideResponse(**response_data)
         
     except RuntimeError:
         raise HTTPException(
@@ -138,10 +175,10 @@ async def get_ride(ride_id: str) -> RideResponse:
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error fetching ride: {e}")
+        logger.error(f"Error fetching pricing decision: {e}")
         raise HTTPException(
             status_code=500,
-            detail=f"Failed to fetch ride: {str(e)}"
+            detail=f"Failed to fetch pricing decision: {str(e)}"
         )
 
 
@@ -253,35 +290,39 @@ async def delete_ride(ride_id: str):
 @router.get("/stats/summary")
 async def get_ride_stats():
     """
-    Get ride statistics summary using MongoDB aggregation
+    Get pricing statistics summary using MongoDB aggregation
     
     Returns:
-        Dict containing ride statistics
+        Dict containing pricing statistics from pricing_decisions collection
     """
-    logger.info("Fetching ride statistics")
+    logger.info("Fetching pricing statistics")
     
     try:
         db_service = get_mongodb_service()
         stats = await db_service.get_ride_statistics()
         
-        logger.info(f"✅ Statistics: {stats['total_rides']} rides, ${stats['total_revenue']} revenue")
+        logger.info(f"✅ Statistics: {stats.get('total_pricing_decisions', 0)} decisions, ${stats.get('total_revenue', 0)} revenue")
         return stats
         
     except RuntimeError:
         logger.warning("⚠️  MongoDB not available")
         return {
-            "total_rides": 0,
+            "total_pricing_decisions": 0,
             "total_revenue": 0.0,
             "average_price": 0.0,
+            "average_base_price": 0.0,
+            "average_surge_multiplier": 0.0,
             "average_distance": 0.0,
             "message": "Database service not available"
         }
     except Exception as e:
         logger.error(f"Error fetching statistics: {e}")
         return {
-            "total_rides": 0,
+            "total_pricing_decisions": 0,
             "total_revenue": 0.0,
             "average_price": 0.0,
+            "average_base_price": 0.0,
+            "average_surge_multiplier": 0.0,
             "average_distance": 0.0,
             "error": str(e)
         }
