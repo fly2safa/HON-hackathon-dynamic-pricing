@@ -25,6 +25,12 @@ export interface PricingResult {
   reasoning: string[];
   confidence: number;
   processingTime: number;
+  competitorPricing?: {
+    uber: number;
+    lyft: number;
+    savings: number;
+    savingsPercent: number;
+  };
 }
 
 export interface MarketConditions {
@@ -291,6 +297,13 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       ...(loyaltyNote ? [loyaltyNote] : []),
     ];
     
+    // Calculate competitor pricing (Uber/Lyft typically 10-15% higher)
+    const uberPrice = priceBeforeDiscount * 1.12; // Uber 12% higher
+    const lyftPrice = priceBeforeDiscount * 1.10; // Lyft 10% higher
+    const avgCompetitorPrice = (uberPrice + lyftPrice) / 2;
+    const savings = avgCompetitorPrice - dynamicPrice;
+    const savingsPercent = (savings / avgCompetitorPrice) * 100;
+
     return {
       basePrice: parseFloat(basePrice.toFixed(2)),
       dynamicPrice: parseFloat(dynamicPrice.toFixed(2)),
@@ -299,6 +312,12 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       reasoning,
       confidence: 0.82 + (Math.random() * 0.15), // 82-97% confidence
       processingTime: parseFloat(actualProcessingTime.toFixed(1)), // Use actual elapsed time
+      competitorPricing: {
+        uber: parseFloat(uberPrice.toFixed(2)),
+        lyft: parseFloat(lyftPrice.toFixed(2)),
+        savings: parseFloat(savings.toFixed(2)),
+        savingsPercent: parseFloat(savingsPercent.toFixed(1)),
+      },
     };
   }
   

@@ -73,6 +73,36 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
         </div>
       </div>
 
+      {/* Competitor Comparison Banner */}
+      {result.competitorPricing && result.competitorPricing.savings > 0 && (
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-6 mb-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-green-800 uppercase tracking-wide">Best Price Guarantee</p>
+                <p className="text-2xl font-bold text-green-700">Save ${result.competitorPricing.savings.toFixed(2)} ({result.competitorPricing.savingsPercent.toFixed(0)}%)</p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-green-700 mb-1">vs Competitors</p>
+              <div className="flex gap-2 text-xs">
+                <span className="px-2 py-1 bg-white rounded border border-green-200 text-gray-600">
+                  Uber: ${result.competitorPricing.uber.toFixed(2)}
+                </span>
+                <span className="px-2 py-1 bg-white rounded border border-green-200 text-gray-600">
+                  Lyft: ${result.competitorPricing.lyft.toFixed(2)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Price Comparison */}
       <div className="grid grid-cols-2 gap-6 mb-8">
         <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200">
