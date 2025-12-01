@@ -90,13 +90,18 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
             </div>
             <div className="text-right">
               <p className="text-xs text-green-700 mb-1">vs Competitors</p>
-              <div className="flex gap-2 text-xs">
+              <div className="flex gap-2 text-xs flex-wrap justify-end">
                 <span className="px-2 py-1 bg-white rounded border border-green-200 text-gray-600">
                   Uber: ${result.competitorPricing.uber.toFixed(2)}
                 </span>
                 <span className="px-2 py-1 bg-white rounded border border-green-200 text-gray-600">
                   Lyft: ${result.competitorPricing.lyft.toFixed(2)}
                 </span>
+                {result.competitorPricing.hasWaymo && result.competitorPricing.waymo && (
+                  <span className="px-2 py-1 bg-white rounded border border-green-200 text-gray-600 flex items-center gap-1">
+                    🤖 Waymo: ${result.competitorPricing.waymo.toFixed(2)}
+                  </span>
+                )}
               </div>
             </div>
           </div>

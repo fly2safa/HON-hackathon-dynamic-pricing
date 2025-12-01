@@ -28,8 +28,10 @@ export interface PricingResult {
   competitorPricing?: {
     uber: number;
     lyft: number;
+    waymo?: number; // Only in Phoenix & SF
     savings: number;
     savingsPercent: number;
+    hasWaymo: boolean;
   };
 }
 
@@ -300,7 +302,20 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
     // Calculate competitor pricing (Uber/Lyft typically 10-15% higher)
     const uberPrice = priceBeforeDiscount * 1.12; // Uber 12% higher
     const lyftPrice = priceBeforeDiscount * 1.10; // Lyft 10% higher
-    const avgCompetitorPrice = (uberPrice + lyftPrice) / 2;
+    
+    // Waymo only operates in Phoenix & San Francisco (as of 2024)
+    const waymoMarkets = ['Phoenix', 'San Francisco'];
+    const hasWaymo = waymoMarkets.includes(ride.city);
+    const waymoPrice = hasWaymo ? priceBeforeDiscount * 1.08 : undefined; // Waymo 8% higher (autonomous efficiency)
+    
+    // Calculate average competitor price
+    let avgCompetitorPrice: number;
+    if (hasWaymo && waymoPrice) {
+      avgCompetitorPrice = (uberPrice + lyftPrice + waymoPrice) / 3;
+    } else {
+      avgCompetitorPrice = (uberPrice + lyftPrice) / 2;
+    }
+    
     const savings = avgCompetitorPrice - dynamicPrice;
     const savingsPercent = (savings / avgCompetitorPrice) * 100;
 
@@ -315,8 +330,10 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       competitorPricing: {
         uber: parseFloat(uberPrice.toFixed(2)),
         lyft: parseFloat(lyftPrice.toFixed(2)),
+        waymo: waymoPrice ? parseFloat(waymoPrice.toFixed(2)) : undefined,
         savings: parseFloat(savings.toFixed(2)),
         savingsPercent: parseFloat(savingsPercent.toFixed(1)),
+        hasWaymo: hasWaymo,
       },
     };
   }
