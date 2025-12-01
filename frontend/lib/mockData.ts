@@ -28,6 +28,8 @@ export interface MarketConditions {
   availableDrivers: number;
   activeRides: number;
   weatherCondition: string;
+  weatherType: 'clear' | 'rain' | 'storm' | 'snow' | 'fog';
+  weatherSeverity: 'none' | 'light' | 'moderate' | 'severe';
   trafficLevel: 'light' | 'moderate' | 'heavy';
 }
 
@@ -111,13 +113,49 @@ export const mockPricingResults: Record<string, PricingResult> = {
   },
 };
 
-// Sample market conditions
+// Generate random weather conditions
+const generateWeatherConditions = () => {
+  const weatherOptions = [
+    { type: 'clear' as const, severity: 'none' as const, display: 'Clear, 72°F', multiplier: 1.0 },
+    { type: 'rain' as const, severity: 'light' as const, display: 'Light Rain, 65°F', multiplier: 1.1 },
+    { type: 'rain' as const, severity: 'moderate' as const, display: 'Heavy Rain, 58°F', multiplier: 1.25 },
+    { type: 'storm' as const, severity: 'severe' as const, display: 'Thunderstorm, 55°F', multiplier: 1.5 },
+    { type: 'snow' as const, severity: 'moderate' as const, display: 'Snow, 28°F', multiplier: 1.4 },
+    { type: 'fog' as const, severity: 'moderate' as const, display: 'Dense Fog, 50°F', multiplier: 1.2 },
+  ];
+  
+  // Weight towards clear weather (70% clear, 30% other)
+  const random = Math.random();
+  if (random < 0.7) {
+    return weatherOptions[0]; // Clear
+  } else {
+    return weatherOptions[Math.floor(Math.random() * (weatherOptions.length - 1)) + 1];
+  }
+};
+
+// Sample market conditions (regenerate on each page load for variety)
+const currentWeather = generateWeatherConditions();
 export const mockMarketConditions: MarketConditions = {
   currentDemand: 'high',
   availableDrivers: 42,
   activeRides: 87,
-  weatherCondition: 'Clear, 72°F',
+  weatherCondition: currentWeather.display,
+  weatherType: currentWeather.type,
+  weatherSeverity: currentWeather.severity,
   trafficLevel: 'moderate',
+};
+
+// Export weather multiplier for pricing
+export const getWeatherMultiplier = () => {
+  const weatherOptions = [
+    { type: 'clear', multiplier: 1.0 },
+    { type: 'rain', multiplier: mockMarketConditions.weatherSeverity === 'light' ? 1.1 : 1.25 },
+    { type: 'storm', multiplier: 1.5 },
+    { type: 'snow', multiplier: 1.4 },
+    { type: 'fog', multiplier: 1.2 },
+  ];
+  
+  return weatherOptions.find(w => w.type === mockMarketConditions.weatherType)?.multiplier || 1.0;
 };
 
 // Simulate AI processing with realistic delays
@@ -136,7 +174,12 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
     const basePrice = 5 + (ride.distance * 2.5) + (ride.passengerCount * 1.5);
     
     // Random surge multiplier based on "market conditions"
-    const surgeMultiplier = 1.0 + (Math.random() * 0.8); // 1.0x to 1.8x
+    const baseSurge = 1.0 + (Math.random() * 0.5); // 1.0x to 1.5x
+    
+    // Add weather multiplier
+    const weatherMultiplier = getWeatherMultiplier();
+    const surgeMultiplier = baseSurge * weatherMultiplier;
+    
     const dynamicPrice = basePrice * surgeMultiplier;
     
     // Driver gets 80% of dynamic price
@@ -147,12 +190,21 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
     const timeOfDay = new Date().getHours();
     const isPeakHour = (timeOfDay >= 7 && timeOfDay <= 9) || (timeOfDay >= 16 && timeOfDay <= 19);
     
+    const weatherImpact = 
+      mockMarketConditions.weatherType === 'storm' ? 'Severe weather (thunderstorm) - significant price increase for driver safety' :
+      mockMarketConditions.weatherType === 'snow' ? 'Snow conditions - higher pricing due to hazardous driving' :
+      mockMarketConditions.weatherType === 'rain' && mockMarketConditions.weatherSeverity === 'moderate' ? 'Heavy rain - increased pricing for difficult driving conditions' :
+      mockMarketConditions.weatherType === 'rain' && mockMarketConditions.weatherSeverity === 'light' ? 'Light rain - slight price adjustment' :
+      mockMarketConditions.weatherType === 'fog' ? 'Dense fog - reduced visibility increases risk' :
+      'Clear weather - standard pricing';
+    
     const reasoning = [
       `${demandLevel} demand detected in the area`,
       `Distance: ${ride.distance} miles requires ${ride.estimatedDuration} minutes`,
       `${ride.passengerCount} passenger${ride.passengerCount > 1 ? 's' : ''} - ${ride.passengerCount > 2 ? 'larger vehicle needed' : 'standard vehicle'}`,
+      weatherImpact,
       isPeakHour ? 'Peak travel hours detected' : 'Off-peak hours - moderate demand',
-      surgeMultiplier > 1.2 ? `Surge pricing applied (${surgeMultiplier.toFixed(1)}x)` : 'No surge pricing - stable market conditions',
+      surgeMultiplier > 1.3 ? `Total surge: ${surgeMultiplier.toFixed(2)}x (includes weather adjustment)` : 'Minimal surge - stable conditions',
     ];
     
     return {

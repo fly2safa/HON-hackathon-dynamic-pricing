@@ -127,9 +127,26 @@ export default function Home() {
                 {mockMarketConditions.activeRides}
               </p>
             </div>
-            <div className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Weather</p>
-              <p className="text-base font-bold text-gray-800">
+            <div className={`text-center p-4 bg-gradient-to-br rounded-xl border-2 ${
+              mockMarketConditions.weatherType === 'storm' ? 'from-red-50 to-orange-50 border-red-300' :
+              mockMarketConditions.weatherType === 'snow' ? 'from-blue-50 to-cyan-50 border-blue-300' :
+              mockMarketConditions.weatherType === 'rain' ? 'from-blue-50 to-gray-50 border-blue-200' :
+              mockMarketConditions.weatherType === 'fog' ? 'from-gray-100 to-gray-50 border-gray-300' :
+              'from-yellow-50 to-white border-yellow-200'
+            }`}>
+              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide flex items-center justify-center gap-1">
+                {mockMarketConditions.weatherType === 'storm' && '⛈️'}
+                {mockMarketConditions.weatherType === 'snow' && '❄️'}
+                {mockMarketConditions.weatherType === 'rain' && '🌧️'}
+                {mockMarketConditions.weatherType === 'fog' && '🌫️'}
+                {mockMarketConditions.weatherType === 'clear' && '☀️'}
+                Weather
+              </p>
+              <p className={`text-base font-bold ${
+                mockMarketConditions.weatherSeverity === 'severe' ? 'text-red-700' :
+                mockMarketConditions.weatherSeverity === 'moderate' ? 'text-orange-700' :
+                'text-gray-800'
+              }`}>
                 {mockMarketConditions.weatherCondition}
               </p>
             </div>
