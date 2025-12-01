@@ -1,80 +1,36 @@
-# Frontend - Next.js Application
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-**Owner:** Role 1 (Jason - Frontend Developer)
+## Getting Started
 
-## Purpose
-Next.js 14+ web application with modern UI for the HoneyGo pricing interface.
+First, run the development server:
 
-## Setup Instructions
-
-### 1. Initialize Next.js Project
-```bash
-cd frontend
-npx create-next-app@latest . --typescript --tailwind --app --no-src-dir
-```
-
-### 2. Install Dependencies
-```bash
-npm install
-```
-
-### 3. Configure Environment Variables
-Create `.env.local` with:
-```bash
-NEXT_PUBLIC_API_URL=http://localhost:8000
-```
-
-### 4. Run Development Server
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Frontend runs on: http://localhost:3000
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Folder Structure to Create
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-```
-frontend/
-├── package.json               # Node dependencies
-├── next.config.js             # Next.js configuration
-├── tsconfig.json              # TypeScript configuration
-├── tailwind.config.js         # Tailwind CSS configuration
-├── .env.local                 # Environment variables
-├── app/                       # Next.js 14+ app router
-│   ├── layout.tsx            # Root layout
-│   ├── page.tsx              # Home page
-│   ├── pricing/              # Pricing page
-│   │   └── page.tsx
-│   └── globals.css           # Global styles
-├── components/                # React components
-│   ├── PricingForm.tsx       # Pricing input form
-│   ├── PricingResult.tsx     # Pricing display
-│   ├── ReasoningExplainer.tsx # Agent reasoning display
-│   ├── VoiceInput.tsx        # Voice input (E1 - Extra)
-│   └── VoiceOutput.tsx       # Voice output (E2 - Extra)
-├── lib/                       # Utilities
-│   ├── api.ts                # API client
-│   └── types.ts              # TypeScript types
-└── public/                    # Static assets
-    └── logo.png              # HoneyGo logo (copy from /images)
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Timeline
-- **Dec 1 AM:** Set up Next.js project and folder structure
-- **Dec 1 PM:** Build UI components with mock data
-- **Dec 2:** Continue UI development
-- **Dec 3 Eve:** Integrate with backend API
-- **Dec 3-4:** Add voice features (E1, E2) if time permits
-- **Dec 4:** Testing and polish
+## Learn More
 
-## Dependencies
-- API contract from Dari (Role 3) - Dec 1 AM
-- Backend API running for integration - Dec 3 Eve
+To learn more about Next.js, take a look at the following resources:
 
-## Extra Features (If Time Permits)
-- **E1:** Voice Input (🎤 Mic Icon) - 2-3 hours
-- **E2:** Voice Output (🔊 Speaker Icon) - 1-2 hours
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Reference
-See `docs/project-structure-guide.md` for detailed setup instructions and sample code.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
