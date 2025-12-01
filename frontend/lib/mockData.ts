@@ -119,12 +119,53 @@ export const mockMarketConditions: MarketConditions = {
 };
 
 // Simulate AI processing with realistic delays
-export const simulateAIPricing = async (rideId: string): Promise<PricingResult> => {
+export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Promise<PricingResult> => {
   // Simulate processing time (2-4 seconds)
   const processingTime = 2000 + Math.random() * 2000;
   await new Promise(resolve => setTimeout(resolve, processingTime));
   
-  return mockPricingResults[rideId] || mockPricingResults['ride-001'];
+  // If we have a predefined result, use it
+  if (mockPricingResults[rideId]) {
+    return mockPricingResults[rideId];
+  }
+  
+  // Otherwise, generate dynamic pricing based on ride characteristics
+  if (ride) {
+    const basePrice = 5 + (ride.distance * 2.5) + (ride.passengerCount * 1.5);
+    
+    // Random surge multiplier based on "market conditions"
+    const surgeMultiplier = 1.0 + (Math.random() * 0.8); // 1.0x to 1.8x
+    const dynamicPrice = basePrice * surgeMultiplier;
+    
+    // Driver gets 80% of dynamic price
+    const driverEarnings = dynamicPrice * 0.8;
+    
+    // Generate realistic reasoning
+    const demandLevel = surgeMultiplier > 1.4 ? 'High' : surgeMultiplier > 1.2 ? 'Moderate' : 'Normal';
+    const timeOfDay = new Date().getHours();
+    const isPeakHour = (timeOfDay >= 7 && timeOfDay <= 9) || (timeOfDay >= 16 && timeOfDay <= 19);
+    
+    const reasoning = [
+      `${demandLevel} demand detected in the area`,
+      `Distance: ${ride.distance} miles requires ${ride.estimatedDuration} minutes`,
+      `${ride.passengerCount} passenger${ride.passengerCount > 1 ? 's' : ''} - ${ride.passengerCount > 2 ? 'larger vehicle needed' : 'standard vehicle'}`,
+      isPeakHour ? 'Peak travel hours detected' : 'Off-peak hours - moderate demand',
+      surgeMultiplier > 1.2 ? `Surge pricing applied (${surgeMultiplier.toFixed(1)}x)` : 'No surge pricing - stable market conditions',
+    ];
+    
+    return {
+      basePrice: parseFloat(basePrice.toFixed(2)),
+      dynamicPrice: parseFloat(dynamicPrice.toFixed(2)),
+      surgeMultiplier: parseFloat(surgeMultiplier.toFixed(2)),
+      driverEarnings: parseFloat(driverEarnings.toFixed(2)),
+      reasoning,
+      confidence: 0.82 + (Math.random() * 0.15), // 82-97% confidence
+      processingTime: parseFloat((processingTime / 1000).toFixed(1)),
+    };
+  }
+  
+  // Fallback to ride-001 if no ride data provided
+  return mockPricingResults['ride-001'];
 };
 
 // Generate random ride request

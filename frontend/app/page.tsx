@@ -27,7 +27,7 @@ export default function Home() {
     setIsProcessing(true);
 
     try {
-      const result = await simulateAIPricing(ride.id);
+      const result = await simulateAIPricing(ride.id, ride);
       setPricingResult(result);
     } catch (error) {
       console.error('Error calculating price:', error);
