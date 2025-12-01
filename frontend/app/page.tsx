@@ -8,11 +8,12 @@ import PricingDisplay from '@/components/PricingDisplay';
 import AIThinkingAnimation from '@/components/AIThinkingAnimation';
 import { 
   mockRideRequests, 
-  mockMarketConditions,
+  generateMarketConditions,
   simulateAIPricing,
   generateRandomRide,
   type RideRequest,
-  type PricingResult 
+  type PricingResult,
+  type MarketConditions
 } from '@/lib/mockData';
 
 export default function Home() {
@@ -20,7 +21,15 @@ export default function Home() {
   const [pricingResult, setPricingResult] = useState<PricingResult | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [rides, setRides] = useState<RideRequest[]>(mockRideRequests);
+  const [selectedCity, setSelectedCity] = useState<string>('Phoenix');
+  const [marketConditions, setMarketConditions] = useState<MarketConditions>(generateMarketConditions('Phoenix'));
   const resultsSectionRef = useRef<HTMLDivElement>(null);
+
+  // Update market conditions when city changes
+  const handleCityChange = (city: string) => {
+    setSelectedCity(city);
+    setMarketConditions(generateMarketConditions(city));
+  };
 
   // Scroll when processing starts
   useEffect(() => {
@@ -49,7 +58,7 @@ export default function Home() {
   };
 
   const handleAddRandomRide = (scheduled: boolean = false) => {
-    const newRide = generateRandomRide(scheduled);
+    const newRide = generateRandomRide(scheduled, selectedCity);
     setRides([newRide, ...rides]);
   };
 
@@ -97,6 +106,26 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* City Selector */}
+        <div className="mb-6">
+          <label className="block text-sm font-semibold text-gray-700 mb-3">Select Market</label>
+          <div className="flex gap-3 flex-wrap">
+            {['Phoenix', 'New York', 'San Francisco', 'Chicago'].map((city) => (
+              <button
+                key={city}
+                onClick={() => handleCityChange(city)}
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
+                  selectedCity === city
+                    ? 'bg-gradient-to-r from-[#FF6A13] to-[#E55A0A] text-white shadow-lg scale-105'
+                    : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#FF6A13] hover:shadow-md'
+                }`}
+              >
+                {city === 'New York' ? '🗽' : city === 'San Francisco' ? '🌉' : city === 'Chicago' ? '🏙️' : '🏜️'} {city}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Market Conditions Banner */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 border border-gray-200">
           <div className="flex items-center gap-3 mb-6">
@@ -113,57 +142,57 @@ export default function Home() {
             <div className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Demand</p>
               <p className={`text-2xl font-bold ${
-                mockMarketConditions.currentDemand === 'surge' ? 'text-red-600' :
-                mockMarketConditions.currentDemand === 'high' ? 'text-orange-600' :
-                mockMarketConditions.currentDemand === 'medium' ? 'text-yellow-600' :
+                marketConditions.currentDemand === 'surge' ? 'text-red-600' :
+                marketConditions.currentDemand === 'high' ? 'text-orange-600' :
+                marketConditions.currentDemand === 'medium' ? 'text-yellow-600' :
                 'text-green-600'
               }`}>
-                {mockMarketConditions.currentDemand.toUpperCase()}
+                {marketConditions.currentDemand.toUpperCase()}
               </p>
             </div>
             <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-gray-200">
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Available Drivers</p>
               <p className="text-2xl font-bold text-blue-600">
-                {mockMarketConditions.availableDrivers}
+                {marketConditions.availableDrivers}
               </p>
             </div>
             <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-white rounded-xl border border-gray-200">
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Active Rides</p>
               <p className="text-2xl font-bold text-purple-600">
-                {mockMarketConditions.activeRides}
+                {marketConditions.activeRides}
               </p>
             </div>
             <div className={`text-center p-4 bg-gradient-to-br rounded-xl border-2 ${
-              mockMarketConditions.weatherType === 'storm' ? 'from-red-50 to-orange-50 border-red-300' :
-              mockMarketConditions.weatherType === 'snow' ? 'from-blue-50 to-cyan-50 border-blue-300' :
-              mockMarketConditions.weatherType === 'rain' ? 'from-blue-50 to-gray-50 border-blue-200' :
-              mockMarketConditions.weatherType === 'fog' ? 'from-gray-100 to-gray-50 border-gray-300' :
+              marketConditions.weatherType === 'storm' ? 'from-red-50 to-orange-50 border-red-300' :
+              marketConditions.weatherType === 'snow' ? 'from-blue-50 to-cyan-50 border-blue-300' :
+              marketConditions.weatherType === 'rain' ? 'from-blue-50 to-gray-50 border-blue-200' :
+              marketConditions.weatherType === 'fog' ? 'from-gray-100 to-gray-50 border-gray-300' :
               'from-yellow-50 to-white border-yellow-200'
             }`}>
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide flex items-center justify-center gap-1">
-                {mockMarketConditions.weatherType === 'storm' && '⛈️'}
-                {mockMarketConditions.weatherType === 'snow' && '❄️'}
-                {mockMarketConditions.weatherType === 'rain' && '🌧️'}
-                {mockMarketConditions.weatherType === 'fog' && '🌫️'}
-                {mockMarketConditions.weatherType === 'clear' && '☀️'}
+                {marketConditions.weatherType === 'storm' && '⛈️'}
+                {marketConditions.weatherType === 'snow' && '❄️'}
+                {marketConditions.weatherType === 'rain' && '🌧️'}
+                {marketConditions.weatherType === 'fog' && '🌫️'}
+                {marketConditions.weatherType === 'clear' && '☀️'}
                 Weather
               </p>
               <p className={`text-base font-bold ${
-                mockMarketConditions.weatherSeverity === 'severe' ? 'text-red-700' :
-                mockMarketConditions.weatherSeverity === 'moderate' ? 'text-orange-700' :
+                marketConditions.weatherSeverity === 'severe' ? 'text-red-700' :
+                marketConditions.weatherSeverity === 'moderate' ? 'text-orange-700' :
                 'text-gray-800'
               }`}>
-                {mockMarketConditions.weatherCondition}
+                {marketConditions.weatherCondition}
               </p>
             </div>
             <div className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Traffic</p>
               <p className={`text-2xl font-bold ${
-                mockMarketConditions.trafficLevel === 'heavy' ? 'text-red-600' :
-                mockMarketConditions.trafficLevel === 'moderate' ? 'text-yellow-600' :
+                marketConditions.trafficLevel === 'heavy' ? 'text-red-600' :
+                marketConditions.trafficLevel === 'moderate' ? 'text-yellow-600' :
                 'text-green-600'
               }`}>
-                {mockMarketConditions.trafficLevel.toUpperCase()}
+                {marketConditions.trafficLevel.toUpperCase()}
               </p>
             </div>
           </div>

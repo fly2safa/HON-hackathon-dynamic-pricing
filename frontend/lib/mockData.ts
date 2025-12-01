@@ -140,17 +140,33 @@ const generateWeatherConditions = (forScheduled: boolean = false) => {
   }
 };
 
-// Sample market conditions (regenerate on each page load for variety)
-const currentWeather = generateWeatherConditions();
-export const mockMarketConditions: MarketConditions = {
-  currentDemand: 'high',
-  availableDrivers: 42,
-  activeRides: 87,
-  weatherCondition: currentWeather.display,
-  weatherType: currentWeather.type,
-  weatherSeverity: currentWeather.severity,
-  trafficLevel: 'moderate',
+// Generate city-specific market conditions
+export const generateMarketConditions = (city: string): MarketConditions => {
+  const currentWeather = generateWeatherConditions();
+  
+  // City-specific market data
+  const cityMarkets: Record<string, { drivers: number; rides: number; demand: 'low' | 'medium' | 'high' | 'surge'; traffic: 'light' | 'moderate' | 'heavy' }> = {
+    'Phoenix': { drivers: 42, rides: 87, demand: 'high', traffic: 'moderate' },
+    'New York': { drivers: 125, rides: 340, demand: 'surge', traffic: 'heavy' },
+    'San Francisco': { drivers: 78, rides: 210, demand: 'high', traffic: 'heavy' },
+    'Chicago': { drivers: 95, rides: 180, demand: 'high', traffic: 'moderate' },
+  };
+  
+  const market = cityMarkets[city] || cityMarkets['Phoenix'];
+  
+  return {
+    currentDemand: market.demand,
+    availableDrivers: market.drivers,
+    activeRides: market.rides,
+    weatherCondition: currentWeather.display,
+    weatherType: currentWeather.type,
+    weatherSeverity: currentWeather.severity,
+    trafficLevel: market.traffic,
+  };
 };
+
+// Default market conditions (Phoenix)
+export const mockMarketConditions: MarketConditions = generateMarketConditions('Phoenix');
 
 // Export weather multiplier for pricing
 export const getWeatherMultiplier = () => {
@@ -304,11 +320,10 @@ const cityLocations = {
 };
 
 // Generate random ride request
-export const generateRandomRide = (scheduled: boolean = false): RideRequest => {
-  // Randomly select a city
-  const cities = Object.keys(cityLocations);
-  const city = cities[Math.floor(Math.random() * cities.length)];
-  const locations = cityLocations[city as keyof typeof cityLocations];
+export const generateRandomRide = (scheduled: boolean = false, city?: string): RideRequest => {
+  // Use provided city or randomly select
+  const selectedCity = city || Object.keys(cityLocations)[Math.floor(Math.random() * Object.keys(cityLocations).length)];
+  const locations = cityLocations[selectedCity as keyof typeof cityLocations];
   
   const location = locations[Math.floor(Math.random() * locations.length)];
   const distance = 3 + Math.random() * 15;
@@ -318,7 +333,7 @@ export const generateRandomRide = (scheduled: boolean = false): RideRequest => {
     id: `ride-${Date.now()}`,
     pickupLocation: location.pickup,
     dropoffLocation: location.dropoff,
-    city: city,
+    city: selectedCity,
     distance: parseFloat(distance.toFixed(1)),
     estimatedDuration: duration,
     requestTime: new Date().toISOString(),
