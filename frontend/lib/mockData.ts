@@ -179,9 +179,12 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
   // Calculate actual elapsed time
   const actualProcessingTime = (Date.now() - startTime) / 1000;
   
-  // If we have a predefined result, use it
+  // If we have a predefined result, use it but update processing time
   if (mockPricingResults[rideId]) {
-    return mockPricingResults[rideId];
+    return {
+      ...mockPricingResults[rideId],
+      processingTime: parseFloat(actualProcessingTime.toFixed(1)), // Use actual time
+    };
   }
   
   // Otherwise, generate dynamic pricing based on ride characteristics
