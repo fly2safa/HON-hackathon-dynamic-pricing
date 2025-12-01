@@ -164,11 +164,85 @@ class MongoDBService:
             logger.error(f"Error updating customer {customer_id}: {e}")
             return False
     
-    # Ride Operations
+    # Ride Operations (Historical Data from CSV)
+    
+    async def get_historical_rides(
+        self,
+        limit: int = 20,
+        skip: int = 0,
+        filter_query: Optional[Dict[str, Any]] = None
+    ) -> List[Dict[str, Any]]:
+        """
+        Get historical ride data from CSV (rides collection)
+        
+        Args:
+            limit: Maximum number of rides to return
+            skip: Number of rides to skip
+            filter_query: MongoDB filter query
+            
+        Returns:
+            List of historical ride data dicts
+        """
+        try:
+            query = filter_query or {}
+            rides = list(self.db.rides.find(
+                query,
+                {"_id": 0}
+            ).sort("timestamp", -1).skip(skip).limit(limit))
+            
+            return rides
+        except Exception as e:
+            logger.error(f"Error fetching historical rides: {e}")
+            return []
+    
+    # Pricing Decision Operations (New AI-Generated Pricing)
+    
+    async def create_pricing_decision(self, pricing_data: Dict[str, Any]) -> str:
+        """
+        Create new pricing decision record in pricing_decisions collection
+        
+        Args:
+            pricing_data: Pricing decision information
+            
+        Returns:
+            Created pricing decision ID
+        """
+        try:
+            pricing_data["timestamp"] = datetime.now()
+            
+            result = self.db.pricing_decisions.insert_one(pricing_data)
+            logger.info(f"Pricing decision created: {pricing_data.get('ride_id')}")
+            return str(result.inserted_id)
+            
+        except Exception as e:
+            logger.error(f"Error creating pricing decision: {e}")
+            raise
+    
+    async def get_pricing_decision(self, ride_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Get pricing decision by ride ID
+        
+        Args:
+            ride_id: Ride identifier
+            
+        Returns:
+            Pricing decision dict or None if not found
+        """
+        try:
+            decision = self.db.pricing_decisions.find_one(
+                {"ride_id": ride_id},
+                {"_id": 0}
+            )
+            return decision
+        except Exception as e:
+            logger.error(f"Error fetching pricing decision {ride_id}: {e}")
+            return None
     
     async def create_ride(self, ride_data: Dict[str, Any]) -> str:
         """
-        Create new ride record
+        DEPRECATED: Use create_pricing_decision for new pricing
+        
+        This method kept for backward compatibility but now creates pricing decisions.
         
         Args:
             ride_data: Ride information including pricing
@@ -176,36 +250,50 @@ class MongoDBService:
         Returns:
             Created ride ID
         """
-        try:
-            ride_data["created_at"] = datetime.now()
-            
-            result = self.db.rides.insert_one(ride_data)
-            logger.info(f"Ride created: {ride_data['ride_id']}")
-            return ride_data["ride_id"]
-            
-        except Exception as e:
-            logger.error(f"Error creating ride: {e}")
-            raise
+        logger.warning("create_ride called - redirecting to create_pricing_decision")
+        return await self.create_pricing_decision(ride_data)
     
     async def get_ride(self, ride_id: str) -> Optional[Dict[str, Any]]:
         """
-        Get ride data by ID
+        Get pricing decision by ride ID (checks pricing_decisions collection)
+        
+        For backward compatibility, but now queries pricing_decisions.
         
         Args:
             ride_id: Ride identifier
             
         Returns:
-            Ride data dict or None if not found
+            Pricing decision dict or None if not found
+        """
+        return await self.get_pricing_decision(ride_id)
+    
+    async def get_customer_pricing_decisions(
+        self,
+        customer_id: str,
+        limit: int = 10,
+        skip: int = 0
+    ) -> List[Dict[str, Any]]:
+        """
+        Get all pricing decisions for a customer
+        
+        Args:
+            customer_id: Customer identifier
+            limit: Maximum number of decisions to return
+            skip: Number of decisions to skip
+            
+        Returns:
+            List of pricing decision dicts
         """
         try:
-            ride = self.db.rides.find_one(
-                {"ride_id": ride_id},
+            decisions = list(self.db.pricing_decisions.find(
+                {"customer_id": customer_id},
                 {"_id": 0}
-            )
-            return ride
+            ).sort("timestamp", -1).skip(skip).limit(limit))
+            
+            return decisions
         except Exception as e:
-            logger.error(f"Error fetching ride {ride_id}: {e}")
-            return None
+            logger.error(f"Error fetching pricing decisions for customer {customer_id}: {e}")
+            return []
     
     async def get_customer_rides(
         self,
@@ -214,7 +302,7 @@ class MongoDBService:
         skip: int = 0
     ) -> List[Dict[str, Any]]:
         """
-        Get all rides for a customer
+        Get all rides for a customer (backward compatibility - returns pricing decisions)
         
         Args:
             customer_id: Customer identifier
@@ -222,44 +310,35 @@ class MongoDBService:
             skip: Number of rides to skip
             
         Returns:
-            List of ride data dicts
+            List of pricing decision dicts
         """
-        try:
-            rides = list(self.db.rides.find(
-                {"customer_id": customer_id},
-                {"_id": 0}
-            ).sort("created_at", -1).skip(skip).limit(limit))
-            
-            return rides
-        except Exception as e:
-            logger.error(f"Error fetching rides for customer {customer_id}: {e}")
-            return []
+        return await self.get_customer_pricing_decisions(customer_id, limit, skip)
     
     async def get_rides(self, limit: int = 20, skip: int = 0) -> List[Dict[str, Any]]:
         """
-        Get all rides with pagination
+        Get all pricing decisions with pagination
         
         Args:
-            limit: Maximum number of rides to return
-            skip: Number of rides to skip
+            limit: Maximum number of decisions to return
+            skip: Number of decisions to skip
             
         Returns:
-            List of ride data dicts
+            List of pricing decision dicts
         """
         try:
-            rides = list(self.db.rides.find(
+            decisions = list(self.db.pricing_decisions.find(
                 {},
                 {"_id": 0}
-            ).sort("created_at", -1).skip(skip).limit(limit))
+            ).sort("timestamp", -1).skip(skip).limit(limit))
             
-            return rides
+            return decisions
         except Exception as e:
-            logger.error(f"Error fetching rides: {e}")
+            logger.error(f"Error fetching pricing decisions: {e}")
             return []
     
     async def delete_ride(self, ride_id: str) -> bool:
         """
-        Delete a ride
+        Delete a pricing decision
         
         Args:
             ride_id: Ride identifier
@@ -268,57 +347,65 @@ class MongoDBService:
             True if deleted, False otherwise
         """
         try:
-            result = self.db.rides.delete_one({"ride_id": ride_id})
+            result = self.db.pricing_decisions.delete_one({"ride_id": ride_id})
             return result.deleted_count > 0
         except Exception as e:
-            logger.error(f"Error deleting ride {ride_id}: {e}")
+            logger.error(f"Error deleting pricing decision {ride_id}: {e}")
             return False
     
     # Statistics and Aggregations
     
     async def get_ride_statistics(self) -> Dict[str, Any]:
         """
-        Get ride statistics using aggregation
+        Get pricing statistics using aggregation from pricing_decisions collection
         
         Returns:
-            Dict containing statistics (total rides, revenue, averages, etc.)
+            Dict containing statistics (total pricing decisions, revenue, averages, etc.)
         """
         try:
             pipeline = [
                 {
                     "$group": {
                         "_id": None,
-                        "total_rides": {"$sum": 1},
-                        "total_revenue": {"$sum": "$final_price"},
-                        "average_price": {"$avg": "$final_price"},
+                        "total_pricing_decisions": {"$sum": 1},
+                        "total_revenue": {"$sum": "$calculated_price"},
+                        "average_price": {"$avg": "$calculated_price"},
+                        "average_base_price": {"$avg": "$base_price"},
+                        "average_surge": {"$avg": "$surge_multiplier"},
                         "average_distance": {"$avg": "$distance_km"}
                     }
                 }
             ]
             
-            result = list(self.db.rides.aggregate(pipeline))
+            result = list(self.db.pricing_decisions.aggregate(pipeline))
             
             if result:
                 stats = result[0]
                 return {
-                    "total_rides": stats.get("total_rides", 0),
+                    "total_pricing_decisions": stats.get("total_pricing_decisions", 0),
                     "total_revenue": round(stats.get("total_revenue", 0), 2),
                     "average_price": round(stats.get("average_price", 0), 2),
+                    "average_base_price": round(stats.get("average_base_price", 0), 2),
+                    "average_surge_multiplier": round(stats.get("average_surge", 0), 2),
                     "average_distance": round(stats.get("average_distance", 0), 2)
                 }
             
             return {
-                "total_rides": 0,
+                "total_pricing_decisions": 0,
                 "total_revenue": 0.0,
                 "average_price": 0.0,
+                "average_base_price": 0.0,
+                "average_surge_multiplier": 0.0,
                 "average_distance": 0.0
             }
         except Exception as e:
             logger.error(f"Error calculating statistics: {e}")
             return {
-                "total_rides": 0,
+                "total_pricing_decisions": 0,
                 "total_revenue": 0.0,
                 "average_price": 0.0,
+                "average_base_price": 0.0,
+                "average_surge_multiplier": 0.0,
                 "average_distance": 0.0
             }
     
@@ -328,7 +415,7 @@ class MongoDBService:
         limit: int = 10
     ) -> List[Dict[str, Any]]:
         """
-        Get pricing history for a customer
+        Get pricing history for a customer from pricing_decisions collection
         
         Args:
             customer_id: Customer identifier
@@ -338,7 +425,7 @@ class MongoDBService:
             List of pricing history records
         """
         try:
-            rides = list(self.db.rides.find(
+            decisions = list(self.db.pricing_decisions.find(
                 {"customer_id": customer_id},
                 {
                     "_id": 0,
@@ -346,12 +433,13 @@ class MongoDBService:
                     "distance_km": 1,
                     "base_price": 1,
                     "surge_multiplier": 1,
-                    "final_price": 1,
-                    "created_at": 1
+                    "calculated_price": 1,
+                    "timestamp": 1,
+                    "applied": 1
                 }
-            ).sort("created_at", -1).limit(limit))
+            ).sort("timestamp", -1).limit(limit))
             
-            return rides
+            return decisions
         except Exception as e:
             logger.error(f"Error fetching pricing history: {e}")
             return []

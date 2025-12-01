@@ -20,6 +20,7 @@ class Customer(CustomerBase):
     Full customer model with all fields
     
     Used for MongoDB storage and retrieval.
+    Matches existing MongoDB schema.
     """
     loyalty_status: str = Field(
         default="Silver",
@@ -33,6 +34,9 @@ class Customer(CustomerBase):
         le=5,
         description="Average customer rating (0-5)"
     )
+    surge_protection: bool = Field(default=False, description="Whether customer has surge protection")
+    contract_rate: Optional[float] = Field(None, description="Special contract rate")
+    preferences: Optional[dict] = Field(default_factory=dict, description="Customer preferences")
     created_at: datetime = Field(default_factory=datetime.now)
     updated_at: datetime = Field(default_factory=datetime.now)
     
