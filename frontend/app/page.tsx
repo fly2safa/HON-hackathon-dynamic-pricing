@@ -26,11 +26,13 @@ export default function Home() {
     setPricingResult(null);
     setIsProcessing(true);
 
-    // Scroll to results section smoothly
+    // Scroll to results section smoothly - use 'start' to show from top
     setTimeout(() => {
       const resultsSection = document.getElementById('results-section');
       if (resultsSection) {
-        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Add extra offset to show more above
+        window.scrollBy({ top: -100, behavior: 'smooth' });
       }
     }, 100);
 
@@ -42,7 +44,8 @@ export default function Home() {
       setTimeout(() => {
         const resultsSection = document.getElementById('results-section');
         if (resultsSection) {
-          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          window.scrollBy({ top: -100, behavior: 'smooth' });
         }
       }, 100);
     } catch (error) {
