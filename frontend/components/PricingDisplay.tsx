@@ -13,25 +13,34 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
   const savingsPercentage = ((savingsForDriver / (result.basePrice * 0.8)) * 100).toFixed(0);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200 animate-fadeIn">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Pricing Result</h2>
-        <div className="text-right">
-          <p className="text-xs text-gray-500">Processing Time</p>
-          <p className="text-sm font-semibold text-blue-600">{result.processingTime}s</p>
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">AI Pricing Complete</h2>
+            <p className="text-sm text-gray-500">Processed in {result.processingTime}s</p>
+          </div>
         </div>
       </div>
 
       {/* Price Comparison */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="bg-gray-50 rounded-lg p-4">
-          <p className="text-sm text-gray-600 mb-1">Base Price</p>
-          <p className="text-3xl font-bold text-gray-800">${result.basePrice.toFixed(2)}</p>
+      <div className="grid grid-cols-2 gap-6 mb-8">
+        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 border border-gray-200">
+          <p className="text-sm font-semibold text-gray-600 mb-2 uppercase tracking-wide">Standard Price</p>
+          <p className="text-4xl font-bold text-gray-700">${result.basePrice.toFixed(2)}</p>
+          <p className="text-xs text-gray-500 mt-2">Traditional pricing</p>
         </div>
-        <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-lg p-4 border-2 border-[#FF6A13]">
-          <p className="text-sm text-[#E55A0A] mb-1">Dynamic Price</p>
-          <p className="text-3xl font-bold text-[#FF6A13]">${result.dynamicPrice.toFixed(2)}</p>
+        <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 border-2 border-[#FF6A13] shadow-lg relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-[#FF6A13] opacity-10 rounded-full -mr-10 -mt-10"></div>
+          <p className="text-sm font-bold text-[#E55A0A] mb-2 uppercase tracking-wide">AI Dynamic Price</p>
+          <p className="text-4xl font-bold text-[#FF6A13]">${result.dynamicPrice.toFixed(2)}</p>
+          <p className="text-xs text-orange-700 mt-2 font-medium">Optimized by AI</p>
         </div>
       </div>
 
@@ -50,21 +59,28 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
         </div>
       )}
 
-      {/* Driver Earnings */}
-      <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      {/* Driver Earnings - Highlighted Feature */}
+      <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-6 mb-8 shadow-md">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+            <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <p className="font-semibold text-green-800">Driver Earnings</p>
           </div>
-          <p className="text-2xl font-bold text-green-600">${result.driverEarnings.toFixed(2)}</p>
+          <div className="flex-1">
+            <p className="text-sm font-bold text-green-800 uppercase tracking-wide">Driver Earnings</p>
+            <p className="text-3xl font-bold text-green-700">${result.driverEarnings.toFixed(2)}</p>
+          </div>
         </div>
         {savingsForDriver > 0 && (
-          <p className="text-sm text-green-700">
-            +${savingsForDriver.toFixed(2)} ({savingsPercentage}%) more than standard rate
-          </p>
+          <div className="bg-white rounded-lg p-3 border border-green-200">
+            <p className="text-sm font-semibold text-green-800 flex items-center gap-2">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              Bonus: +${savingsForDriver.toFixed(2)} ({savingsPercentage}%) above standard rate
+            </p>
+          </div>
         )}
       </div>
 
