@@ -96,14 +96,11 @@ async def health_check():
 
 
 # Import and include routers
-from routers import health, pricing
+from routers import health, pricing, rides
 
 app.include_router(health.router)
 app.include_router(pricing.router)
-
-# Additional routers to be added in subsequent commits
-# from routers import rides
-# app.include_router(rides.router)
+app.include_router(rides.router)
 
 
 if __name__ == "__main__":
