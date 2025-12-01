@@ -110,7 +110,7 @@ export default function Home() {
         <div className="mb-6">
           <label className="block text-sm font-semibold text-gray-700 mb-3">Select Market</label>
           <div className="flex gap-3 flex-wrap">
-            {['Phoenix', 'New York', 'San Francisco', 'Chicago'].map((city) => (
+            {['Phoenix', 'New York', 'San Francisco', 'Chicago', 'Tampa'].map((city) => (
               <button
                 key={city}
                 onClick={() => handleCityChange(city)}
@@ -120,7 +120,11 @@ export default function Home() {
                     : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#FF6A13] hover:shadow-md'
                 }`}
               >
-                {city === 'New York' ? '🗽' : city === 'San Francisco' ? '🌉' : city === 'Chicago' ? '🏙️' : '🏜️'} {city}
+                {city === 'New York' ? '🗽' : 
+                 city === 'San Francisco' ? '🌉' : 
+                 city === 'Chicago' ? '🏙️' : 
+                 city === 'Tampa' ? '🌴' : 
+                 '🏜️'} {city}
               </button>
             ))}
           </div>

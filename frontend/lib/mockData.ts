@@ -150,6 +150,7 @@ export const generateMarketConditions = (city: string): MarketConditions => {
     'New York': { drivers: 125, rides: 340, demand: 'surge', traffic: 'heavy' },
     'San Francisco': { drivers: 78, rides: 210, demand: 'high', traffic: 'heavy' },
     'Chicago': { drivers: 95, rides: 180, demand: 'high', traffic: 'moderate' },
+    'Tampa': { drivers: 35, rides: 68, demand: 'medium', traffic: 'light' },
   };
   
   const market = cityMarkets[city] || cityMarkets['Phoenix'];
@@ -215,6 +216,7 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       'New York': 1.4,
       'San Francisco': 1.5,
       'Chicago': 1.2,
+      'Tampa': 0.95, // Slightly lower than Phoenix (lower cost of living)
     };
     
     const cityMultiplier = cityMultipliers[ride.city] || 1.0;
@@ -264,6 +266,7 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       ride.city === 'New York' ? 'NYC market: Higher base rates due to cost of living' :
       ride.city === 'San Francisco' ? 'SF market: Premium pricing for high-demand area' :
       ride.city === 'Chicago' ? 'Chicago market: Moderate pricing adjustment' :
+      ride.city === 'Tampa' ? 'Tampa market: Competitive pricing, lower cost of living' :
       'Phoenix market: Standard base rates';
     
     const reasoning = [
@@ -316,6 +319,12 @@ const cityLocations = {
     { pickup: 'Millennium Park', dropoff: 'Willis Tower' },
     { pickup: 'Wrigley Field', dropoff: 'The Loop' },
     { pickup: 'Lincoln Park', dropoff: 'Michigan Avenue' },
+  ],
+  'Tampa': [
+    { pickup: 'Tampa International Airport', dropoff: 'Ybor City' },
+    { pickup: 'Busch Gardens', dropoff: 'Downtown Tampa' },
+    { pickup: 'Clearwater Beach', dropoff: 'Tampa Riverwalk' },
+    { pickup: 'Amalie Arena', dropoff: 'Hyde Park Village' },
   ],
 };
 
