@@ -159,6 +159,12 @@ export const getWeatherMultiplier = () => {
 };
 
 // Simulate AI processing with realistic delays
+// NOTE: When backend is ready, this will call:
+// - FastAPI endpoint: POST /api/pricing/calculate
+// - Backend will fetch real weather from OpenWeatherMap API
+// - For scheduled rides, backend will use weather forecast API
+// - MongoDB will store historical pricing decisions
+// - ChromaDB will provide similar context for better AI reasoning
 export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Promise<PricingResult> => {
   // Simulate processing time (2-4 seconds)
   const processingTime = 2000 + Math.random() * 2000;
@@ -176,8 +182,22 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
     // Random surge multiplier based on "market conditions"
     const baseSurge = 1.0 + (Math.random() * 0.5); // 1.0x to 1.5x
     
-    // Add weather multiplier
-    const weatherMultiplier = getWeatherMultiplier();
+    // Determine weather for this specific ride
+    let rideWeather;
+    if (ride.isScheduled) {
+      // Scheduled rides: predict future weather (different from current)
+      rideWeather = generateWeatherConditions();
+    } else {
+      // Immediate rides: use current weather
+      rideWeather = {
+        type: mockMarketConditions.weatherType,
+        severity: mockMarketConditions.weatherSeverity,
+        display: mockMarketConditions.weatherCondition,
+        multiplier: getWeatherMultiplier()
+      };
+    }
+    
+    const weatherMultiplier = rideWeather.multiplier;
     const surgeMultiplier = baseSurge * weatherMultiplier;
     
     const dynamicPrice = basePrice * surgeMultiplier;
@@ -190,13 +210,14 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
     const timeOfDay = new Date().getHours();
     const isPeakHour = (timeOfDay >= 7 && timeOfDay <= 9) || (timeOfDay >= 16 && timeOfDay <= 19);
     
+    const weatherPrefix = ride.isScheduled ? 'Predicted weather: ' : 'Current weather: ';
     const weatherImpact = 
-      mockMarketConditions.weatherType === 'storm' ? 'Severe weather (thunderstorm) - significant price increase for driver safety' :
-      mockMarketConditions.weatherType === 'snow' ? 'Snow conditions - higher pricing due to hazardous driving' :
-      mockMarketConditions.weatherType === 'rain' && mockMarketConditions.weatherSeverity === 'moderate' ? 'Heavy rain - increased pricing for difficult driving conditions' :
-      mockMarketConditions.weatherType === 'rain' && mockMarketConditions.weatherSeverity === 'light' ? 'Light rain - slight price adjustment' :
-      mockMarketConditions.weatherType === 'fog' ? 'Dense fog - reduced visibility increases risk' :
-      'Clear weather - standard pricing';
+      rideWeather.type === 'storm' ? weatherPrefix + 'Severe thunderstorm - significant price increase for driver safety' :
+      rideWeather.type === 'snow' ? weatherPrefix + 'Snow conditions - higher pricing due to hazardous driving' :
+      rideWeather.type === 'rain' && rideWeather.severity === 'moderate' ? weatherPrefix + 'Heavy rain - increased pricing for difficult driving conditions' :
+      rideWeather.type === 'rain' && rideWeather.severity === 'light' ? weatherPrefix + 'Light rain - slight price adjustment' :
+      rideWeather.type === 'fog' ? weatherPrefix + 'Dense fog - reduced visibility increases risk' :
+      weatherPrefix + 'Clear conditions - standard pricing';
     
     const reasoning = [
       `${demandLevel} demand detected in the area`,
