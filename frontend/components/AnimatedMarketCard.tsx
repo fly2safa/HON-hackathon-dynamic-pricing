@@ -11,7 +11,6 @@ interface AnimatedMarketCardProps {
     location?: string;
     weatherType?: string;
   };
-  previousValue?: string | number;
 }
 
 // Determine if value is "good" or "bad" for coloring
@@ -20,8 +19,7 @@ const getValueSentiment = (type: string, value: string | number): 'positive' | '
   
   switch (type) {
     case 'demand':
-      if (strValue === 'surge') return 'negative';
-      if (strValue === 'high') return 'negative';
+      if (strValue === 'surge' || strValue === 'high') return 'negative';
       if (strValue === 'low') return 'positive';
       return 'neutral';
     case 'drivers':
@@ -30,10 +28,7 @@ const getValueSentiment = (type: string, value: string | number): 'positive' | '
       if (driverCount <= 20) return 'negative';
       return 'neutral';
     case 'rides':
-      const rideCount = typeof value === 'number' ? value : parseInt(String(value));
-      if (rideCount >= 100) return 'positive';
-      if (rideCount <= 30) return 'negative';
-      return 'neutral';
+      return 'neutral'; // Rides are informational
     case 'traffic':
       if (strValue === 'heavy') return 'negative';
       if (strValue === 'light') return 'positive';
@@ -51,9 +46,9 @@ const getValueSentiment = (type: string, value: string | number): 'positive' | '
 const getBorderColor = (sentiment: 'positive' | 'negative' | 'neutral'): string => {
   switch (sentiment) {
     case 'positive':
-      return 'border-green-400 shadow-green-100';
+      return 'border-green-300';
     case 'negative':
-      return 'border-red-400 shadow-red-100';
+      return 'border-red-300';
     default:
       return 'border-gray-200';
   }
@@ -83,11 +78,18 @@ const getTextColor = (type: string, value: string | number): string => {
 };
 
 // Animated number component
-const AnimatedNumber = ({ value, duration = 1000 }: { value: number; duration?: number }) => {
-  const [displayValue, setDisplayValue] = useState(0);
-  const previousValueRef = useRef(0);
+const AnimatedNumber = ({ value, duration = 800 }: { value: number; duration?: number }) => {
+  const [displayValue, setDisplayValue] = useState(value);
+  const previousValueRef = useRef(value);
+  const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  useEffect(() => {
+    if (!mounted) return;
+    
     const startValue = previousValueRef.current;
     const endValue = value;
     const startTime = Date.now();
@@ -96,7 +98,7 @@ const AnimatedNumber = ({ value, duration = 1000 }: { value: number; duration?: 
       const elapsed = Date.now() - startTime;
       const progress = Math.min(elapsed / duration, 1);
       
-      // Easing function for smooth animation
+      // Easing function
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
       const current = Math.round(startValue + (endValue - startValue) * easeOutQuart);
       
@@ -109,8 +111,13 @@ const AnimatedNumber = ({ value, duration = 1000 }: { value: number; duration?: 
       }
     };
     
-    requestAnimationFrame(animate);
-  }, [value, duration]);
+    if (startValue !== endValue) {
+      requestAnimationFrame(animate);
+    }
+  }, [value, duration, mounted]);
+  
+  // Show initial value without animation on server/initial render
+  if (!mounted) return <span>{value}</span>;
   
   return <span>{displayValue}</span>;
 };
@@ -119,25 +126,32 @@ export default function AnimatedMarketCard({
   label, 
   value, 
   type, 
-  weatherData,
-  previousValue 
+  weatherData 
 }: AnimatedMarketCardProps) {
+  const [mounted, setMounted] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showShimmer, setShowShimmer] = useState(false);
   const prevValueRef = useRef(value);
+  
+  // Handle hydration
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const sentiment = getValueSentiment(type, value);
   const borderColor = getBorderColor(sentiment);
   const textColor = getTextColor(type, value);
   
-  // Trigger animation when value changes
+  // Trigger animation when value changes (only after mounted)
   useEffect(() => {
+    if (!mounted) return;
+    
     if (prevValueRef.current !== value) {
       setIsAnimating(true);
       setShowShimmer(true);
       
-      const shimmerTimeout = setTimeout(() => setShowShimmer(false), 1500);
-      const animateTimeout = setTimeout(() => setIsAnimating(false), 600);
+      const shimmerTimeout = setTimeout(() => setShowShimmer(false), 1200);
+      const animateTimeout = setTimeout(() => setIsAnimating(false), 400);
       
       prevValueRef.current = value;
       
@@ -146,17 +160,19 @@ export default function AnimatedMarketCard({
         clearTimeout(animateTimeout);
       };
     }
-  }, [value]);
+  }, [value, mounted]);
   
-  // Periodic shimmer effect
+  // Periodic subtle shimmer (only after mounted)
   useEffect(() => {
+    if (!mounted) return;
+    
     const interval = setInterval(() => {
       setShowShimmer(true);
-      setTimeout(() => setShowShimmer(false), 1500);
-    }, 8000 + Math.random() * 4000); // Random interval between 8-12 seconds
+      setTimeout(() => setShowShimmer(false), 1200);
+    }, 10000 + Math.random() * 5000); // 10-15 seconds
     
     return () => clearInterval(interval);
-  }, []);
+  }, [mounted]);
   
   const isNumeric = typeof value === 'number' || !isNaN(Number(value));
   
@@ -182,9 +198,9 @@ export default function AnimatedMarketCard({
     }
   };
   
-  // Get weather emoji
+  // Get weather emoji - only render on client
   const getWeatherEmoji = () => {
-    if (!weatherData?.weatherType) return '';
+    if (!weatherData?.weatherType) return null;
     const wt = weatherData.weatherType;
     if (wt === 'storm') return '⛈️';
     if (wt === 'snow') return '❄️';
@@ -201,71 +217,73 @@ export default function AnimatedMarketCard({
         bg-gradient-to-br ${getBackgroundGradient()} 
         rounded-xl border-2 
         ${borderColor}
-        transition-all duration-500 ease-out
-        ${isAnimating ? 'scale-105 shadow-lg' : 'shadow-sm'}
+        transition-all duration-300 ease-out
+        ${isAnimating ? 'scale-[1.02] shadow-md' : 'scale-100 shadow-sm'}
         overflow-hidden
       `}
       suppressHydrationWarning
     >
       {/* Shimmer overlay */}
-      {showShimmer && (
+      {showShimmer && mounted && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div 
-            className="absolute inset-0 -translate-x-full animate-shimmer"
+            className="absolute inset-0 -translate-x-full"
             style={{
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-              animation: 'shimmer 1.5s ease-in-out'
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)',
+              animation: 'shimmer 1.2s ease-in-out forwards'
             }}
           />
         </div>
       )}
       
-      {/* Pulse ring on value change */}
-      {isAnimating && (
-        <div className="absolute inset-0 rounded-xl animate-ping opacity-20 bg-current" 
-             style={{ animationDuration: '0.6s', animationIterationCount: '1' }} 
-        />
-      )}
-      
       {/* Live badge for weather */}
-      {type === 'weather' && weatherData?.isLive && (
+      {type === 'weather' && weatherData?.isLive && mounted && (
         <div className="absolute top-1 right-1">
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 border border-green-300 animate-pulse">
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 border border-green-300">
             🌐 Live
           </span>
         </div>
       )}
       
       {/* Label */}
-      <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide flex items-center justify-center gap-1">
-        {type === 'weather' && getWeatherEmoji()}
+      <p 
+        className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide flex items-center justify-center gap-1"
+        suppressHydrationWarning
+      >
+        {type === 'weather' && mounted && getWeatherEmoji()}
         {label}
       </p>
       
       {/* Value with animation */}
-      <p className={`text-2xl font-bold ${textColor} transition-all duration-300 ${isAnimating ? 'scale-110' : ''}`}>
-        {isNumeric ? (
-          <AnimatedNumber value={Number(value)} duration={800} />
+      <p 
+        className={`text-2xl font-bold ${textColor} transition-transform duration-300 ${isAnimating ? 'scale-105' : 'scale-100'}`}
+        suppressHydrationWarning
+      >
+        {isNumeric && mounted ? (
+          <AnimatedNumber value={Number(value)} duration={600} />
         ) : (
-          <span className={isAnimating ? 'animate-pulse' : ''}>{String(value).toUpperCase()}</span>
+          <span>{String(value).toUpperCase()}</span>
         )}
       </p>
       
       {/* Weather location */}
-      {type === 'weather' && weatherData?.location && (
+      {type === 'weather' && weatherData?.location && mounted && (
         <p className="text-xs text-gray-500 mt-1" suppressHydrationWarning>
           {weatherData.location}
         </p>
       )}
       
-      {/* Sentiment indicator dot */}
-      <div className={`
-        absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full
-        ${sentiment === 'positive' ? 'bg-green-500' : 
-          sentiment === 'negative' ? 'bg-red-500' : 
-          'bg-gray-400'}
-        ${isAnimating ? 'animate-bounce' : ''}
-      `} />
+      {/* Subtle sentiment indicator line at bottom */}
+      <div 
+        className={`
+          absolute bottom-0 left-0 right-0 h-1 
+          transition-all duration-500
+          ${sentiment === 'positive' ? 'bg-gradient-to-r from-green-400 to-green-300' : 
+            sentiment === 'negative' ? 'bg-gradient-to-r from-red-400 to-red-300' : 
+            'bg-gradient-to-r from-gray-300 to-gray-200'}
+          ${isAnimating ? 'opacity-100' : 'opacity-60'}
+        `} 
+      />
     </div>
   );
 }
