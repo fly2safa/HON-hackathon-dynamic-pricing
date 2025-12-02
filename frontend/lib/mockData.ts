@@ -418,7 +418,7 @@ export const getLoyaltyBadge = (tier: LoyaltyTier): string => {
 };
 
 // Generate random ride request
-export const generateRandomRide = (scheduled: boolean = false, city?: string, loyaltyTier: LoyaltyTier = 'new'): RideRequest => {
+export const generateRandomRide = (scheduled: boolean = false, city?: string, loyaltyTier: LoyaltyTier = 'new', customDateTime?: string): RideRequest => {
   // Use provided city or randomly select
   const selectedCity = city || Object.keys(cityLocations)[Math.floor(Math.random() * Object.keys(cityLocations).length)];
   const locations = cityLocations[selectedCity as keyof typeof cityLocations];
@@ -439,13 +439,20 @@ export const generateRandomRide = (scheduled: boolean = false, city?: string, lo
     loyaltyTier: loyaltyTier,
   };
   
-  // If scheduled, add a future time (1-6 hours from now)
+  // If scheduled, add a future time
   if (scheduled) {
-    const hoursAhead = 1 + Math.floor(Math.random() * 5);
-    const scheduledDate = new Date();
-    scheduledDate.setHours(scheduledDate.getHours() + hoursAhead);
-    ride.isScheduled = true;
-    ride.scheduledTime = scheduledDate.toISOString();
+    if (customDateTime) {
+      // Use custom date/time provided by user
+      ride.isScheduled = true;
+      ride.scheduledTime = new Date(customDateTime).toISOString();
+    } else {
+      // Random time 1-6 hours from now
+      const hoursAhead = 1 + Math.floor(Math.random() * 5);
+      const scheduledDate = new Date();
+      scheduledDate.setHours(scheduledDate.getHours() + hoursAhead);
+      ride.isScheduled = true;
+      ride.scheduledTime = scheduledDate.toISOString();
+    }
   }
   
   return ride;
