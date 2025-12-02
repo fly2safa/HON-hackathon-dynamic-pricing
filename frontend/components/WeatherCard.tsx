@@ -43,8 +43,8 @@ const AnimatedClouds = () => (
   <div className="absolute inset-0 pointer-events-none overflow-hidden">
     {/* Cloud 1 */}
     <div 
-      className="absolute"
-      style={{ animation: 'cloudFloat 8s ease-in-out infinite', top: '15%' }}
+      className="absolute animate-cloud-float"
+      style={{ top: '15%' }}
     >
       <svg width="50" height="30" viewBox="0 0 50 30" fill="none">
         <ellipse cx="25" cy="20" rx="20" ry="10" fill="#E5E7EB" />
@@ -55,8 +55,8 @@ const AnimatedClouds = () => (
     </div>
     {/* Cloud 2 */}
     <div 
-      className="absolute"
-      style={{ animation: 'cloudFloat 10s ease-in-out infinite 2s', top: '40%', left: '30%' }}
+      className="absolute animate-cloud-float-delayed"
+      style={{ top: '40%', left: '30%' }}
     >
       <svg width="40" height="25" viewBox="0 0 40 25" fill="none">
         <ellipse cx="20" cy="16" rx="16" ry="8" fill="#E5E7EB" />
@@ -83,10 +83,10 @@ const AnimatedRain = () => (
     {[...Array(12)].map((_, i) => (
       <div
         key={i}
-        className="absolute w-0.5 h-3 bg-gradient-to-b from-blue-400 to-blue-300 rounded-full"
+        className="absolute w-0.5 h-3 bg-gradient-to-b from-blue-400 to-blue-300 rounded-full animate-rain-fall"
         style={{
           left: `${10 + (i * 7) % 80}%`,
-          animation: `rainFall ${0.6 + (i % 3) * 0.2}s linear infinite`,
+          animationDuration: `${0.6 + (i % 3) * 0.2}s`,
           animationDelay: `${(i * 0.1) % 0.6}s`,
           top: '25%',
         }}
@@ -138,10 +138,10 @@ const AnimatedStorm = () => {
       {[...Array(8)].map((_, i) => (
         <div
           key={i}
-          className="absolute w-0.5 h-4 bg-gradient-to-b from-blue-500 to-blue-400 rounded-full"
+          className="absolute w-0.5 h-4 bg-gradient-to-b from-blue-500 to-blue-400 rounded-full animate-rain-fall"
           style={{
             left: `${15 + (i * 9) % 70}%`,
-            animation: `rainFall ${0.5 + (i % 3) * 0.15}s linear infinite`,
+            animationDuration: `${0.5 + (i % 3) * 0.15}s`,
             animationDelay: `${(i * 0.08) % 0.5}s`,
             top: '30%',
           }}
