@@ -11,6 +11,60 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
+def calculate_confidence_score(
+    weather_condition: str,
+    time_of_day: str,
+    distance_km: float,
+    surge_multiplier: float
+) -> float:
+    """
+    Calculate dynamic confidence score based on pricing factors.
+    
+    Returns a score between 0.60 and 0.95 based on:
+    - Weather severity (storms reduce confidence)
+    - Time of day (night reduces confidence)
+    - Distance (very long trips reduce confidence)
+    - Surge multiplier (high volatility reduces confidence)
+    
+    Args:
+        weather_condition: Current weather (clear, rain, storm, etc.)
+        time_of_day: Time period (morning, afternoon, evening, night)
+        distance_km: Trip distance in kilometers
+        surge_multiplier: Current surge pricing multiplier
+        
+    Returns:
+        Confidence score between 0.60 and 0.95
+    """
+    base_confidence = 0.85  # Start with high confidence
+    
+    # Reduce confidence for severe weather (more uncertainty)
+    if weather_condition:
+        weather_lower = weather_condition.lower()
+        if any(w in weather_lower for w in ['storm', 'snow', 'heavy']):
+            base_confidence -= 0.15
+        elif any(w in weather_lower for w in ['rain', 'fog', 'cloud']):
+            base_confidence -= 0.08
+    
+    # Reduce confidence for unusual times (less historical data)
+    if time_of_day == 'night':
+        base_confidence -= 0.05
+    
+    # Reduce confidence for very long distances (edge cases)
+    if distance_km > 50:
+        base_confidence -= 0.10
+    elif distance_km > 30:
+        base_confidence -= 0.05
+    
+    # Reduce confidence for high surge (volatile market)
+    if surge_multiplier > 2.0:
+        base_confidence -= 0.10
+    elif surge_multiplier > 1.5:
+        base_confidence -= 0.05
+    
+    # Ensure it stays in valid range (60% to 95%)
+    return round(max(0.60, min(0.95, base_confidence)), 2)
+
 router = APIRouter(
     prefix="/api/v1/pricing",
     tags=["pricing"],
@@ -106,17 +160,31 @@ async def calculate_pricing(request: PricingRequest) -> PricingResponse:
         
         reasoning = ". ".join(reasoning_parts)
         
+        # Calculate dynamic confidence score based on conditions
+        confidence = calculate_confidence_score(
+            weather_condition=request.weather_condition or "clear",
+            time_of_day=request.time_of_day,
+            distance_km=request.distance_km,
+            surge_multiplier=surge_multiplier
+        )
+        
         response = PricingResponse(
             base_price=round(base_price, 2),
             surge_multiplier=round(surge_multiplier, 2),
             final_price=round(final_price, 2),
             reasoning=reasoning,
-            confidence_score=0.75,  # Mock confidence score
+            confidence_score=confidence,  # Dynamic confidence based on conditions
             agent_trace_url=None,   # Will be populated with LangSmith URL (Dec 3)
             metadata={
                 "customer_id": request.customer_id,
                 "implementation": "mock",
-                "version": "1.0.0-mock"
+                "version": "1.0.0-mock",
+                "confidence_factors": {
+                    "weather": request.weather_condition or "clear",
+                    "time": request.time_of_day,
+                    "distance_km": request.distance_km,
+                    "surge": surge_multiplier
+                }
             }
         )
         
