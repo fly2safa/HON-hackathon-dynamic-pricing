@@ -11,6 +11,7 @@ import WeatherStatusBanner from '@/components/WeatherStatusBanner';
 import StatusBar from '@/components/StatusBar';
 import AIStatusIcon from '@/components/AIStatusIcon';
 import CityComparisonModal from '@/components/CityComparisonModal';
+import AnimatedMarketCard from '@/components/AnimatedMarketCard';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -68,6 +69,25 @@ export default function Home() {
       });
     }
   }, [weather, selectedCity]);
+
+  // Simulate live market data updates (for animation effect)
+  useEffect(() => {
+    const updateInterval = setInterval(() => {
+      setMarketConditions(prev => {
+        // Small random variations to trigger animations
+        const driverVariation = Math.floor(Math.random() * 5) - 2; // -2 to +2
+        const rideVariation = Math.floor(Math.random() * 7) - 3; // -3 to +3
+        
+        return {
+          ...prev,
+          availableDrivers: Math.max(10, Math.min(80, prev.availableDrivers + driverVariation)),
+          activeRides: Math.max(20, Math.min(150, prev.activeRides + rideVariation))
+        };
+      });
+    }, 5000); // Update every 5 seconds
+
+    return () => clearInterval(updateInterval);
+  }, []);
 
   // Scroll when processing starts
   useEffect(() => {
@@ -276,76 +296,36 @@ export default function Home() {
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            <div className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Demand</p>
-              <p className={`text-2xl font-bold ${
-                marketConditions.currentDemand === 'surge' ? 'text-red-600' :
-                marketConditions.currentDemand === 'high' ? 'text-orange-600' :
-                marketConditions.currentDemand === 'medium' ? 'text-yellow-600' :
-                'text-green-600'
-              }`}>
-                {marketConditions.currentDemand.toUpperCase()}
-              </p>
-            </div>
-            <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Available Drivers</p>
-              <p className="text-2xl font-bold text-blue-600">
-                {marketConditions.availableDrivers}
-              </p>
-            </div>
-            <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Active Rides</p>
-              <p className="text-2xl font-bold text-purple-600">
-                {marketConditions.activeRides}
-              </p>
-            </div>
-            <div className={`text-center p-4 bg-gradient-to-br rounded-xl border-2 relative ${
-              marketConditions.weatherType === 'storm' ? 'from-red-50 to-orange-50 border-red-300' :
-              marketConditions.weatherType === 'snow' ? 'from-blue-50 to-cyan-50 border-blue-300' :
-              marketConditions.weatherType === 'rain' ? 'from-blue-50 to-gray-50 border-blue-200' :
-              marketConditions.weatherType === 'fog' ? 'from-gray-100 to-gray-50 border-gray-300' :
-              marketConditions.weatherType === 'clouds' ? 'from-gray-50 to-white border-gray-300' :
-              'from-yellow-50 to-white border-yellow-200'
-            }`} suppressHydrationWarning>
-              {weather && weather.isRealData && (
-                <div className="absolute top-1 right-1">
-                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 border border-green-300">
-                    🌐 Live
-                  </span>
-                </div>
-              )}
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide flex items-center justify-center gap-1" suppressHydrationWarning>
-                {marketConditions.weatherType === 'storm' && '⛈️'}
-                {marketConditions.weatherType === 'snow' && '❄️'}
-                {marketConditions.weatherType === 'rain' && '🌧️'}
-                {marketConditions.weatherType === 'fog' && '🌫️'}
-                {marketConditions.weatherType === 'clear' && '☀️'}
-                {marketConditions.weatherType === 'clouds' && '☁️'}
-                Weather
-              </p>
-              <p className={`text-base font-bold ${
-                marketConditions.weatherSeverity === 'severe' ? 'text-red-700' :
-                marketConditions.weatherSeverity === 'moderate' ? 'text-orange-700' :
-                'text-gray-800'
-              }`} suppressHydrationWarning>
-                {marketConditions.weatherCondition}
-              </p>
-              {weather && weather.location && (
-                <p className="text-xs text-gray-500 mt-1" suppressHydrationWarning>
-                  {weather.location}
-                </p>
-              )}
-            </div>
-            <div className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Traffic</p>
-              <p className={`text-2xl font-bold ${
-                marketConditions.trafficLevel === 'heavy' ? 'text-red-600' :
-                marketConditions.trafficLevel === 'moderate' ? 'text-yellow-600' :
-                'text-green-600'
-              }`}>
-                {marketConditions.trafficLevel.toUpperCase()}
-              </p>
-            </div>
+            <AnimatedMarketCard
+              label="Demand"
+              value={marketConditions.currentDemand}
+              type="demand"
+            />
+            <AnimatedMarketCard
+              label="Available Drivers"
+              value={marketConditions.availableDrivers}
+              type="drivers"
+            />
+            <AnimatedMarketCard
+              label="Active Rides"
+              value={marketConditions.activeRides}
+              type="rides"
+            />
+            <AnimatedMarketCard
+              label="Weather"
+              value={marketConditions.weatherCondition}
+              type="weather"
+              weatherData={{
+                isLive: weather?.isRealData,
+                location: weather?.location,
+                weatherType: marketConditions.weatherType
+              }}
+            />
+            <AnimatedMarketCard
+              label="Traffic"
+              value={marketConditions.trafficLevel}
+              type="traffic"
+            />
           </div>
         </div>
 

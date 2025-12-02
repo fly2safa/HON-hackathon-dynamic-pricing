@@ -41,7 +41,7 @@ export interface MarketConditions {
   availableDrivers: number;
   activeRides: number;
   weatherCondition: string;
-  weatherType: 'clear' | 'rain' | 'storm' | 'snow' | 'fog';
+  weatherType: 'clear' | 'rain' | 'storm' | 'snow' | 'fog' | 'clouds';
   weatherSeverity: 'none' | 'light' | 'moderate' | 'severe';
   trafficLevel: 'light' | 'moderate' | 'heavy';
 }
