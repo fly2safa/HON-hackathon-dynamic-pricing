@@ -30,7 +30,7 @@ export default function BackendStatusBanner() {
   if (!showBanner) return null;
 
   return (
-    <div className={`fixed top-16 left-0 right-0 z-40 ${
+    <div className={`fixed top-0 left-0 right-0 z-50 ${
       backendStatus === 'checking' 
         ? 'bg-yellow-500' 
         : backendStatus === 'connected' 

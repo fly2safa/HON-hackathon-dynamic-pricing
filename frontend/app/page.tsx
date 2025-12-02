@@ -75,12 +75,12 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-10">
       {/* Backend Status Banner */}
       <BackendStatusBanner />
       
       {/* Header */}
-      <header className="bg-black shadow-md sticky top-0 z-50">
+      <header className="bg-black shadow-md sticky top-10 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
