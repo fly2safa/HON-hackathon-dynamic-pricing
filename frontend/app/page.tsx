@@ -11,6 +11,8 @@ import WeatherStatusBanner from '@/components/WeatherStatusBanner';
 import StatusBar from '@/components/StatusBar';
 import AIStatusIcon from '@/components/AIStatusIcon';
 import CityComparisonModal from '@/components/CityComparisonModal';
+import DemandThermometer from '@/components/DemandThermometer';
+import DemandThermometerCard from '@/components/DemandThermometerCard';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -276,17 +278,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            <div className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Demand</p>
-              <p className={`text-2xl font-bold ${
-                marketConditions.currentDemand === 'surge' ? 'text-red-600' :
-                marketConditions.currentDemand === 'high' ? 'text-orange-600' :
-                marketConditions.currentDemand === 'medium' ? 'text-yellow-600' :
-                'text-green-600'
-              }`}>
-                {marketConditions.currentDemand.toUpperCase()}
-              </p>
-            </div>
+            <DemandThermometerCard demand={marketConditions.currentDemand as 'low' | 'medium' | 'high' | 'surge'} />
             <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-gray-200">
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Available Drivers</p>
               <p className="text-2xl font-bold text-blue-600">
