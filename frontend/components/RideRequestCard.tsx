@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { type RideRequest, getLoyaltyBadge } from '@/lib/mockData';
+import { formatDistance } from '@/lib/formatUtils';
 
 interface RideRequestCardProps {
   ride: RideRequest;
@@ -106,7 +107,7 @@ export default function RideRequestCard({
       <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200">
         <div>
           <p className="text-xs font-medium text-gray-500 mb-1">Distance</p>
-          <p className="text-2xl font-bold text-gray-900">{ride.distance} <span className="text-base font-normal text-gray-600">mi</span></p>
+          <p className="text-lg font-bold text-gray-900">{formatDistance(ride.distance)}</p>
         </div>
         <div>
           <p className="text-xs font-medium text-gray-500 mb-1">Est. Duration</p>
