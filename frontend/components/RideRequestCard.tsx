@@ -56,7 +56,7 @@ export default function RideRequestCard({
               </span>
             )}
           </div>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500" suppressHydrationWarning>
             {ride.isScheduled && ride.scheduledTime 
               ? `Scheduled for ${new Date(ride.scheduledTime).toLocaleString([], { 
                   month: 'short', 

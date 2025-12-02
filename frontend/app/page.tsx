@@ -20,6 +20,7 @@ import {
   type MarketConditions,
   type LoyaltyTier
 } from '@/lib/mockData';
+import { calculatePricingWithBackend } from '@/lib/dataAdapter';
 import { useRealWeather } from '@/hooks/useRealWeather';
 import { formatWeatherDisplay, getWeatherEmoji } from '@/lib/weatherService';
 
