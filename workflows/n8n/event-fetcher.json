@@ -1,0 +1,69 @@
+{
+  "name": "HoneyGo - Event Fetcher",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "event-data",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-events",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "honeygo-events"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://app.ticketmaster.com/discovery/v2/events.json?city={{ $json.body.city }}&apikey={{ $env.EVENTS_API_KEY }}&size=10&sort=date,asc",
+        "options": {}
+      },
+      "id": "http-events-api",
+      "name": "Get Events",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Transform events data for HoneyGo pricing\nconst response = $input.first().json;\nconst events = response._embedded?.events || [];\n\nconst now = new Date();\nconst threeHoursFromNow = new Date(now.getTime() + 3 * 60 * 60 * 1000);\n\n// Filter events happening soon\nconst upcomingEvents = events\n  .filter(event => {\n    const eventDate = new Date(event.dates.start.dateTime);\n    return eventDate >= now && eventDate <= threeHoursFromNow;\n  })\n  .map(event => {\n    // Estimate attendance based on venue\n    let attendance = 5000;\n    let multiplier = 1.2;\n    \n    const type = event.classifications?.[0]?.segment?.name?.toLowerCase() || 'other';\n    \n    if (type.includes('sport')) {\n      attendance = 20000;\n      multiplier = 1.4;\n    } else if (type.includes('music')) {\n      attendance = 15000;\n      multiplier = 1.5;\n    } else if (type.includes('arts')) {\n      attendance = 2000;\n      multiplier = 1.15;\n    }\n    \n    return {\n      id: event.id,\n      name: event.name,\n      type: type,\n      venue: event._embedded?.venues?.[0]?.name || 'Unknown',\n      date: event.dates.start.localDate,\n      time: event.dates.start.localTime,\n      expected_attendance: attendance,\n      pricing_multiplier: multiplier,\n      surge_radius_miles: 3\n    };\n  });\n\nlet finalMultiplier = 1.0;\nlet reasoning = 'No major events detected nearby';\n\nif (upcomingEvents.length > 0) {\n  // Use highest multiplier from nearby events\n  finalMultiplier = Math.max(...upcomingEvents.map(e => e.pricing_multiplier));\n  reasoning = `${upcomingEvents.length} event(s) nearby: ${upcomingEvents.map(e => e.name).join(', ')}`;\n}\n\nreturn {\n  city: $input.first().json.body?.city || 'Unknown',\n  events: upcomingEvents,\n  event_count: upcomingEvents.length,\n  pricing_multiplier: finalMultiplier,\n  reasoning: reasoning,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "transform-events",
+      "name": "Transform Events",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "respond-events",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{"node": "Get Events", "type": "main", "index": 0}]]
+    },
+    "Get Events": {
+      "main": [[{"node": "Transform Events", "type": "main", "index": 0}]]
+    },
+    "Transform Events": {
+      "main": [[{"node": "Respond to Webhook", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": [{"name": "HoneyGo"}, {"name": "Events"}]
+}

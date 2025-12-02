@@ -1,0 +1,62 @@
+{
+  "phoenix": {
+    "city": "Phoenix",
+    "state": "AZ",
+    "conditions": "Clear",
+    "temperature_f": 75,
+    "humidity": 25,
+    "wind_mph": 8,
+    "precipitation_chance": 0,
+    "visibility_miles": 10,
+    "pricing_multiplier": 1.0,
+    "reasoning": "Clear weather, no impact on pricing"
+  },
+  "phoenix_extreme": {
+    "city": "Phoenix",
+    "state": "AZ",
+    "conditions": "Extreme Heat",
+    "temperature_f": 115,
+    "humidity": 15,
+    "wind_mph": 5,
+    "precipitation_chance": 0,
+    "visibility_miles": 10,
+    "pricing_multiplier": 1.15,
+    "reasoning": "Extreme heat increases AC usage and driver discomfort"
+  },
+  "new_york": {
+    "city": "New York",
+    "state": "NY",
+    "conditions": "Rain",
+    "temperature_f": 45,
+    "humidity": 85,
+    "wind_mph": 15,
+    "precipitation_chance": 80,
+    "visibility_miles": 4,
+    "pricing_multiplier": 1.25,
+    "reasoning": "Rain reduces visibility and increases demand"
+  },
+  "new_york_snow": {
+    "city": "New York",
+    "state": "NY",
+    "conditions": "Heavy Snow",
+    "temperature_f": 28,
+    "humidity": 90,
+    "wind_mph": 20,
+    "precipitation_chance": 95,
+    "visibility_miles": 1,
+    "pricing_multiplier": 1.5,
+    "reasoning": "Snow significantly impacts road conditions and driver availability"
+  },
+  "chicago": {
+    "city": "Chicago",
+    "state": "IL",
+    "conditions": "Cloudy",
+    "temperature_f": 55,
+    "humidity": 60,
+    "wind_mph": 25,
+    "precipitation_chance": 30,
+    "visibility_miles": 8,
+    "pricing_multiplier": 1.05,
+    "reasoning": "High winds slightly impact driving conditions"
+  }
+}
