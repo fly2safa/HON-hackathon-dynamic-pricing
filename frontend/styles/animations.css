@@ -101,3 +101,15 @@
   animation: bounce 1.4s ease-in-out infinite;
 }
 
+.animate-cloud-float {
+  animation: cloudFloat 8s ease-in-out infinite;
+}
+
+.animate-cloud-float-delayed {
+  animation: cloudFloat 10s ease-in-out infinite 2s;
+}
+
+.animate-rain-fall {
+  animation: rainFall linear infinite;
+}
+
