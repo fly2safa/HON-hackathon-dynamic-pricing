@@ -24,7 +24,8 @@ export interface PricingResult {
   driverEarnings: number;
   reasoning: string[];
   confidence: number;
-  processingTime: number;
+  processingTime: number; // AI calculation time only
+  totalTime?: number; // Total user wait time (includes UI/network)
   competitorPricing?: {
     uber: number;
     lyft: number;
@@ -181,16 +182,18 @@ export const generateMarketConditions = (city: string): MarketConditions => {
 export const mockMarketConditions: MarketConditions = generateMarketConditions('Phoenix');
 
 // Export weather multiplier for pricing
-export const getWeatherMultiplier = () => {
+export const getWeatherMultiplier = (weatherType?: string) => {
+  const currentWeather = weatherType || mockMarketConditions.weatherType;
   const weatherOptions = [
     { type: 'clear', multiplier: 1.0 },
     { type: 'rain', multiplier: mockMarketConditions.weatherSeverity === 'light' ? 1.1 : 1.25 },
     { type: 'storm', multiplier: 1.5 },
     { type: 'snow', multiplier: 1.4 },
     { type: 'fog', multiplier: 1.2 },
+    { type: 'clouds', multiplier: 1.05 },
   ];
   
-  return weatherOptions.find(w => w.type === mockMarketConditions.weatherType)?.multiplier || 1.0;
+  return weatherOptions.find(w => w.type === currentWeather)?.multiplier || 1.0;
 };
 
 // Simulate AI processing with realistic delays
@@ -200,7 +203,9 @@ export const getWeatherMultiplier = () => {
 // - For scheduled rides, backend will use weather forecast API
 // - MongoDB will store historical pricing decisions
 // - ChromaDB will provide similar context for better AI reasoning
-export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Promise<PricingResult> => {
+export const simulateAIPricing = async (rideId: string, ride?: RideRequest, weatherType?: string): Promise<PricingResult> => {
+  console.log('🎯 simulateAIPricing called with weatherType:', weatherType);
+  
   // Record actual start time
   const startTime = Date.now();
   
@@ -227,7 +232,7 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       'New York': 1.4,
       'San Francisco': 1.5,
       'Chicago': 1.2,
-      'Tampa': 0.95, // Slightly lower than Phoenix (lower cost of living)
+      'Orlando': 0.95, // Slightly lower than Phoenix (lower cost of living, tourist market)
     };
     
     const cityMultiplier = cityMultipliers[ride.city] || 1.0;
@@ -242,13 +247,25 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       // Scheduled rides: predict future weather (50% chance of change)
       rideWeather = generateWeatherConditions(true);
     } else {
-      // Immediate rides: use current weather
+      // Immediate rides: use passed weather or current market weather
+      const currentWeatherType = weatherType || mockMarketConditions.weatherType;
+      
+      // Determine severity based on weather type
+      const weatherSeverity = 
+        currentWeatherType === 'storm' ? 'severe' as const :
+        currentWeatherType === 'snow' ? 'moderate' as const :
+        currentWeatherType === 'rain' ? 'moderate' as const :
+        currentWeatherType === 'fog' ? 'moderate' as const :
+        'none' as const;
+      
       rideWeather = {
-        type: mockMarketConditions.weatherType,
-        severity: mockMarketConditions.weatherSeverity,
+        type: currentWeatherType as any,
+        severity: weatherSeverity,
         display: mockMarketConditions.weatherCondition,
-        multiplier: getWeatherMultiplier()
+        multiplier: getWeatherMultiplier(currentWeatherType)
       };
+      
+      console.log('🌦️ Using weather for pricing:', { type: currentWeatherType, severity: weatherSeverity, multiplier: rideWeather.multiplier });
     }
     
     const weatherMultiplier = rideWeather.multiplier;
@@ -275,13 +292,14 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest): Pro
       rideWeather.type === 'rain' && rideWeather.severity === 'moderate' ? weatherPrefix + 'Heavy rain - increased pricing for difficult driving conditions' :
       rideWeather.type === 'rain' && rideWeather.severity === 'light' ? weatherPrefix + 'Light rain - slight price adjustment' :
       rideWeather.type === 'fog' ? weatherPrefix + 'Dense fog - reduced visibility increases risk' :
+      rideWeather.type === 'clouds' ? weatherPrefix + 'Cloudy conditions - slight price adjustment' :
       weatherPrefix + 'Clear conditions - standard pricing';
     
     const cityPricingNote = 
       ride.city === 'New York' ? 'NYC market: Higher base rates due to cost of living' :
       ride.city === 'San Francisco' ? 'SF market: Premium pricing for high-demand area' :
       ride.city === 'Chicago' ? 'Chicago market: Moderate pricing adjustment' :
-      ride.city === 'Tampa' ? 'Tampa market: Competitive pricing, lower cost of living' :
+      ride.city === 'Orlando' ? 'Orlando market: Tourist-friendly pricing, competitive rates' :
       'Phoenix market: Standard base rates';
     
     const loyaltyNote = ride.loyaltyTier && ride.loyaltyTier !== 'new'
@@ -368,11 +386,11 @@ const cityLocations = {
     { pickup: 'Wrigley Field', dropoff: 'The Loop' },
     { pickup: 'Lincoln Park', dropoff: 'Michigan Avenue' },
   ],
-  'Tampa': [
-    { pickup: 'Tampa International Airport', dropoff: 'Ybor City' },
-    { pickup: 'Busch Gardens', dropoff: 'Downtown Tampa' },
-    { pickup: 'Clearwater Beach', dropoff: 'Tampa Riverwalk' },
-    { pickup: 'Amalie Arena', dropoff: 'Hyde Park Village' },
+  'Orlando': [
+    { pickup: 'Orlando International Airport', dropoff: 'Disney Springs' },
+    { pickup: 'Universal Studios', dropoff: 'Downtown Orlando' },
+    { pickup: 'Lake Eola', dropoff: 'International Drive' },
+    { pickup: 'Amway Center', dropoff: 'Winter Park' },
   ],
 };
 

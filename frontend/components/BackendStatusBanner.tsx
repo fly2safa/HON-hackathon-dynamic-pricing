@@ -9,7 +9,13 @@
 import { useState, useEffect } from 'react';
 import { isBackendAvailable } from '@/lib/dataAdapter';
 
-export default function BackendStatusBanner() {
+interface BackendStatusBannerProps {
+  onClose?: () => void;
+  onStatusChange?: (connected: boolean) => void;
+  hasStatusBar?: boolean;
+}
+
+export default function BackendStatusBanner({ onClose, onStatusChange, hasStatusBar = false }: BackendStatusBannerProps = {}) {
   const [backendStatus, setBackendStatus] = useState<'checking' | 'connected' | 'disconnected'>('checking');
   const [showBanner, setShowBanner] = useState(true);
 
@@ -25,12 +31,15 @@ export default function BackendStatusBanner() {
   const checkBackendStatus = async () => {
     const isAvailable = await isBackendAvailable();
     setBackendStatus(isAvailable ? 'connected' : 'disconnected');
+    if (onStatusChange) {
+      onStatusChange(isAvailable);
+    }
   };
 
   if (!showBanner) return null;
 
   return (
-    <div className={`fixed top-0 left-0 right-0 z-50 ${
+    <div className={`fixed ${hasStatusBar ? 'top-8' : 'top-0'} left-0 right-0 z-50 ${
       backendStatus === 'checking' 
         ? 'bg-yellow-500' 
         : backendStatus === 'connected' 
@@ -78,7 +87,10 @@ export default function BackendStatusBanner() {
 
         {/* Close Button */}
         <button
-          onClick={() => setShowBanner(false)}
+          onClick={() => {
+            setShowBanner(false);
+            if (onClose) onClose();
+          }}
           className="text-white hover:text-gray-200 transition-colors"
           aria-label="Close banner"
         >

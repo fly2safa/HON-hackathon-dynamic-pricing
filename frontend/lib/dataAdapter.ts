@@ -192,7 +192,7 @@ export async function calculatePricingWithBackend(
     
     // Fallback to mock data if backend fails
     const { simulateAIPricing } = await import('./mockData');
-    return simulateAIPricing(ride.id, ride);
+    return simulateAIPricing(ride.id, ride, weatherType);
   }
 }
 
