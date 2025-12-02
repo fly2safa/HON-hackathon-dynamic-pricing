@@ -18,7 +18,8 @@ import {
   type MarketConditions,
   type LoyaltyTier
 } from '@/lib/mockData';
-import { calculatePricingWithBackend } from '@/lib/dataAdapter';
+import { useRealWeather } from '@/hooks/useRealWeather';
+import { formatWeatherDisplay, getWeatherEmoji } from '@/lib/weatherService';
 
 export default function Home() {
   const [selectedRide, setSelectedRide] = useState<RideRequest | null>(null);
@@ -30,11 +31,34 @@ export default function Home() {
   const [marketConditions, setMarketConditions] = useState<MarketConditions>(generateMarketConditions('Phoenix'));
   const resultsSectionRef = useRef<HTMLDivElement>(null);
 
-  // Update market conditions when city changes
+  // Fetch real-time weather for selected city
+  const { weather, loading: weatherLoading, error: weatherError } = useRealWeather(selectedCity);
+
+  // Update market conditions when city or weather changes
   const handleCityChange = (city: string) => {
     setSelectedCity(city);
     setMarketConditions(generateMarketConditions(city));
   };
+
+  // Update weather in market conditions when real weather data arrives
+  useEffect(() => {
+    if (weather) {
+      setMarketConditions(prev => ({
+        ...prev,
+        weatherCondition: formatWeatherDisplay(weather),
+        weatherType: weather.weatherType,
+        weatherSeverity: weather.weatherSeverity
+      }));
+      
+      // Log to console for debugging
+      console.log(`🌦️ Real weather loaded for ${selectedCity}:`, {
+        temperature: weather.temperature,
+        condition: weather.condition,
+        isRealData: weather.isRealData,
+        location: weather.location
+      });
+    }
+  }, [weather, selectedCity]);
 
   // Scroll when processing starts
   useEffect(() => {
@@ -121,7 +145,7 @@ export default function Home() {
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-3">Select Market</label>
           <div className="flex gap-3 flex-wrap">
-            {['Phoenix', 'New York', 'San Francisco', 'Chicago', 'Tampa'].map((city) => (
+            {['Phoenix', 'New York', 'San Francisco', 'Chicago', 'Orlando'].map((city) => (
               <button
                 key={city}
                 onClick={() => handleCityChange(city)}
@@ -131,10 +155,11 @@ export default function Home() {
                     : 'bg-white text-gray-700 border-2 border-gray-300 hover:border-[#FF6A13] hover:shadow-md'
                 }`}
               >
-                {city === 'New York' ? '🗽' : 
+                {city === 'Phoenix' ? '🌵' : 
+                 city === 'New York' ? '🗽' : 
                  city === 'San Francisco' ? '🌉' : 
                  city === 'Chicago' ? '🏙️' : 
-                 city === 'Tampa' ? '🌴' : 
+                 city === 'Orlando' ? '🏰' : 
                  '🏜️'} {city}
               </button>
             ))}
@@ -203,19 +228,28 @@ export default function Home() {
                 {marketConditions.activeRides}
               </p>
             </div>
-            <div className={`text-center p-4 bg-gradient-to-br rounded-xl border-2 ${
+            <div className={`text-center p-4 bg-gradient-to-br rounded-xl border-2 relative ${
               marketConditions.weatherType === 'storm' ? 'from-red-50 to-orange-50 border-red-300' :
               marketConditions.weatherType === 'snow' ? 'from-blue-50 to-cyan-50 border-blue-300' :
               marketConditions.weatherType === 'rain' ? 'from-blue-50 to-gray-50 border-blue-200' :
               marketConditions.weatherType === 'fog' ? 'from-gray-100 to-gray-50 border-gray-300' :
+              marketConditions.weatherType === 'clouds' ? 'from-gray-50 to-white border-gray-300' :
               'from-yellow-50 to-white border-yellow-200'
             }`}>
+              {weather && weather.isRealData && (
+                <div className="absolute top-1 right-1">
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 border border-green-300">
+                    🌐 Live
+                  </span>
+                </div>
+              )}
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide flex items-center justify-center gap-1">
                 {marketConditions.weatherType === 'storm' && '⛈️'}
                 {marketConditions.weatherType === 'snow' && '❄️'}
                 {marketConditions.weatherType === 'rain' && '🌧️'}
                 {marketConditions.weatherType === 'fog' && '🌫️'}
                 {marketConditions.weatherType === 'clear' && '☀️'}
+                {marketConditions.weatherType === 'clouds' && '☁️'}
                 Weather
               </p>
               <p className={`text-base font-bold ${
@@ -225,6 +259,11 @@ export default function Home() {
               }`}>
                 {marketConditions.weatherCondition}
               </p>
+              {weather && weather.location && (
+                <p className="text-xs text-gray-500 mt-1">
+                  {weather.location}
+                </p>
+              )}
             </div>
             <div className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Traffic</p>
