@@ -2,7 +2,7 @@
 
 **Date:** December 2, 2025  
 **Database:** MongoDB Atlas Cluster0  
-**User:** honeywell
+**User:** username
 
 ---
 
@@ -16,21 +16,21 @@ The MongoDB connection string is **working correctly**. The application can succ
 
 ### Connection Details
 - **Host:** `cluster0.qpxvnax.mongodb.net`
-- **Username:** `honeywell`
-- **Password:** `getyourcar` ✓ (verified working)
+- **Username:** `username`
+- **Password:** `password` ✓ (verified working)
 - **Authentication:** ✅ Successful
 - **Network Access:** ✅ IP whitelisted
 
 ### Current Connection String
 ```
-mongodb+srv://honeywell:getyourcar@cluster0.qpxvnax.mongodb.net/honeygo_pricing?retryWrites=true&w=majority
+mongodb+srv://username:password@cluster0.qpxvnax.mongodb.net/honeygo_pricing?retryWrites=true&w=majority
 ```
 
 ---
 
 ## ⚠️ ISSUE IDENTIFIED: Permission Restrictions
 
-The user `honeywell` has **authentication access** but **NO read/write permissions** on the database.
+The user `username` has **authentication access** but **NO read/write permissions** on the database.
 
 ### What's Not Working
 ❌ Cannot list collections  
@@ -57,7 +57,7 @@ You need to update the user permissions in MongoDB Atlas:
 #### Steps:
 1. Go to [MongoDB Atlas](https://cloud.mongodb.com)
 2. Navigate to **Database Access** (left sidebar)
-3. Find the user **`honeywell`**
+3. Find the user **`username`**
 4. Click **Edit** on that user
 5. Under "Database User Privileges", change to one of:
    
@@ -85,12 +85,12 @@ Update your connection string to use `honeygo` (without `_pricing`):
 
 **Change FROM:**
 ```
-mongodb+srv://honeywell:getyourcar@cluster0.qpxvnax.mongodb.net/honeygo_pricing?retryWrites=true&w=majority
+mongodb+srv://username:password@cluster0.qpxvnax.mongodb.net/honeygo_pricing?retryWrites=true&w=majority
 ```
 
 **Change TO:**
 ```
-mongodb+srv://honeywell:getyourcar@cluster0.qpxvnax.mongodb.net/honeygo?retryWrites=true&w=majority
+mongodb+srv://username:password@cluster0.qpxvnax.mongodb.net/honeygo?retryWrites=true&w=majority
 ```
 
 **Then update the user permissions** to grant `readWrite` on database `honeygo` instead of `honeygo_pricing`.
@@ -119,7 +119,7 @@ Once permissions are granted, re-run the test to see:
 
 ## 🚀 Next Steps
 
-1. **IMMEDIATE:** Grant read permissions to user `honeywell` in MongoDB Atlas
+1. **IMMEDIATE:** Grant read permissions to user `username` in MongoDB Atlas
 2. **RECOMMENDED:** Change database name to `honeygo` (consistent with backend code)
 3. **VERIFY:** Re-run the connection test after permission changes
 
