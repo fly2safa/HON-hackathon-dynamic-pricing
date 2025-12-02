@@ -161,7 +161,7 @@ export const generateMarketConditions = (city: string): MarketConditions => {
     'New York': { drivers: 125, rides: 340, demand: 'surge', traffic: 'heavy' },
     'San Francisco': { drivers: 78, rides: 210, demand: 'high', traffic: 'heavy' },
     'Chicago': { drivers: 95, rides: 180, demand: 'high', traffic: 'moderate' },
-    'Tampa': { drivers: 35, rides: 68, demand: 'medium', traffic: 'light' },
+    'Orlando': { drivers: 35, rides: 68, demand: 'medium', traffic: 'light' },
   };
   
   const market = cityMarkets[city] || cityMarkets['Phoenix'];
