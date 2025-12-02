@@ -15,12 +15,20 @@ data/
 ├── raw/                       # Original data files
 │   ├── dynamic_pricing.csv   # Original dataset (1000 records)
 │   └── dynamic_pricing.tsv   # Alternative format
-├── mongodb/                   # MongoDB seed scripts (Jason)
+├── mongodb_export/            # MongoDB exported data (for local dev) ✨ NEW
+│   ├── customers.json        # 988 customer documents (497 KB)
+│   ├── rides.json            # 1000 ride documents (642 KB)
+│   ├── pricing_decisions.json # 1000 pricing decisions (2.6 MB)
+│   ├── drivers.json          # 159 driver documents (140 KB)
+│   ├── external_data.json    # 1200 external data documents (753 KB)
+│   ├── metadata.json         # Export metadata
+│   └── README.md             # Export documentation
+├── mongodb/                   # MongoDB seed scripts (Jason) - git ignored
 │   ├── seed_mongodb.py       # Main seeding script
 │   ├── rides_data.json       # Processed ride data
 │   ├── customers_data.json   # Customer profiles
 │   └── drivers_data.json     # Driver profiles
-├── chromadb/                  # ChromaDB seed scripts (Safa)
+├── chromadb/                  # ChromaDB data files - git ignored
 │   ├── seed_chromadb.py      # Main seeding script
 │   ├── hon_knowledge.json    # HON domain knowledge (20+ items)
 │   └── pricing_reasoning.json # Historical pricing reasoning
@@ -116,6 +124,34 @@ For development and testing without external APIs:
 ## Dependencies
 - MongoDB Atlas connection string (Jason sets up Dec 1)
 - ChromaDB setup (Safa sets up Dec 1)
+
+## 🆕 Local MongoDB Setup (Dec 2, 2025)
+
+### Quick Start - Run MongoDB Locally
+
+**Why?** Faster development, offline access, full read/write permissions.
+
+**Steps:**
+1. **Export cloud data** (already done - see `mongodb_export/`)
+2. **Install MongoDB locally** (see `MONGODB_LOCAL_SETUP.md` in project root)
+3. **Import data:**
+   ```bash
+   cd /home/jason/Python/AzNext_VibeCoding/HON-hackathon-dynamic-pricing
+   python import_mongodb_data.py
+   ```
+4. **Update `.env`:**
+   ```bash
+   # Switch from cloud to local
+   MONGODB_URI=mongodb://localhost:27017/HoneyGo
+   ```
+
+**Exported Data:**
+- ✅ `mongodb_export/` - Contains 4,347 documents (~4.6 MB)
+- ✅ Committed to Git for team sharing
+- ✅ Use `export_mongodb_data.py` to refresh from cloud
+- ✅ Use `import_mongodb_data.py` to import to local MongoDB
+
+See `MONGODB_LOCAL_SETUP.md` for complete instructions.
 
 ## Reference
 See `docs/project-structure-guide.md` for detailed instructions and sample code.

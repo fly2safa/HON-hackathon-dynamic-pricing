@@ -1,0 +1,5408 @@
+[
+  {
+    "driver_id": "DRV-720620",
+    "name": "Omar Jackson",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.21,
+    "total_rides_completed": 737,
+    "total_earnings": 180344.35,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 7357.2,
+      "this_month": 35314.56,
+      "average_per_ride": 245.24
+    },
+    "incentives": {
+      "surge_bonus_earned": 26264.98,
+      "peak_hour_bonus": 11524.41,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.89,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.21
+    },
+    "joined_date": "2025-09-10 19:12:11",
+    "last_ride_date": "2025-11-25 12:12:11"
+  },
+  {
+    "driver_id": "DRV-923599",
+    "name": "William Rodriguez",
+    "status": "Inactive",
+    "vehicle_type": "Economy",
+    "rating": 3.83,
+    "total_rides_completed": 162,
+    "total_earnings": 47367.23,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-08-30 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 245.38
+    },
+    "incentives": {
+      "surge_bonus_earned": 1357.69,
+      "peak_hour_bonus": 881.71,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.71,
+      "cancellation_rate": 0.15,
+      "on_time_rate": 0.79,
+      "customer_satisfaction": 3.83
+    },
+    "joined_date": "2025-02-26 01:12:11",
+    "last_ride_date": "2025-08-29 17:12:11"
+  },
+  {
+    "driver_id": "DRV-926997",
+    "name": "Linda Rodriguez",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.26,
+    "total_rides_completed": 825,
+    "total_earnings": 227719.18,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 716.34,
+      "this_week": 2149.02,
+      "this_month": 34384.32,
+      "average_per_ride": 238.78
+    },
+    "incentives": {
+      "surge_bonus_earned": 12038.43,
+      "peak_hour_bonus": 6453.22,
+      "quality_bonus": 0.0,
+      "retention_bonus": 761.64
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.8,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.91,
+      "customer_satisfaction": 4.26
+    },
+    "joined_date": "2024-04-21 08:12:11",
+    "last_ride_date": "2025-11-26 00:12:11"
+  },
+  {
+    "driver_id": "DRV-495816",
+    "name": "Jessica Taylor",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.05,
+    "total_rides_completed": 1632,
+    "total_earnings": 425125.11,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 02:12:11"
+    },
+    "earnings_stats": {
+      "today": 2004.96,
+      "this_week": 10275.42,
+      "this_month": 40099.2,
+      "average_per_ride": 250.62
+    },
+    "incentives": {
+      "surge_bonus_earned": 62842.99,
+      "peak_hour_bonus": 33330.74,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1032.88
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.1,
+      "on_time_rate": 0.94,
+      "customer_satisfaction": 4.05
+    },
+    "joined_date": "2023-10-18 06:12:11",
+    "last_ride_date": "2025-11-26 04:12:11"
+  },
+  {
+    "driver_id": "DRV-681536",
+    "name": "Raj Thompson",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.27,
+    "total_rides_completed": 1837,
+    "total_earnings": 644763.0,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 20:12:11"
+    },
+    "earnings_stats": {
+      "today": 590.96,
+      "this_week": 9750.84,
+      "this_month": 42253.64,
+      "average_per_ride": 295.48
+    },
+    "incentives": {
+      "surge_bonus_earned": 61029.51,
+      "peak_hour_bonus": 48328.44,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.84,
+      "customer_satisfaction": 4.27
+    },
+    "joined_date": "2025-06-21 10:12:11",
+    "last_ride_date": "2025-11-24 10:12:11"
+  },
+  {
+    "driver_id": "DRV-479124",
+    "name": "Dmitri Ali",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.25,
+    "total_rides_completed": 1340,
+    "total_earnings": 403596.36,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-26 01:12:11"
+    },
+    "earnings_stats": {
+      "today": 1690.68,
+      "this_week": 3381.36,
+      "this_month": 25923.76,
+      "average_per_ride": 281.78
+    },
+    "incentives": {
+      "surge_bonus_earned": 23573.77,
+      "peak_hour_bonus": 23648.01,
+      "quality_bonus": 0.0,
+      "retention_bonus": 793.15
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.83,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.87,
+      "customer_satisfaction": 4.25
+    },
+    "joined_date": "2024-04-17 04:12:11",
+    "last_ride_date": "2025-11-25 18:12:11"
+  },
+  {
+    "driver_id": "DRV-162279",
+    "name": "Robert Jackson",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.2,
+    "total_rides_completed": 1652,
+    "total_earnings": 355798.03,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 05:12:11"
+    },
+    "earnings_stats": {
+      "today": 555.7,
+      "this_week": 5279.15,
+      "this_month": 24172.95,
+      "average_per_ride": 277.85
+    },
+    "incentives": {
+      "surge_bonus_earned": 19308.09,
+      "peak_hour_bonus": 10671.38,
+      "quality_bonus": 0.0,
+      "retention_bonus": 741.1
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.79,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.2
+    },
+    "joined_date": "2024-05-09 19:12:11",
+    "last_ride_date": "2025-11-24 07:12:11"
+  },
+  {
+    "driver_id": "DRV-238998",
+    "name": "David Ali",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.39,
+    "total_rides_completed": 1191,
+    "total_earnings": 275077.74,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 1431.18,
+      "this_week": 2862.36,
+      "this_month": 29816.25,
+      "average_per_ride": 238.53
+    },
+    "incentives": {
+      "surge_bonus_earned": 35107.67,
+      "peak_hour_bonus": 6738.45,
+      "quality_bonus": 0.0,
+      "retention_bonus": 489.04
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.83,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.39
+    },
+    "joined_date": "2024-11-25 01:12:11",
+    "last_ride_date": "2025-11-25 16:12:11"
+  },
+  {
+    "driver_id": "DRV-524086",
+    "name": "Jennifer Petrov",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.68,
+    "total_rides_completed": 1737,
+    "total_earnings": 468747.15,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 09:12:11"
+    },
+    "earnings_stats": {
+      "today": 2535.66,
+      "this_week": 13523.52,
+      "this_month": 13523.52,
+      "average_per_ride": 281.74
+    },
+    "incentives": {
+      "surge_bonus_earned": 69930.66,
+      "peak_hour_bonus": 26488.69,
+      "quality_bonus": 19783.64,
+      "retention_bonus": 438.36
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.86,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.96,
+      "customer_satisfaction": 4.68
+    },
+    "joined_date": "2024-12-23 06:12:11",
+    "last_ride_date": "2025-11-24 22:12:11"
+  },
+  {
+    "driver_id": "DRV-790674",
+    "name": "Ahmed Harris",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 3.8,
+    "total_rides_completed": 1766,
+    "total_earnings": 438199.65,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-26 17:12:11"
+    },
+    "earnings_stats": {
+      "today": 2173.15,
+      "this_week": 6519.45,
+      "this_month": 7761.25,
+      "average_per_ride": 310.45
+    },
+    "incentives": {
+      "surge_bonus_earned": 52167.4,
+      "peak_hour_bonus": 33958.9,
+      "quality_bonus": 0.0,
+      "retention_bonus": 712.33
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.65,
+      "cancellation_rate": 0.17,
+      "on_time_rate": 0.77,
+      "customer_satisfaction": 3.8
+    },
+    "joined_date": "2024-06-15 02:12:11",
+    "last_ride_date": "2025-11-26 20:12:11"
+  },
+  {
+    "driver_id": "DRV-505284",
+    "name": "Robert Chen",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.3,
+    "total_rides_completed": 1817,
+    "total_earnings": 456695.45,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 08:12:11"
+    },
+    "earnings_stats": {
+      "today": 3423.64,
+      "this_week": 13383.32,
+      "this_month": 35481.36,
+      "average_per_ride": 311.24
+    },
+    "incentives": {
+      "surge_bonus_earned": 65090.92,
+      "peak_hour_bonus": 18094.3,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.84,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.3
+    },
+    "joined_date": "2025-07-02 04:12:11",
+    "last_ride_date": "2025-11-26 02:12:11"
+  },
+  {
+    "driver_id": "DRV-608551",
+    "name": "Mei Lee",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.4,
+    "total_rides_completed": 377,
+    "total_earnings": 95929.92,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 21:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 8959.68,
+      "this_month": 45325.44,
+      "average_per_ride": 263.52
+    },
+    "incentives": {
+      "surge_bonus_earned": 8897.26,
+      "peak_hour_bonus": 2492.06,
+      "quality_bonus": 0.0,
+      "retention_bonus": 630.14
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.81,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.4
+    },
+    "joined_date": "2024-08-22 05:12:11",
+    "last_ride_date": "2025-11-25 23:12:11"
+  },
+  {
+    "driver_id": "DRV-805989",
+    "name": "David Ali",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 4.23,
+    "total_rides_completed": 163,
+    "total_earnings": 53142.14,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-10-23 06:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 258.31
+    },
+    "incentives": {
+      "surge_bonus_earned": 2434.73,
+      "peak_hour_bonus": 1503.77,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.23
+    },
+    "joined_date": "2024-07-29 12:12:11",
+    "last_ride_date": "2025-10-22 02:12:11"
+  },
+  {
+    "driver_id": "DRV-929969",
+    "name": "Jessica Kumar",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.37,
+    "total_rides_completed": 510,
+    "total_earnings": 143609.61,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 2649.2,
+      "this_week": 7682.68,
+      "this_month": 42387.2,
+      "average_per_ride": 264.92
+    },
+    "incentives": {
+      "surge_bonus_earned": 15383.41,
+      "peak_hour_bonus": 5533.24,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.82,
+      "customer_satisfaction": 4.37
+    },
+    "joined_date": "2025-05-25 07:12:11",
+    "last_ride_date": "2025-11-26 21:12:11"
+  },
+  {
+    "driver_id": "DRV-896796",
+    "name": "Anya Thompson",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.43,
+    "total_rides_completed": 208,
+    "total_earnings": 53278.06,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 20:12:11"
+    },
+    "earnings_stats": {
+      "today": 1210.25,
+      "this_week": 2178.45,
+      "this_month": 30498.3,
+      "average_per_ride": 242.05
+    },
+    "incentives": {
+      "surge_bonus_earned": 7237.14,
+      "peak_hour_bonus": 3460.61,
+      "quality_bonus": 0.0,
+      "retention_bonus": 261.64
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.81,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.43
+    },
+    "joined_date": "2025-05-06 18:12:11",
+    "last_ride_date": "2025-11-25 23:12:11"
+  },
+  {
+    "driver_id": "DRV-346501",
+    "name": "Patricia Okafor",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.81,
+    "total_rides_completed": 302,
+    "total_earnings": 68425.65,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 10240.49,
+      "this_month": 30444.7,
+      "average_per_ride": 276.77
+    },
+    "incentives": {
+      "surge_bonus_earned": 4411.94,
+      "peak_hour_bonus": 4155.21,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.71,
+      "cancellation_rate": 0.16,
+      "on_time_rate": 0.8,
+      "customer_satisfaction": 3.81
+    },
+    "joined_date": "2025-10-25 18:12:11",
+    "last_ride_date": "2025-11-25 13:12:11"
+  },
+  {
+    "driver_id": "DRV-384553",
+    "name": "James Okafor",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.1,
+    "total_rides_completed": 1461,
+    "total_earnings": 368462.03,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 20:12:11"
+    },
+    "earnings_stats": {
+      "today": 2251.84,
+      "this_week": 12948.08,
+      "this_month": 36310.92,
+      "average_per_ride": 281.48
+    },
+    "incentives": {
+      "surge_bonus_earned": 35896.23,
+      "peak_hour_bonus": 16473.68,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1163.01
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.82,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.1
+    },
+    "joined_date": "2023-07-28 05:12:11",
+    "last_ride_date": "2025-11-27 16:12:11"
+  },
+  {
+    "driver_id": "DRV-471684",
+    "name": "Aisha Chen",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.07,
+    "total_rides_completed": 431,
+    "total_earnings": 115603.58,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 18:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 10688.04,
+      "this_month": 52144.68,
+      "average_per_ride": 323.88
+    },
+    "incentives": {
+      "surge_bonus_earned": 13870.17,
+      "peak_hour_bonus": 6297.79,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1205.48
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.07
+    },
+    "joined_date": "2023-06-29 04:12:11",
+    "last_ride_date": "2025-11-25 07:12:11"
+  },
+  {
+    "driver_id": "DRV-743788",
+    "name": "James Martin",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.45,
+    "total_rides_completed": 464,
+    "total_earnings": 102399.88,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 23:12:11"
+    },
+    "earnings_stats": {
+      "today": 1173.4,
+      "this_week": 7744.44,
+      "this_month": 25814.8,
+      "average_per_ride": 234.68
+    },
+    "incentives": {
+      "surge_bonus_earned": 11591.66,
+      "peak_hour_bonus": 7829.62,
+      "quality_bonus": 0.0,
+      "retention_bonus": 645.21
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.8,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.9,
+      "customer_satisfaction": 4.45
+    },
+    "joined_date": "2024-07-30 12:12:11",
+    "last_ride_date": "2025-11-27 02:12:11"
+  },
+  {
+    "driver_id": "DRV-104688",
+    "name": "Hassan Jones",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.52,
+    "total_rides_completed": 1096,
+    "total_earnings": 252301.39,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 2043.68,
+      "this_week": 5364.66,
+      "this_month": 6641.96,
+      "average_per_ride": 255.46
+    },
+    "incentives": {
+      "surge_bonus_earned": 20340.57,
+      "peak_hour_bonus": 11860.45,
+      "quality_bonus": 4506.31,
+      "retention_bonus": 264.38
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.85,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.94,
+      "customer_satisfaction": 4.52
+    },
+    "joined_date": "2025-05-09 11:12:11",
+    "last_ride_date": "2025-11-27 21:12:11"
+  },
+  {
+    "driver_id": "DRV-390377",
+    "name": "Michael Smith",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.17,
+    "total_rides_completed": 1001,
+    "total_earnings": 291464.21,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 14:12:11"
+    },
+    "earnings_stats": {
+      "today": 1504.55,
+      "this_week": 14443.68,
+      "this_month": 45738.32,
+      "average_per_ride": 300.91
+    },
+    "incentives": {
+      "surge_bonus_earned": 29019.09,
+      "peak_hour_bonus": 10038.09,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1154.79
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.77,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.86,
+      "customer_satisfaction": 4.17
+    },
+    "joined_date": "2023-07-11 07:12:11",
+    "last_ride_date": "2025-11-25 03:12:11"
+  },
+  {
+    "driver_id": "DRV-138022",
+    "name": "Anya Tanaka",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.02,
+    "total_rides_completed": 1095,
+    "total_earnings": 293403.03,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-26 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 2811.1,
+      "this_week": 9276.63,
+      "this_month": 14055.5,
+      "average_per_ride": 281.11
+    },
+    "incentives": {
+      "surge_bonus_earned": 27063.59,
+      "peak_hour_bonus": 11249.77,
+      "quality_bonus": 0.0,
+      "retention_bonus": 969.86
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.76,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.86,
+      "customer_satisfaction": 4.02
+    },
+    "joined_date": "2023-12-18 10:12:11",
+    "last_ride_date": "2025-11-26 11:12:11"
+  },
+  {
+    "driver_id": "DRV-772847",
+    "name": "Raj Silva",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.2,
+    "total_rides_completed": 905,
+    "total_earnings": 203395.06,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-24 22:12:11"
+    },
+    "earnings_stats": {
+      "today": 1376.15,
+      "this_week": 3302.76,
+      "this_month": 48165.25,
+      "average_per_ride": 275.23
+    },
+    "incentives": {
+      "surge_bonus_earned": 13130.39,
+      "peak_hour_bonus": 10305.38,
+      "quality_bonus": 0.0,
+      "retention_bonus": 823.29
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.9,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.9,
+      "customer_satisfaction": 4.2
+    },
+    "joined_date": "2024-03-21 00:12:11",
+    "last_ride_date": "2025-11-24 22:12:11"
+  },
+  {
+    "driver_id": "DRV-573675",
+    "name": "Jennifer Brown",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.15,
+    "total_rides_completed": 402,
+    "total_earnings": 116417.44,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 17:12:11"
+    },
+    "earnings_stats": {
+      "today": 2778.5,
+      "this_week": 8613.35,
+      "this_month": 40843.95,
+      "average_per_ride": 277.85
+    },
+    "incentives": {
+      "surge_bonus_earned": 6000.78,
+      "peak_hour_bonus": 3281.39,
+      "quality_bonus": 0.0,
+      "retention_bonus": 482.19
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.15
+    },
+    "joined_date": "2024-11-23 11:12:11",
+    "last_ride_date": "2025-11-26 14:12:11"
+  },
+  {
+    "driver_id": "DRV-693267",
+    "name": "Aisha Nguyen",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.56,
+    "total_rides_completed": 1406,
+    "total_earnings": 296960.33,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 2044.8,
+      "this_week": 7156.8,
+      "this_month": 9968.4,
+      "average_per_ride": 255.6
+    },
+    "incentives": {
+      "surge_bonus_earned": 30862.29,
+      "peak_hour_bonus": 22494.24,
+      "quality_bonus": 8771.69,
+      "retention_bonus": 316.44
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.86,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.98,
+      "customer_satisfaction": 4.56
+    },
+    "joined_date": "2025-04-08 01:12:11",
+    "last_ride_date": "2025-11-25 10:12:11"
+  },
+  {
+    "driver_id": "DRV-591119",
+    "name": "Anya Garcia",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.93,
+    "total_rides_completed": 345,
+    "total_earnings": 82481.55,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 08:12:11"
+    },
+    "earnings_stats": {
+      "today": 764.82,
+      "this_week": 5353.74,
+      "this_month": 18610.62,
+      "average_per_ride": 254.94
+    },
+    "incentives": {
+      "surge_bonus_earned": 7248.43,
+      "peak_hour_bonus": 2775.25,
+      "quality_bonus": 0.0,
+      "retention_bonus": 634.25
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.75,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.76,
+      "customer_satisfaction": 3.93
+    },
+    "joined_date": "2024-07-26 13:12:11",
+    "last_ride_date": "2025-11-26 02:12:11"
+  },
+  {
+    "driver_id": "DRV-346012",
+    "name": "Dmitri Martin",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.53,
+    "total_rides_completed": 1655,
+    "total_earnings": 388219.63,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 11:12:11"
+    },
+    "earnings_stats": {
+      "today": 1995.2,
+      "this_week": 2494.0,
+      "this_month": 33170.2,
+      "average_per_ride": 249.4
+    },
+    "incentives": {
+      "surge_bonus_earned": 47467.79,
+      "peak_hour_bonus": 20843.9,
+      "quality_bonus": 10558.86,
+      "retention_bonus": 963.01
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.95,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.95,
+      "customer_satisfaction": 4.53
+    },
+    "joined_date": "2023-11-29 01:12:11",
+    "last_ride_date": "2025-11-25 14:12:11"
+  },
+  {
+    "driver_id": "DRV-372218",
+    "name": "Kenji Chen",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.45,
+    "total_rides_completed": 679,
+    "total_earnings": 161506.81,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 08:12:11"
+    },
+    "earnings_stats": {
+      "today": 3082.86,
+      "this_week": 7286.76,
+      "this_month": 22140.54,
+      "average_per_ride": 280.26
+    },
+    "incentives": {
+      "surge_bonus_earned": 14246.18,
+      "peak_hour_bonus": 8949.36,
+      "quality_bonus": 0.0,
+      "retention_bonus": 616.44
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.86,
+      "customer_satisfaction": 4.45
+    },
+    "joined_date": "2024-08-05 05:12:11",
+    "last_ride_date": "2025-11-26 01:12:11"
+  },
+  {
+    "driver_id": "DRV-579562",
+    "name": "William Chen",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.44,
+    "total_rides_completed": 700,
+    "total_earnings": 217368.26,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 2960.04,
+      "this_week": 4440.06,
+      "this_month": 14800.2,
+      "average_per_ride": 246.67
+    },
+    "incentives": {
+      "surge_bonus_earned": 22653.54,
+      "peak_hour_bonus": 9266.31,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.83,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.86,
+      "customer_satisfaction": 4.44
+    },
+    "joined_date": "2025-10-08 04:12:11",
+    "last_ride_date": "2025-11-24 22:12:11"
+  },
+  {
+    "driver_id": "DRV-868207",
+    "name": "Fatima Garcia",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 3.9,
+    "total_rides_completed": 232,
+    "total_earnings": 66006.31,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-23 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 295.32,
+      "this_month": 2657.88,
+      "average_per_ride": 295.32
+    },
+    "incentives": {
+      "surge_bonus_earned": 6163.56,
+      "peak_hour_bonus": 3125.75,
+      "quality_bonus": 0.0,
+      "retention_bonus": 268.77
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.66,
+      "cancellation_rate": 0.11,
+      "on_time_rate": 0.73,
+      "customer_satisfaction": 3.9
+    },
+    "joined_date": "2024-12-07 12:12:11",
+    "last_ride_date": "2025-11-23 04:12:11"
+  },
+  {
+    "driver_id": "DRV-459029",
+    "name": "Elizabeth Williams",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.19,
+    "total_rides_completed": 1376,
+    "total_earnings": 336395.77,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 3040.9,
+      "this_week": 10034.97,
+      "this_month": 40748.06,
+      "average_per_ride": 304.09
+    },
+    "incentives": {
+      "surge_bonus_earned": 31013.74,
+      "peak_hour_bonus": 19813.76,
+      "quality_bonus": 0.0,
+      "retention_bonus": 910.96
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.86,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.82,
+      "customer_satisfaction": 4.19
+    },
+    "joined_date": "2024-01-27 16:12:11",
+    "last_ride_date": "2025-11-25 22:12:11"
+  },
+  {
+    "driver_id": "DRV-384592",
+    "name": "Dmitri Anderson",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.48,
+    "total_rides_completed": 368,
+    "total_earnings": 106590.95,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 21:12:11"
+    },
+    "earnings_stats": {
+      "today": 2285.64,
+      "this_week": 5587.12,
+      "this_month": 21332.64,
+      "average_per_ride": 253.96
+    },
+    "incentives": {
+      "surge_bonus_earned": 13860.68,
+      "peak_hour_bonus": 3856.8,
+      "quality_bonus": 0.0,
+      "retention_bonus": 361.64
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.79,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.48
+    },
+    "joined_date": "2025-03-03 06:12:11",
+    "last_ride_date": "2025-11-25 02:12:11"
+  },
+  {
+    "driver_id": "DRV-475526",
+    "name": "Michael Jones",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.83,
+    "total_rides_completed": 1469,
+    "total_earnings": 356491.66,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 2577.63,
+      "this_week": 4452.27,
+      "this_month": 28822.59,
+      "average_per_ride": 234.33
+    },
+    "incentives": {
+      "surge_bonus_earned": 18342.44,
+      "peak_hour_bonus": 28013.22,
+      "quality_bonus": 0.0,
+      "retention_bonus": 400.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.67,
+      "cancellation_rate": 0.16,
+      "on_time_rate": 0.75,
+      "customer_satisfaction": 3.83
+    },
+    "joined_date": "2025-01-22 15:12:11",
+    "last_ride_date": "2025-11-24 05:12:11"
+  },
+  {
+    "driver_id": "DRV-183014",
+    "name": "Joseph Ali",
+    "status": "Inactive",
+    "vehicle_type": "Economy",
+    "rating": 4.35,
+    "total_rides_completed": 79,
+    "total_earnings": 18808.86,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-08-08 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 241.38
+    },
+    "incentives": {
+      "surge_bonus_earned": 975.88,
+      "peak_hour_bonus": 413.28,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.35
+    },
+    "joined_date": "2025-04-09 18:12:11",
+    "last_ride_date": "2025-08-07 00:12:11"
+  },
+  {
+    "driver_id": "DRV-328784",
+    "name": "Miguel Brown",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 3.87,
+    "total_rides_completed": 1308,
+    "total_earnings": 413582.14,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 1744.14,
+      "this_week": 8720.7,
+      "this_month": 9011.39,
+      "average_per_ride": 290.69
+    },
+    "incentives": {
+      "surge_bonus_earned": 60548.83,
+      "peak_hour_bonus": 20572.72,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1131.51
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.73,
+      "cancellation_rate": 0.13,
+      "on_time_rate": 0.78,
+      "customer_satisfaction": 3.87
+    },
+    "joined_date": "2023-08-18 09:12:11",
+    "last_ride_date": "2025-11-24 00:12:11"
+  },
+  {
+    "driver_id": "DRV-352067",
+    "name": "Priya Jones",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.61,
+    "total_rides_completed": 1585,
+    "total_earnings": 477122.12,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 816.69,
+      "this_week": 1361.15,
+      "this_month": 19600.56,
+      "average_per_ride": 272.23
+    },
+    "incentives": {
+      "surge_bonus_earned": 42756.04,
+      "peak_hour_bonus": 35201.05,
+      "quality_bonus": 5728.19,
+      "retention_bonus": 406.85
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.96,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.61
+    },
+    "joined_date": "2025-01-17 14:12:11",
+    "last_ride_date": "2025-11-25 13:12:11"
+  },
+  {
+    "driver_id": "DRV-910104",
+    "name": "Linda White",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.09,
+    "total_rides_completed": 364,
+    "total_earnings": 128013.26,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 11:12:11"
+    },
+    "earnings_stats": {
+      "today": 2070.81,
+      "this_week": 10649.88,
+      "this_month": 36387.09,
+      "average_per_ride": 295.83
+    },
+    "incentives": {
+      "surge_bonus_earned": 9319.59,
+      "peak_hour_bonus": 6326.49,
+      "quality_bonus": 0.0,
+      "retention_bonus": 267.12
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.82,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.09
+    },
+    "joined_date": "2025-04-30 06:12:11",
+    "last_ride_date": "2025-11-24 06:12:11"
+  },
+  {
+    "driver_id": "DRV-795940",
+    "name": "Hassan Gonzalez",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.58,
+    "total_rides_completed": 916,
+    "total_earnings": 200833.82,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 09:12:11"
+    },
+    "earnings_stats": {
+      "today": 1061.44,
+      "this_week": 11410.48,
+      "this_month": 37415.76,
+      "average_per_ride": 265.36
+    },
+    "incentives": {
+      "surge_bonus_earned": 26784.72,
+      "peak_hour_bonus": 6471.51,
+      "quality_bonus": 8999.53,
+      "retention_bonus": 857.53
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.96,
+      "customer_satisfaction": 4.58
+    },
+    "joined_date": "2024-02-12 18:12:11",
+    "last_ride_date": "2025-11-27 20:12:11"
+  },
+  {
+    "driver_id": "DRV-450336",
+    "name": "Maria Smith",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 4.58,
+    "total_rides_completed": 88,
+    "total_earnings": 22053.39,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-20 21:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 546.46,
+      "this_month": 5464.6,
+      "average_per_ride": 273.23
+    },
+    "incentives": {
+      "surge_bonus_earned": 1746.45,
+      "peak_hour_bonus": 252.32,
+      "quality_bonus": 463.44,
+      "retention_bonus": 249.86
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.97,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.58
+    },
+    "joined_date": "2025-01-19 22:12:11",
+    "last_ride_date": "2025-11-19 22:12:11"
+  },
+  {
+    "driver_id": "DRV-600151",
+    "name": "Dmitri Brown",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.19,
+    "total_rides_completed": 1349,
+    "total_earnings": 476914.12,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 09:12:11"
+    },
+    "earnings_stats": {
+      "today": 539.84,
+      "this_week": 5398.4,
+      "this_month": 19704.16,
+      "average_per_ride": 269.92
+    },
+    "incentives": {
+      "surge_bonus_earned": 45261.47,
+      "peak_hour_bonus": 17177.19,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1093.15
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.8,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.94,
+      "customer_satisfaction": 4.19
+    },
+    "joined_date": "2023-08-28 06:12:11",
+    "last_ride_date": "2025-11-25 19:12:11"
+  },
+  {
+    "driver_id": "DRV-571046",
+    "name": "Elena Mohammed",
+    "status": "On-Break",
+    "vehicle_type": "Economy",
+    "rating": 4.34,
+    "total_rides_completed": 458,
+    "total_earnings": 101258.8,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-18 03:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 768.12,
+      "this_month": 7681.2,
+      "average_per_ride": 256.04
+    },
+    "incentives": {
+      "surge_bonus_earned": 8848.49,
+      "peak_hour_bonus": 4040.84,
+      "quality_bonus": 0.0,
+      "retention_bonus": 182.47
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.8,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.89,
+      "customer_satisfaction": 4.34
+    },
+    "joined_date": "2025-03-20 17:12:11",
+    "last_ride_date": "2025-11-18 08:12:11"
+  },
+  {
+    "driver_id": "DRV-406039",
+    "name": "Hassan Anderson",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.03,
+    "total_rides_completed": 1524,
+    "total_earnings": 520417.84,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 05:12:11"
+    },
+    "earnings_stats": {
+      "today": 2130.59,
+      "this_week": 2434.96,
+      "this_month": 46872.98,
+      "average_per_ride": 304.37
+    },
+    "incentives": {
+      "surge_bonus_earned": 45865.57,
+      "peak_hour_bonus": 16400.14,
+      "quality_bonus": 0.0,
+      "retention_bonus": 554.79
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.82,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.85,
+      "customer_satisfaction": 4.03
+    },
+    "joined_date": "2024-10-14 07:12:11",
+    "last_ride_date": "2025-11-23 22:12:11"
+  },
+  {
+    "driver_id": "DRV-857377",
+    "name": "Jennifer Patel",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.96,
+    "total_rides_completed": 385,
+    "total_earnings": 92176.77,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 01:12:11"
+    },
+    "earnings_stats": {
+      "today": 491.1,
+      "this_week": 1718.85,
+      "this_month": 37814.7,
+      "average_per_ride": 245.55
+    },
+    "incentives": {
+      "surge_bonus_earned": 13683.4,
+      "peak_hour_bonus": 6465.0,
+      "quality_bonus": 0.0,
+      "retention_bonus": 316.44
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.66,
+      "cancellation_rate": 0.17,
+      "on_time_rate": 0.79,
+      "customer_satisfaction": 3.96
+    },
+    "joined_date": "2025-03-28 22:12:11",
+    "last_ride_date": "2025-11-26 10:12:11"
+  },
+  {
+    "driver_id": "DRV-696116",
+    "name": "Wei Chen",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.34,
+    "total_rides_completed": 1013,
+    "total_earnings": 349470.96,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 05:12:11"
+    },
+    "earnings_stats": {
+      "today": 545.8,
+      "this_week": 2183.2,
+      "this_month": 44209.8,
+      "average_per_ride": 272.9
+    },
+    "incentives": {
+      "surge_bonus_earned": 49268.87,
+      "peak_hour_bonus": 20989.75,
+      "quality_bonus": 0.0,
+      "retention_bonus": 949.32
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.84,
+      "customer_satisfaction": 4.34
+    },
+    "joined_date": "2023-12-11 18:12:11",
+    "last_ride_date": "2025-11-25 16:12:11"
+  },
+  {
+    "driver_id": "DRV-831244",
+    "name": "Elena Lee",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.67,
+    "total_rides_completed": 1732,
+    "total_earnings": 579501.18,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 07:12:11"
+    },
+    "earnings_stats": {
+      "today": 2764.9,
+      "this_week": 12165.56,
+      "this_month": 32349.33,
+      "average_per_ride": 276.49
+    },
+    "incentives": {
+      "surge_bonus_earned": 52135.31,
+      "peak_hour_bonus": 13733.88,
+      "quality_bonus": 14965.95,
+      "retention_bonus": 613.7
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.91,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.9,
+      "customer_satisfaction": 4.67
+    },
+    "joined_date": "2024-08-13 12:12:11",
+    "last_ride_date": "2025-11-26 00:12:11"
+  },
+  {
+    "driver_id": "DRV-901256",
+    "name": "Sarah Kumar",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.51,
+    "total_rides_completed": 576,
+    "total_earnings": 162532.72,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 20:12:11"
+    },
+    "earnings_stats": {
+      "today": 1992.55,
+      "this_week": 11386.0,
+      "this_month": 13093.9,
+      "average_per_ride": 284.65
+    },
+    "incentives": {
+      "surge_bonus_earned": 22378.53,
+      "peak_hour_bonus": 9267.46,
+      "quality_bonus": 4799.69,
+      "retention_bonus": 739.73
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.94,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.51
+    },
+    "joined_date": "2024-06-01 22:12:11",
+    "last_ride_date": "2025-11-24 22:12:11"
+  },
+  {
+    "driver_id": "DRV-417588",
+    "name": "Joseph Taylor",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.67,
+    "total_rides_completed": 546,
+    "total_earnings": 174232.23,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 08:12:11"
+    },
+    "earnings_stats": {
+      "today": 3033.0,
+      "this_week": 12738.6,
+      "this_month": 26083.8,
+      "average_per_ride": 303.3
+    },
+    "incentives": {
+      "surge_bonus_earned": 23102.06,
+      "peak_hour_bonus": 9349.28,
+      "quality_bonus": 5661.2,
+      "retention_bonus": 1032.88
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.95,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.91,
+      "customer_satisfaction": 4.67
+    },
+    "joined_date": "2023-10-24 22:12:11",
+    "last_ride_date": "2025-11-24 18:12:11"
+  },
+  {
+    "driver_id": "DRV-828228",
+    "name": "Raj Garcia",
+    "status": "On-Break",
+    "vehicle_type": "Economy",
+    "rating": 4.22,
+    "total_rides_completed": 283,
+    "total_earnings": 60464.06,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-19 22:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 2155.86,
+      "this_month": 5509.42,
+      "average_per_ride": 239.54
+    },
+    "incentives": {
+      "surge_bonus_earned": 4411.98,
+      "peak_hour_bonus": 1865.19,
+      "quality_bonus": 0.0,
+      "retention_bonus": 260.55
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.89,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.22
+    },
+    "joined_date": "2024-12-25 19:12:11",
+    "last_ride_date": "2025-11-20 07:12:11"
+  },
+  {
+    "driver_id": "DRV-462158",
+    "name": "Kenji Patel",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.45,
+    "total_rides_completed": 915,
+    "total_earnings": 288989.24,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 06:12:11"
+    },
+    "earnings_stats": {
+      "today": 952.23,
+      "this_week": 9522.3,
+      "this_month": 19044.6,
+      "average_per_ride": 317.41
+    },
+    "incentives": {
+      "surge_bonus_earned": 25567.32,
+      "peak_hour_bonus": 9633.67,
+      "quality_bonus": 0.0,
+      "retention_bonus": 378.08
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.79,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.89,
+      "customer_satisfaction": 4.45
+    },
+    "joined_date": "2025-02-11 02:12:11",
+    "last_ride_date": "2025-11-25 05:12:11"
+  },
+  {
+    "driver_id": "DRV-918752",
+    "name": "Anya Rodriguez",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.15,
+    "total_rides_completed": 1927,
+    "total_earnings": 578403.84,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 01:12:11"
+    },
+    "earnings_stats": {
+      "today": 1733.34,
+      "this_week": 3466.68,
+      "this_month": 33428.7,
+      "average_per_ride": 247.62
+    },
+    "incentives": {
+      "surge_bonus_earned": 39100.98,
+      "peak_hour_bonus": 19628.69,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.82,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.15
+    },
+    "joined_date": "2025-08-20 07:12:11",
+    "last_ride_date": "2025-11-24 11:12:11"
+  },
+  {
+    "driver_id": "DRV-846330",
+    "name": "Aisha Williams",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.67,
+    "total_rides_completed": 291,
+    "total_earnings": 85593.55,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 21:12:11"
+    },
+    "earnings_stats": {
+      "today": 1504.55,
+      "this_week": 9629.12,
+      "this_month": 51756.52,
+      "average_per_ride": 300.91
+    },
+    "incentives": {
+      "surge_bonus_earned": 4469.19,
+      "peak_hour_bonus": 3474.09,
+      "quality_bonus": 3918.25,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.94,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.97,
+      "customer_satisfaction": 4.67
+    },
+    "joined_date": "2025-08-07 11:12:11",
+    "last_ride_date": "2025-11-25 01:12:11"
+  },
+  {
+    "driver_id": "DRV-880484",
+    "name": "Sofia Thompson",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.63,
+    "total_rides_completed": 645,
+    "total_earnings": 195868.14,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 17:12:11"
+    },
+    "earnings_stats": {
+      "today": 2537.01,
+      "this_week": 9866.15,
+      "this_month": 45666.18,
+      "average_per_ride": 281.89
+    },
+    "incentives": {
+      "surge_bonus_earned": 28814.22,
+      "peak_hour_bonus": 10175.24,
+      "quality_bonus": 7544.37,
+      "retention_bonus": 449.32
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.98,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.97,
+      "customer_satisfaction": 4.63
+    },
+    "joined_date": "2024-12-21 04:12:11",
+    "last_ride_date": "2025-11-24 15:12:11"
+  },
+  {
+    "driver_id": "DRV-886715",
+    "name": "Elena Anderson",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.13,
+    "total_rides_completed": 1593,
+    "total_earnings": 497069.03,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 19:12:11"
+    },
+    "earnings_stats": {
+      "today": 2950.7,
+      "this_week": 8261.96,
+      "this_month": 9737.31,
+      "average_per_ride": 295.07
+    },
+    "incentives": {
+      "surge_bonus_earned": 50054.76,
+      "peak_hour_bonus": 22287.76,
+      "quality_bonus": 0.0,
+      "retention_bonus": 684.93
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.81,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.13
+    },
+    "joined_date": "2024-06-23 00:12:11",
+    "last_ride_date": "2025-11-26 15:12:11"
+  },
+  {
+    "driver_id": "DRV-742634",
+    "name": "Raj Okafor",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.65,
+    "total_rides_completed": 480,
+    "total_earnings": 115214.93,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 12:12:11"
+    },
+    "earnings_stats": {
+      "today": 904.35,
+      "this_week": 14469.6,
+      "this_month": 31953.7,
+      "average_per_ride": 301.45
+    },
+    "incentives": {
+      "surge_bonus_earned": 9257.77,
+      "peak_hour_bonus": 3995.14,
+      "quality_bonus": 1922.36,
+      "retention_bonus": 910.96
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.97,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.91,
+      "customer_satisfaction": 4.65
+    },
+    "joined_date": "2024-01-19 02:12:11",
+    "last_ride_date": "2025-11-26 08:12:11"
+  },
+  {
+    "driver_id": "DRV-409429",
+    "name": "Mei Harris",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.38,
+    "total_rides_completed": 1996,
+    "total_earnings": 624170.6,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 3326.04,
+      "this_week": 7206.42,
+      "this_month": 23836.62,
+      "average_per_ride": 277.17
+    },
+    "incentives": {
+      "surge_bonus_earned": 52911.24,
+      "peak_hour_bonus": 39271.53,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.86,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.87,
+      "customer_satisfaction": 4.38
+    },
+    "joined_date": "2025-08-06 21:12:11",
+    "last_ride_date": "2025-11-23 22:12:11"
+  },
+  {
+    "driver_id": "DRV-728552",
+    "name": "Hassan Park",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.02,
+    "total_rides_completed": 397,
+    "total_earnings": 85736.43,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 979.2,
+      "this_week": 2937.6,
+      "this_month": 9792.0,
+      "average_per_ride": 244.8
+    },
+    "incentives": {
+      "surge_bonus_earned": 4914.96,
+      "peak_hour_bonus": 4574.35,
+      "quality_bonus": 0.0,
+      "retention_bonus": 369.86
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.77,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.02
+    },
+    "joined_date": "2025-02-12 21:12:11",
+    "last_ride_date": "2025-11-24 00:12:11"
+  },
+  {
+    "driver_id": "DRV-298897",
+    "name": "Ashley Kim",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.3,
+    "total_rides_completed": 615,
+    "total_earnings": 168696.39,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 19:12:11"
+    },
+    "earnings_stats": {
+      "today": 272.05,
+      "this_week": 5985.1,
+      "this_month": 36182.65,
+      "average_per_ride": 272.05
+    },
+    "incentives": {
+      "surge_bonus_earned": 20267.62,
+      "peak_hour_bonus": 10373.28,
+      "quality_bonus": 0.0,
+      "retention_bonus": 863.01
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.89,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.3
+    },
+    "joined_date": "2024-03-07 03:12:11",
+    "last_ride_date": "2025-11-26 11:12:11"
+  },
+  {
+    "driver_id": "DRV-895303",
+    "name": "Yuki Jackson",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 3.96,
+    "total_rides_completed": 659,
+    "total_earnings": 229653.16,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 21:12:11"
+    },
+    "earnings_stats": {
+      "today": 623.0,
+      "this_week": 10591.0,
+      "this_month": 55758.5,
+      "average_per_ride": 311.5
+    },
+    "incentives": {
+      "surge_bonus_earned": 28584.25,
+      "peak_hour_bonus": 16550.76,
+      "quality_bonus": 0.0,
+      "retention_bonus": 834.25
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.63,
+      "cancellation_rate": 0.16,
+      "on_time_rate": 0.79,
+      "customer_satisfaction": 3.96
+    },
+    "joined_date": "2024-03-24 00:12:11",
+    "last_ride_date": "2025-11-25 12:12:11"
+  },
+  {
+    "driver_id": "DRV-504205",
+    "name": "Maria Garcia",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.43,
+    "total_rides_completed": 269,
+    "total_earnings": 76948.59,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 16:12:11"
+    },
+    "earnings_stats": {
+      "today": 564.42,
+      "this_week": 564.42,
+      "this_month": 14674.92,
+      "average_per_ride": 282.21
+    },
+    "incentives": {
+      "surge_bonus_earned": 5960.19,
+      "peak_hour_bonus": 5201.0,
+      "quality_bonus": 0.0,
+      "retention_bonus": 479.45
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.8,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.43
+    },
+    "joined_date": "2024-11-17 13:12:11",
+    "last_ride_date": "2025-11-24 10:12:11"
+  },
+  {
+    "driver_id": "DRV-957419",
+    "name": "Miguel Martin",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.49,
+    "total_rides_completed": 1566,
+    "total_earnings": 435849.22,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 18:12:11"
+    },
+    "earnings_stats": {
+      "today": 3547.72,
+      "this_week": 7740.48,
+      "this_month": 12578.28,
+      "average_per_ride": 322.52
+    },
+    "incentives": {
+      "surge_bonus_earned": 37077.02,
+      "peak_hour_bonus": 10683.81,
+      "quality_bonus": 0.0,
+      "retention_bonus": 458.9
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.83,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.49
+    },
+    "joined_date": "2024-11-29 08:12:11",
+    "last_ride_date": "2025-11-25 17:12:11"
+  },
+  {
+    "driver_id": "DRV-760339",
+    "name": "Michael Chen",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 3.85,
+    "total_rides_completed": 1319,
+    "total_earnings": 358957.39,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 06:12:11"
+    },
+    "earnings_stats": {
+      "today": 3792.36,
+      "this_week": 11693.11,
+      "this_month": 52144.95,
+      "average_per_ride": 316.03
+    },
+    "incentives": {
+      "surge_bonus_earned": 41407.62,
+      "peak_hour_bonus": 11597.27,
+      "quality_bonus": 0.0,
+      "retention_bonus": 636.99
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.68,
+      "cancellation_rate": 0.11,
+      "on_time_rate": 0.73,
+      "customer_satisfaction": 3.85
+    },
+    "joined_date": "2024-08-11 19:12:11",
+    "last_ride_date": "2025-11-27 04:12:11"
+  },
+  {
+    "driver_id": "DRV-220263",
+    "name": "Joseph Garcia",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.03,
+    "total_rides_completed": 522,
+    "total_earnings": 152073.08,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 18:12:11"
+    },
+    "earnings_stats": {
+      "today": 651.04,
+      "this_week": 6835.92,
+      "this_month": 33528.56,
+      "average_per_ride": 325.52
+    },
+    "incentives": {
+      "surge_bonus_earned": 18909.72,
+      "peak_hour_bonus": 4811.95,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1176.71
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.89,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.91,
+      "customer_satisfaction": 4.03
+    },
+    "joined_date": "2023-06-27 08:12:11",
+    "last_ride_date": "2025-11-26 22:12:11"
+  },
+  {
+    "driver_id": "DRV-865230",
+    "name": "Sofia Harris",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.9,
+    "total_rides_completed": 392,
+    "total_earnings": 88388.92,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 2807.7,
+      "this_week": 4773.09,
+      "this_month": 38465.49,
+      "average_per_ride": 280.77
+    },
+    "incentives": {
+      "surge_bonus_earned": 6484.1,
+      "peak_hour_bonus": 5678.92,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1068.49
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.7,
+      "cancellation_rate": 0.11,
+      "on_time_rate": 0.82,
+      "customer_satisfaction": 3.9
+    },
+    "joined_date": "2023-10-09 09:12:11",
+    "last_ride_date": "2025-11-26 03:12:11"
+  },
+  {
+    "driver_id": "DRV-359781",
+    "name": "Elena Singh",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.6,
+    "total_rides_completed": 1753,
+    "total_earnings": 546061.15,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 14:12:11"
+    },
+    "earnings_stats": {
+      "today": 513.42,
+      "this_week": 5134.2,
+      "this_month": 11295.24,
+      "average_per_ride": 256.71
+    },
+    "incentives": {
+      "surge_bonus_earned": 46842.07,
+      "peak_hour_bonus": 22637.77,
+      "quality_bonus": 8157.13,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.94,
+      "customer_satisfaction": 4.6
+    },
+    "joined_date": "2025-09-18 18:12:11",
+    "last_ride_date": "2025-11-26 19:12:11"
+  },
+  {
+    "driver_id": "DRV-614797",
+    "name": "Anya Johnson",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.11,
+    "total_rides_completed": 1982,
+    "total_earnings": 509918.98,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 3204.48,
+      "this_week": 11749.76,
+      "this_month": 19226.88,
+      "average_per_ride": 267.04
+    },
+    "incentives": {
+      "surge_bonus_earned": 51398.13,
+      "peak_hour_bonus": 15251.67,
+      "quality_bonus": 0.0,
+      "retention_bonus": 621.92
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.81,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.84,
+      "customer_satisfaction": 4.11
+    },
+    "joined_date": "2024-08-06 00:12:11",
+    "last_ride_date": "2025-11-24 05:12:11"
+  },
+  {
+    "driver_id": "DRV-136363",
+    "name": "Michael Martinez",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 3.87,
+    "total_rides_completed": 1701,
+    "total_earnings": 576237.33,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 05:12:11"
+    },
+    "earnings_stats": {
+      "today": 2660.31,
+      "this_week": 4729.44,
+      "this_month": 52319.43,
+      "average_per_ride": 295.59
+    },
+    "incentives": {
+      "surge_bonus_earned": 33145.44,
+      "peak_hour_bonus": 42866.08,
+      "quality_bonus": 0.0,
+      "retention_bonus": 531.51
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.75,
+      "cancellation_rate": 0.1,
+      "on_time_rate": 0.82,
+      "customer_satisfaction": 3.87
+    },
+    "joined_date": "2024-10-08 11:12:11",
+    "last_ride_date": "2025-11-27 08:12:11"
+  },
+  {
+    "driver_id": "DRV-306437",
+    "name": "Ahmed Jones",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.75,
+    "total_rides_completed": 1081,
+    "total_earnings": 240259.08,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 20:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 11974.95,
+      "this_month": 13039.39,
+      "average_per_ride": 266.11
+    },
+    "incentives": {
+      "surge_bonus_earned": 21436.23,
+      "peak_hour_bonus": 7297.63,
+      "quality_bonus": 0.0,
+      "retention_bonus": 617.81
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.65,
+      "cancellation_rate": 0.14,
+      "on_time_rate": 0.8,
+      "customer_satisfaction": 3.75
+    },
+    "joined_date": "2024-08-08 16:12:11",
+    "last_ride_date": "2025-11-25 16:12:11"
+  },
+  {
+    "driver_id": "DRV-529068",
+    "name": "Dmitri Smith",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.48,
+    "total_rides_completed": 109,
+    "total_earnings": 34721.19,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 307.24,
+      "this_week": 7681.0,
+      "this_month": 19048.88,
+      "average_per_ride": 307.24
+    },
+    "incentives": {
+      "surge_bonus_earned": 2482.49,
+      "peak_hour_bonus": 1086.9,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.86,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.84,
+      "customer_satisfaction": 4.48
+    },
+    "joined_date": "2025-08-30 02:12:11",
+    "last_ride_date": "2025-11-24 11:12:11"
+  },
+  {
+    "driver_id": "DRV-274692",
+    "name": "Miguel Tanaka",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.73,
+    "total_rides_completed": 705,
+    "total_earnings": 210857.8,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 03:12:11"
+    },
+    "earnings_stats": {
+      "today": 2225.84,
+      "this_week": 9738.05,
+      "this_month": 45629.72,
+      "average_per_ride": 278.23
+    },
+    "incentives": {
+      "surge_bonus_earned": 15416.98,
+      "peak_hour_bonus": 4368.13,
+      "quality_bonus": 6018.13,
+      "retention_bonus": 813.7
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.95,
+      "customer_satisfaction": 4.73
+    },
+    "joined_date": "2024-03-21 12:12:11",
+    "last_ride_date": "2025-11-26 13:12:11"
+  },
+  {
+    "driver_id": "DRV-164217",
+    "name": "William Williams",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 3.97,
+    "total_rides_completed": 19,
+    "total_earnings": 4709.18,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-06-08 11:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 257.86
+    },
+    "incentives": {
+      "surge_bonus_earned": 256.53,
+      "peak_hour_bonus": 133.42,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.7,
+      "cancellation_rate": 0.15,
+      "on_time_rate": 0.78,
+      "customer_satisfaction": 3.97
+    },
+    "joined_date": "2024-11-19 05:12:11",
+    "last_ride_date": "2025-06-07 20:12:11"
+  },
+  {
+    "driver_id": "DRV-479535",
+    "name": "Jennifer Lee",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.79,
+    "total_rides_completed": 456,
+    "total_earnings": 141758.54,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 1103.08,
+      "this_week": 10479.26,
+      "this_month": 19855.44,
+      "average_per_ride": 275.77
+    },
+    "incentives": {
+      "surge_bonus_earned": 8138.63,
+      "peak_hour_bonus": 7797.43,
+      "quality_bonus": 0.0,
+      "retention_bonus": 738.36
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.71,
+      "cancellation_rate": 0.15,
+      "on_time_rate": 0.7,
+      "customer_satisfaction": 3.79
+    },
+    "joined_date": "2024-05-20 01:12:11",
+    "last_ride_date": "2025-11-26 05:12:11"
+  },
+  {
+    "driver_id": "DRV-327489",
+    "name": "James Singh",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.31,
+    "total_rides_completed": 534,
+    "total_earnings": 136964.16,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 3309.96,
+      "this_week": 5240.77,
+      "this_month": 48821.91,
+      "average_per_ride": 275.83
+    },
+    "incentives": {
+      "surge_bonus_earned": 20161.35,
+      "peak_hour_bonus": 4162.71,
+      "quality_bonus": 0.0,
+      "retention_bonus": 279.45
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.82,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.84,
+      "customer_satisfaction": 4.31
+    },
+    "joined_date": "2025-05-01 10:12:11",
+    "last_ride_date": "2025-11-26 10:12:11"
+  },
+  {
+    "driver_id": "DRV-208939",
+    "name": "Wei Wang",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.0,
+    "total_rides_completed": 1765,
+    "total_earnings": 518301.94,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 991.88,
+      "this_week": 11902.56,
+      "this_month": 40171.14,
+      "average_per_ride": 247.97
+    },
+    "incentives": {
+      "surge_bonus_earned": 37020.81,
+      "peak_hour_bonus": 13163.19,
+      "quality_bonus": 0.0,
+      "retention_bonus": 406.85
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.85,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.0
+    },
+    "joined_date": "2025-02-03 08:12:11",
+    "last_ride_date": "2025-11-25 07:12:11"
+  },
+  {
+    "driver_id": "DRV-903958",
+    "name": "Anya Singh",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.58,
+    "total_rides_completed": 1518,
+    "total_earnings": 403752.11,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-26 03:12:11"
+    },
+    "earnings_stats": {
+      "today": 1447.56,
+      "this_week": 1688.82,
+      "this_month": 21472.14,
+      "average_per_ride": 241.26
+    },
+    "incentives": {
+      "surge_bonus_earned": 36155.51,
+      "peak_hour_bonus": 8819.36,
+      "quality_bonus": 14404.75,
+      "retention_bonus": 1228.77
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.01,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.58
+    },
+    "joined_date": "2023-05-15 23:12:11",
+    "last_ride_date": "2025-11-26 18:12:11"
+  },
+  {
+    "driver_id": "DRV-651787",
+    "name": "William Harris",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.24,
+    "total_rides_completed": 1442,
+    "total_earnings": 321614.43,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 282.44,
+      "this_week": 4236.6,
+      "this_month": 38411.84,
+      "average_per_ride": 282.44
+    },
+    "incentives": {
+      "surge_bonus_earned": 39264.04,
+      "peak_hour_bonus": 25716.03,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1146.58
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.85,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.24
+    },
+    "joined_date": "2023-07-24 12:12:11",
+    "last_ride_date": "2025-11-23 23:12:11"
+  },
+  {
+    "driver_id": "DRV-446000",
+    "name": "Anya Singh",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.8,
+    "total_rides_completed": 483,
+    "total_earnings": 109632.5,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 237.31,
+      "this_week": 2610.41,
+      "this_month": 28714.51,
+      "average_per_ride": 237.31
+    },
+    "incentives": {
+      "surge_bonus_earned": 10272.57,
+      "peak_hour_bonus": 4055.13,
+      "quality_bonus": 0.0,
+      "retention_bonus": 595.89
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.65,
+      "cancellation_rate": 0.16,
+      "on_time_rate": 0.76,
+      "customer_satisfaction": 3.8
+    },
+    "joined_date": "2024-08-30 04:12:11",
+    "last_ride_date": "2025-11-26 08:12:11"
+  },
+  {
+    "driver_id": "DRV-895677",
+    "name": "Fatima Wang",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.05,
+    "total_rides_completed": 1977,
+    "total_earnings": 491129.6,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 02:12:11"
+    },
+    "earnings_stats": {
+      "today": 1244.15,
+      "this_week": 12441.5,
+      "this_month": 20155.23,
+      "average_per_ride": 248.83
+    },
+    "incentives": {
+      "surge_bonus_earned": 49984.17,
+      "peak_hour_bonus": 24883.95,
+      "quality_bonus": 0.0,
+      "retention_bonus": 891.78
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.75,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.85,
+      "customer_satisfaction": 4.05
+    },
+    "joined_date": "2024-02-02 07:12:11",
+    "last_ride_date": "2025-11-25 10:12:11"
+  },
+  {
+    "driver_id": "DRV-857477",
+    "name": "Joseph Petrov",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.45,
+    "total_rides_completed": 1161,
+    "total_earnings": 286016.45,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 1116.8,
+      "this_week": 12005.6,
+      "this_month": 34900.0,
+      "average_per_ride": 279.2
+    },
+    "incentives": {
+      "surge_bonus_earned": 17300.9,
+      "peak_hour_bonus": 7381.96,
+      "quality_bonus": 0.0,
+      "retention_bonus": 475.34
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.79,
+      "cancellation_rate": 0.1,
+      "on_time_rate": 0.91,
+      "customer_satisfaction": 4.45
+    },
+    "joined_date": "2024-12-13 00:12:11",
+    "last_ride_date": "2025-11-25 01:12:11"
+  },
+  {
+    "driver_id": "DRV-317789",
+    "name": "James Singh",
+    "status": "On-Break",
+    "vehicle_type": "Economy",
+    "rating": 4.59,
+    "total_rides_completed": 103,
+    "total_earnings": 26849.2,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-24 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 1784.32,
+      "this_month": 6022.08,
+      "average_per_ride": 223.04
+    },
+    "incentives": {
+      "surge_bonus_earned": 2311.68,
+      "peak_hour_bonus": 1341.2,
+      "quality_bonus": 677.38,
+      "retention_bonus": 177.53
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.86,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.59
+    },
+    "joined_date": "2025-04-09 14:12:11",
+    "last_ride_date": "2025-11-24 07:12:11"
+  },
+  {
+    "driver_id": "DRV-115741",
+    "name": "Maria Kim",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.31,
+    "total_rides_completed": 1147,
+    "total_earnings": 325087.77,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 19:12:11"
+    },
+    "earnings_stats": {
+      "today": 724.8,
+      "this_week": 10872.0,
+      "this_month": 38172.8,
+      "average_per_ride": 241.6
+    },
+    "incentives": {
+      "surge_bonus_earned": 47488.48,
+      "peak_hour_bonus": 14077.54,
+      "quality_bonus": 0.0,
+      "retention_bonus": 515.07
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.75,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.31
+    },
+    "joined_date": "2024-11-08 03:12:11",
+    "last_ride_date": "2025-11-26 09:12:11"
+  },
+  {
+    "driver_id": "DRV-559143",
+    "name": "Anya Taylor",
+    "status": "Inactive",
+    "vehicle_type": "Economy",
+    "rating": 4.7,
+    "total_rides_completed": 59,
+    "total_earnings": 17254.49,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-06-11 01:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 255.15
+    },
+    "incentives": {
+      "surge_bonus_earned": 547.14,
+      "peak_hour_bonus": 216.12,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.93,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.95,
+      "customer_satisfaction": 4.7
+    },
+    "joined_date": "2024-05-11 23:12:11",
+    "last_ride_date": "2025-06-09 22:12:11"
+  },
+  {
+    "driver_id": "DRV-906614",
+    "name": "Kenji Kim",
+    "status": "On-Break",
+    "vehicle_type": "Economy",
+    "rating": 3.99,
+    "total_rides_completed": 310,
+    "total_earnings": 95024.0,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-15 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 515.36,
+      "this_month": 4638.24,
+      "average_per_ride": 257.68
+    },
+    "incentives": {
+      "surge_bonus_earned": 7484.18,
+      "peak_hour_bonus": 2446.45,
+      "quality_bonus": 0.0,
+      "retention_bonus": 162.74
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.13,
+      "on_time_rate": 0.76,
+      "customer_satisfaction": 3.99
+    },
+    "joined_date": "2025-05-07 12:12:11",
+    "last_ride_date": "2025-11-15 06:12:11"
+  },
+  {
+    "driver_id": "DRV-816914",
+    "name": "Carlos Kim",
+    "status": "Inactive",
+    "vehicle_type": "Economy",
+    "rating": 4.37,
+    "total_rides_completed": 61,
+    "total_earnings": 16864.54,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-08-07 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 240.78
+    },
+    "incentives": {
+      "surge_bonus_earned": 615.46,
+      "peak_hour_bonus": 330.31,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.37
+    },
+    "joined_date": "2024-05-09 06:12:11",
+    "last_ride_date": "2025-08-06 06:12:11"
+  },
+  {
+    "driver_id": "DRV-877004",
+    "name": "Robert Martinez",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.08,
+    "total_rides_completed": 603,
+    "total_earnings": 176564.96,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 14:12:11"
+    },
+    "earnings_stats": {
+      "today": 1621.56,
+      "this_week": 7567.28,
+      "this_month": 18918.2,
+      "average_per_ride": 270.26
+    },
+    "incentives": {
+      "surge_bonus_earned": 22699.24,
+      "peak_hour_bonus": 5484.42,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1213.7
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.76,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.9,
+      "customer_satisfaction": 4.08
+    },
+    "joined_date": "2023-06-13 22:12:11",
+    "last_ride_date": "2025-11-24 17:12:11"
+  },
+  {
+    "driver_id": "DRV-372060",
+    "name": "Aisha Garcia",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.41,
+    "total_rides_completed": 342,
+    "total_earnings": 108366.56,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 3158.6,
+      "this_week": 3158.6,
+      "this_month": 47063.14,
+      "average_per_ride": 315.86
+    },
+    "incentives": {
+      "surge_bonus_earned": 15083.11,
+      "peak_hour_bonus": 3692.56,
+      "quality_bonus": 0.0,
+      "retention_bonus": 761.64
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.77,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.41
+    },
+    "joined_date": "2024-04-24 15:12:11",
+    "last_ride_date": "2025-11-27 15:12:11"
+  },
+  {
+    "driver_id": "DRV-841060",
+    "name": "Robert Garcia",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.25,
+    "total_rides_completed": 119,
+    "total_earnings": 39836.13,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 2897.64,
+      "this_week": 16098.0,
+      "this_month": 29942.28,
+      "average_per_ride": 321.96
+    },
+    "incentives": {
+      "surge_bonus_earned": 3063.45,
+      "peak_hour_bonus": 1310.32,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1205.48
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.25
+    },
+    "joined_date": "2023-06-25 11:12:11",
+    "last_ride_date": "2025-11-25 17:12:11"
+  },
+  {
+    "driver_id": "DRV-495706",
+    "name": "Jennifer Lee",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.33,
+    "total_rides_completed": 1541,
+    "total_earnings": 414044.81,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-26 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 325.21,
+      "this_week": 13658.82,
+      "this_month": 40976.46,
+      "average_per_ride": 325.21
+    },
+    "incentives": {
+      "surge_bonus_earned": 50152.33,
+      "peak_hour_bonus": 22286.23,
+      "quality_bonus": 0.0,
+      "retention_bonus": 253.42
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.77,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.86,
+      "customer_satisfaction": 4.33
+    },
+    "joined_date": "2025-04-29 11:12:11",
+    "last_ride_date": "2025-11-26 17:12:11"
+  },
+  {
+    "driver_id": "DRV-610253",
+    "name": "Linda Martin",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.61,
+    "total_rides_completed": 344,
+    "total_earnings": 101834.19,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 3754.68,
+      "this_week": 12202.71,
+      "this_month": 45369.05,
+      "average_per_ride": 312.89
+    },
+    "incentives": {
+      "surge_bonus_earned": 10983.73,
+      "peak_hour_bonus": 6652.85,
+      "quality_bonus": 2056.95,
+      "retention_bonus": 910.96
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.01,
+      "on_time_rate": 0.95,
+      "customer_satisfaction": 4.61
+    },
+    "joined_date": "2024-01-30 15:12:11",
+    "last_ride_date": "2025-11-25 02:12:11"
+  },
+  {
+    "driver_id": "DRV-345867",
+    "name": "Robert Rodriguez",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 4.75,
+    "total_rides_completed": 189,
+    "total_earnings": 67018.55,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-06-08 02:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 287.01
+    },
+    "incentives": {
+      "surge_bonus_earned": 3945.69,
+      "peak_hour_bonus": 1405.68,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.95,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.96,
+      "customer_satisfaction": 4.75
+    },
+    "joined_date": "2024-10-19 07:12:11",
+    "last_ride_date": "2025-06-08 15:12:11"
+  },
+  {
+    "driver_id": "DRV-336572",
+    "name": "Hassan Jones",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.13,
+    "total_rides_completed": 1305,
+    "total_earnings": 444827.35,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 16:12:11"
+    },
+    "earnings_stats": {
+      "today": 3020.82,
+      "this_week": 7140.12,
+      "this_month": 42566.1,
+      "average_per_ride": 274.62
+    },
+    "incentives": {
+      "surge_bonus_earned": 57069.28,
+      "peak_hour_bonus": 26352.88,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1108.22
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.83,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.87,
+      "customer_satisfaction": 4.13
+    },
+    "joined_date": "2023-08-21 23:12:11",
+    "last_ride_date": "2025-11-24 21:12:11"
+  },
+  {
+    "driver_id": "DRV-426657",
+    "name": "Kenji Anderson",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.6,
+    "total_rides_completed": 698,
+    "total_earnings": 210752.59,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 14:12:11"
+    },
+    "earnings_stats": {
+      "today": 286.97,
+      "this_week": 1721.82,
+      "this_month": 3156.67,
+      "average_per_ride": 286.97
+    },
+    "incentives": {
+      "surge_bonus_earned": 24110.1,
+      "peak_hour_bonus": 7447.46,
+      "quality_bonus": 9411.4,
+      "retention_bonus": 257.53
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.93,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.95,
+      "customer_satisfaction": 4.6
+    },
+    "joined_date": "2025-05-15 16:12:11",
+    "last_ride_date": "2025-11-25 13:12:11"
+  },
+  {
+    "driver_id": "DRV-448847",
+    "name": "Mei Smith",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.13,
+    "total_rides_completed": 1303,
+    "total_earnings": 284884.03,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 19:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 4335.52,
+      "this_month": 28993.79,
+      "average_per_ride": 270.97
+    },
+    "incentives": {
+      "surge_bonus_earned": 32643.51,
+      "peak_hour_bonus": 19824.71,
+      "quality_bonus": 0.0,
+      "retention_bonus": 815.07
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.94,
+      "customer_satisfaction": 4.13
+    },
+    "joined_date": "2024-03-19 06:12:11",
+    "last_ride_date": "2025-11-24 07:12:11"
+  },
+  {
+    "driver_id": "DRV-818398",
+    "name": "David Nguyen",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.85,
+    "total_rides_completed": 926,
+    "total_earnings": 201218.57,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 02:12:11"
+    },
+    "earnings_stats": {
+      "today": 255.08,
+      "this_week": 4846.52,
+      "this_month": 12243.84,
+      "average_per_ride": 255.08
+    },
+    "incentives": {
+      "surge_bonus_earned": 14023.84,
+      "peak_hour_bonus": 7574.05,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.18,
+      "on_time_rate": 0.73,
+      "customer_satisfaction": 3.85
+    },
+    "joined_date": "2025-08-15 15:12:11",
+    "last_ride_date": "2025-11-26 23:12:11"
+  },
+  {
+    "driver_id": "DRV-304441",
+    "name": "Robert Ali",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.5,
+    "total_rides_completed": 545,
+    "total_earnings": 178349.84,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 05:12:11"
+    },
+    "earnings_stats": {
+      "today": 1719.24,
+      "this_week": 4584.64,
+      "this_month": 48425.26,
+      "average_per_ride": 286.54
+    },
+    "incentives": {
+      "surge_bonus_earned": 9650.74,
+      "peak_hour_bonus": 7716.94,
+      "quality_bonus": 3615.87,
+      "retention_bonus": 1227.4
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.93,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.97,
+      "customer_satisfaction": 4.5
+    },
+    "joined_date": "2023-06-10 11:12:11",
+    "last_ride_date": "2025-11-27 14:12:11"
+  },
+  {
+    "driver_id": "DRV-537446",
+    "name": "Omar Okafor",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 3.86,
+    "total_rides_completed": 194,
+    "total_earnings": 68759.93,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-10-06 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 271.17
+    },
+    "incentives": {
+      "surge_bonus_earned": 2048.53,
+      "peak_hour_bonus": 1350.18,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.71,
+      "cancellation_rate": 0.1,
+      "on_time_rate": 0.78,
+      "customer_satisfaction": 3.86
+    },
+    "joined_date": "2024-04-20 10:12:11",
+    "last_ride_date": "2025-10-06 14:12:11"
+  },
+  {
+    "driver_id": "DRV-498727",
+    "name": "William Anderson",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.86,
+    "total_rides_completed": 1912,
+    "total_earnings": 591722.07,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 1254.4,
+      "this_week": 11791.36,
+      "this_month": 26342.4,
+      "average_per_ride": 250.88
+    },
+    "incentives": {
+      "surge_bonus_earned": 73043.64,
+      "peak_hour_bonus": 19888.14,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1095.89
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.73,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.71,
+      "customer_satisfaction": 3.86
+    },
+    "joined_date": "2023-08-24 19:12:11",
+    "last_ride_date": "2025-11-24 01:12:11"
+  },
+  {
+    "driver_id": "DRV-158430",
+    "name": "Ashley Harris",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.96,
+    "total_rides_completed": 1643,
+    "total_earnings": 419697.55,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 2901.47,
+      "this_week": 8176.87,
+      "this_month": 17145.05,
+      "average_per_ride": 263.77
+    },
+    "incentives": {
+      "surge_bonus_earned": 36845.11,
+      "peak_hour_bonus": 26654.56,
+      "quality_bonus": 0.0,
+      "retention_bonus": 932.88
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.6,
+      "cancellation_rate": 0.15,
+      "on_time_rate": 0.77,
+      "customer_satisfaction": 3.96
+    },
+    "joined_date": "2024-01-06 19:12:11",
+    "last_ride_date": "2025-11-24 02:12:11"
+  },
+  {
+    "driver_id": "DRV-400687",
+    "name": "James Harris",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.38,
+    "total_rides_completed": 436,
+    "total_earnings": 124641.54,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 11:12:11"
+    },
+    "earnings_stats": {
+      "today": 2372.04,
+      "this_week": 3426.28,
+      "this_month": 35317.04,
+      "average_per_ride": 263.56
+    },
+    "incentives": {
+      "surge_bonus_earned": 7842.41,
+      "peak_hour_bonus": 3257.38,
+      "quality_bonus": 0.0,
+      "retention_bonus": 420.55
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.75,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.87,
+      "customer_satisfaction": 4.38
+    },
+    "joined_date": "2025-01-24 14:12:11",
+    "last_ride_date": "2025-11-26 09:12:11"
+  },
+  {
+    "driver_id": "DRV-861138",
+    "name": "Hassan Tanaka",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 3.94,
+    "total_rides_completed": 171,
+    "total_earnings": 50897.5,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-10-01 06:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 254.68
+    },
+    "incentives": {
+      "surge_bonus_earned": 1958.9,
+      "peak_hour_bonus": 1456.82,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.68,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.85,
+      "customer_satisfaction": 3.94
+    },
+    "joined_date": "2025-03-17 13:12:11",
+    "last_ride_date": "2025-09-30 09:12:11"
+  },
+  {
+    "driver_id": "DRV-238968",
+    "name": "Michael Garcia",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 4.65,
+    "total_rides_completed": 200,
+    "total_earnings": 53430.58,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-07-15 06:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 295.08
+    },
+    "incentives": {
+      "surge_bonus_earned": 2863.01,
+      "peak_hour_bonus": 755.86,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.65
+    },
+    "joined_date": "2024-03-10 20:12:11",
+    "last_ride_date": "2025-07-15 20:12:11"
+  },
+  {
+    "driver_id": "DRV-886070",
+    "name": "Oluwaseun Martinez",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.93,
+    "total_rides_completed": 709,
+    "total_earnings": 164807.69,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 19:12:11"
+    },
+    "earnings_stats": {
+      "today": 254.3,
+      "this_week": 5594.6,
+      "this_month": 27973.0,
+      "average_per_ride": 254.3
+    },
+    "incentives": {
+      "surge_bonus_earned": 18840.54,
+      "peak_hour_bonus": 11150.03,
+      "quality_bonus": 0.0,
+      "retention_bonus": 573.97
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.74,
+      "customer_satisfaction": 3.93
+    },
+    "joined_date": "2024-09-27 19:12:11",
+    "last_ride_date": "2025-11-25 07:12:11"
+  },
+  {
+    "driver_id": "DRV-495686",
+    "name": "William Park",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.81,
+    "total_rides_completed": 1144,
+    "total_earnings": 330177.17,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-26 07:12:11"
+    },
+    "earnings_stats": {
+      "today": 1337.95,
+      "this_week": 3211.08,
+      "this_month": 35857.06,
+      "average_per_ride": 267.59
+    },
+    "incentives": {
+      "surge_bonus_earned": 35918.7,
+      "peak_hour_bonus": 18352.52,
+      "quality_bonus": 0.0,
+      "retention_bonus": 994.52
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.76,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.78,
+      "customer_satisfaction": 3.81
+    },
+    "joined_date": "2023-12-01 21:12:11",
+    "last_ride_date": "2025-11-24 22:12:11"
+  },
+  {
+    "driver_id": "DRV-421353",
+    "name": "Kenji Gonzalez",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.26,
+    "total_rides_completed": 1401,
+    "total_earnings": 385773.49,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-24 23:12:11"
+    },
+    "earnings_stats": {
+      "today": 2212.8,
+      "this_week": 6915.0,
+      "this_month": 9957.6,
+      "average_per_ride": 276.6
+    },
+    "incentives": {
+      "surge_bonus_earned": 33162.42,
+      "peak_hour_bonus": 12410.05,
+      "quality_bonus": 0.0,
+      "retention_bonus": 319.18
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.86,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.86,
+      "customer_satisfaction": 4.26
+    },
+    "joined_date": "2025-03-20 09:12:11",
+    "last_ride_date": "2025-11-24 09:12:11"
+  },
+  {
+    "driver_id": "DRV-805186",
+    "name": "Joseph Thomas",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.58,
+    "total_rides_completed": 1344,
+    "total_earnings": 398426.01,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 01:12:11"
+    },
+    "earnings_stats": {
+      "today": 1943.4,
+      "this_week": 13927.7,
+      "this_month": 14251.6,
+      "average_per_ride": 323.9
+    },
+    "incentives": {
+      "surge_bonus_earned": 32884.19,
+      "peak_hour_bonus": 10397.65,
+      "quality_bonus": 5067.9,
+      "retention_bonus": 638.36
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.96,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.95,
+      "customer_satisfaction": 4.58
+    },
+    "joined_date": "2024-08-04 03:12:11",
+    "last_ride_date": "2025-11-26 23:12:11"
+  },
+  {
+    "driver_id": "DRV-951426",
+    "name": "Fatima Anderson",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 4.01,
+    "total_rides_completed": 43,
+    "total_earnings": 12675.73,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-09-03 22:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 266.44
+    },
+    "incentives": {
+      "surge_bonus_earned": 734.3,
+      "peak_hour_bonus": 153.72,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.85,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.01
+    },
+    "joined_date": "2024-10-03 21:12:11",
+    "last_ride_date": "2025-09-03 22:12:11"
+  },
+  {
+    "driver_id": "DRV-981090",
+    "name": "Oluwaseun Brown",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 3.79,
+    "total_rides_completed": 216,
+    "total_earnings": 58924.39,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-20 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 1135.48,
+      "this_month": 3406.44,
+      "average_per_ride": 283.87
+    },
+    "incentives": {
+      "surge_bonus_earned": 3889.33,
+      "peak_hour_bonus": 2787.54,
+      "quality_bonus": 0.0,
+      "retention_bonus": 406.03
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.7,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.74,
+      "customer_satisfaction": 3.79
+    },
+    "joined_date": "2024-07-13 12:12:11",
+    "last_ride_date": "2025-11-20 01:12:11"
+  },
+  {
+    "driver_id": "DRV-497957",
+    "name": "James Patel",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 4.67,
+    "total_rides_completed": 406,
+    "total_earnings": 127049.48,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-18 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 2778.9,
+      "this_month": 7503.03,
+      "average_per_ride": 277.89
+    },
+    "incentives": {
+      "surge_bonus_earned": 8918.06,
+      "peak_hour_bonus": 6016.4,
+      "quality_bonus": 2263.11,
+      "retention_bonus": 241.64
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.93,
+      "cancellation_rate": 0.01,
+      "on_time_rate": 0.97,
+      "customer_satisfaction": 4.67
+    },
+    "joined_date": "2025-01-24 11:12:11",
+    "last_ride_date": "2025-11-17 20:12:11"
+  },
+  {
+    "driver_id": "DRV-725915",
+    "name": "Miguel Johnson",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.86,
+    "total_rides_completed": 831,
+    "total_earnings": 223889.12,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 01:12:11"
+    },
+    "earnings_stats": {
+      "today": 1800.19,
+      "this_week": 11572.65,
+      "this_month": 42947.39,
+      "average_per_ride": 257.17
+    },
+    "incentives": {
+      "surge_bonus_earned": 24359.89,
+      "peak_hour_bonus": 6101.04,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.63,
+      "cancellation_rate": 0.13,
+      "on_time_rate": 0.7,
+      "customer_satisfaction": 3.86
+    },
+    "joined_date": "2025-09-30 01:12:11",
+    "last_ride_date": "2025-11-25 03:12:11"
+  },
+  {
+    "driver_id": "DRV-982322",
+    "name": "Patricia Mohammed",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.16,
+    "total_rides_completed": 390,
+    "total_earnings": 106516.92,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 07:12:11"
+    },
+    "earnings_stats": {
+      "today": 1037.48,
+      "this_week": 9856.06,
+      "this_month": 34236.84,
+      "average_per_ride": 259.37
+    },
+    "incentives": {
+      "surge_bonus_earned": 13015.24,
+      "peak_hour_bonus": 2334.8,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.85,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.16
+    },
+    "joined_date": "2025-07-07 19:12:11",
+    "last_ride_date": "2025-11-26 16:12:11"
+  },
+  {
+    "driver_id": "DRV-601096",
+    "name": "Elena Jones",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.51,
+    "total_rides_completed": 1608,
+    "total_earnings": 498317.78,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 19:12:11"
+    },
+    "earnings_stats": {
+      "today": 1917.44,
+      "this_week": 8388.8,
+      "this_month": 14860.16,
+      "average_per_ride": 239.68
+    },
+    "incentives": {
+      "surge_bonus_earned": 28551.92,
+      "peak_hour_bonus": 38501.49,
+      "quality_bonus": 20570.55,
+      "retention_bonus": 868.49
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.96,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.99,
+      "customer_satisfaction": 4.51
+    },
+    "joined_date": "2024-02-28 19:12:11",
+    "last_ride_date": "2025-11-26 01:12:11"
+  },
+  {
+    "driver_id": "DRV-958444",
+    "name": "Joseph Williams",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.01,
+    "total_rides_completed": 744,
+    "total_earnings": 155544.3,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 2635.0,
+      "this_week": 8168.5,
+      "this_month": 18708.5,
+      "average_per_ride": 263.5
+    },
+    "incentives": {
+      "surge_bonus_earned": 11734.78,
+      "peak_hour_bonus": 12158.52,
+      "quality_bonus": 0.0,
+      "retention_bonus": 853.42
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.91,
+      "customer_satisfaction": 4.01
+    },
+    "joined_date": "2024-02-18 04:12:11",
+    "last_ride_date": "2025-11-27 03:12:11"
+  },
+  {
+    "driver_id": "DRV-939651",
+    "name": "Sarah Ali",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.44,
+    "total_rides_completed": 1900,
+    "total_earnings": 466270.75,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 09:12:11"
+    },
+    "earnings_stats": {
+      "today": 2241.36,
+      "this_week": 4202.55,
+      "this_month": 46508.22,
+      "average_per_ride": 280.17
+    },
+    "incentives": {
+      "surge_bonus_earned": 63315.3,
+      "peak_hour_bonus": 29183.36,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1168.49
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.82,
+      "customer_satisfaction": 4.44
+    },
+    "joined_date": "2023-07-12 04:12:11",
+    "last_ride_date": "2025-11-25 19:12:11"
+  },
+  {
+    "driver_id": "DRV-764839",
+    "name": "Joseph Chen",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.52,
+    "total_rides_completed": 1558,
+    "total_earnings": 483227.97,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 17:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 4439.38,
+      "this_month": 42565.82,
+      "average_per_ride": 261.14
+    },
+    "incentives": {
+      "surge_bonus_earned": 32589.75,
+      "peak_hour_bonus": 18655.35,
+      "quality_bonus": 7057.49,
+      "retention_bonus": 1016.44
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.96,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.98,
+      "customer_satisfaction": 4.52
+    },
+    "joined_date": "2023-11-04 19:12:11",
+    "last_ride_date": "2025-11-25 00:12:11"
+  },
+  {
+    "driver_id": "DRV-329991",
+    "name": "Patricia Garcia",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.5,
+    "total_rides_completed": 605,
+    "total_earnings": 159072.52,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 11:12:11"
+    },
+    "earnings_stats": {
+      "today": 1693.98,
+      "this_week": 6493.59,
+      "this_month": 33879.6,
+      "average_per_ride": 282.33
+    },
+    "incentives": {
+      "surge_bonus_earned": 17199.24,
+      "peak_hour_bonus": 6716.56,
+      "quality_bonus": 6364.55,
+      "retention_bonus": 254.79
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.94,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.5
+    },
+    "joined_date": "2025-05-01 01:12:11",
+    "last_ride_date": "2025-11-27 17:12:11"
+  },
+  {
+    "driver_id": "DRV-611589",
+    "name": "Elizabeth Nguyen",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.06,
+    "total_rides_completed": 1075,
+    "total_earnings": 308433.92,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 2556.27,
+      "this_week": 9372.99,
+      "this_month": 24710.61,
+      "average_per_ride": 284.03
+    },
+    "incentives": {
+      "surge_bonus_earned": 31158.65,
+      "peak_hour_bonus": 17613.06,
+      "quality_bonus": 0.0,
+      "retention_bonus": 313.7
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.79,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.89,
+      "customer_satisfaction": 4.06
+    },
+    "joined_date": "2025-03-24 01:12:11",
+    "last_ride_date": "2025-11-26 14:12:11"
+  },
+  {
+    "driver_id": "DRV-479223",
+    "name": "David Martinez",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.5,
+    "total_rides_completed": 323,
+    "total_earnings": 90421.61,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 2370.72,
+      "this_week": 7408.5,
+      "this_month": 51859.5,
+      "average_per_ride": 296.34
+    },
+    "incentives": {
+      "surge_bonus_earned": 6653.02,
+      "peak_hour_bonus": 4378.38,
+      "quality_bonus": 3650.24,
+      "retention_bonus": 457.53
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.5
+    },
+    "joined_date": "2024-11-28 10:12:11",
+    "last_ride_date": "2025-11-27 20:12:11"
+  },
+  {
+    "driver_id": "DRV-551038",
+    "name": "Robert Park",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.59,
+    "total_rides_completed": 1821,
+    "total_earnings": 584459.4,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-24 22:12:11"
+    },
+    "earnings_stats": {
+      "today": 1133.68,
+      "this_week": 12470.48,
+      "this_month": 26924.9,
+      "average_per_ride": 283.42
+    },
+    "incentives": {
+      "surge_bonus_earned": 35074.91,
+      "peak_hour_bonus": 14896.14,
+      "quality_bonus": 26123.56,
+      "retention_bonus": 750.68
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.96,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.98,
+      "customer_satisfaction": 4.59
+    },
+    "joined_date": "2024-05-10 16:12:11",
+    "last_ride_date": "2025-11-25 14:12:11"
+  },
+  {
+    "driver_id": "DRV-724430",
+    "name": "Elena Thompson",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.36,
+    "total_rides_completed": 1169,
+    "total_earnings": 281721.16,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-26 12:12:11"
+    },
+    "earnings_stats": {
+      "today": 1115.84,
+      "this_week": 3626.48,
+      "this_month": 37380.64,
+      "average_per_ride": 278.96
+    },
+    "incentives": {
+      "surge_bonus_earned": 25051.63,
+      "peak_hour_bonus": 19443.87,
+      "quality_bonus": 0.0,
+      "retention_bonus": 917.81
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.36
+    },
+    "joined_date": "2024-01-04 16:12:11",
+    "last_ride_date": "2025-11-24 23:12:11"
+  },
+  {
+    "driver_id": "DRV-234821",
+    "name": "Fatima Rodriguez",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.54,
+    "total_rides_completed": 1434,
+    "total_earnings": 414726.38,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-24 23:12:11"
+    },
+    "earnings_stats": {
+      "today": 1112.56,
+      "this_week": 12516.3,
+      "this_month": 17800.96,
+      "average_per_ride": 278.14
+    },
+    "incentives": {
+      "surge_bonus_earned": 50754.43,
+      "peak_hour_bonus": 18786.71,
+      "quality_bonus": 17551.28,
+      "retention_bonus": 1167.12
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.96,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.96,
+      "customer_satisfaction": 4.54
+    },
+    "joined_date": "2023-07-01 23:12:11",
+    "last_ride_date": "2025-11-24 22:12:11"
+  },
+  {
+    "driver_id": "DRV-261770",
+    "name": "Yuki Ali",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.41,
+    "total_rides_completed": 345,
+    "total_earnings": 119492.65,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 01:12:11"
+    },
+    "earnings_stats": {
+      "today": 3457.56,
+      "this_week": 3745.69,
+      "this_month": 4321.95,
+      "average_per_ride": 288.13
+    },
+    "incentives": {
+      "surge_bonus_earned": 9078.65,
+      "peak_hour_bonus": 5763.53,
+      "quality_bonus": 0.0,
+      "retention_bonus": 408.22
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.75,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.41
+    },
+    "joined_date": "2025-01-11 22:12:11",
+    "last_ride_date": "2025-11-24 18:12:11"
+  },
+  {
+    "driver_id": "DRV-366045",
+    "name": "Robert Kumar",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 3.85,
+    "total_rides_completed": 1526,
+    "total_earnings": 363596.26,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 06:12:11"
+    },
+    "earnings_stats": {
+      "today": 1887.66,
+      "this_week": 3775.32,
+      "this_month": 7865.25,
+      "average_per_ride": 314.61
+    },
+    "incentives": {
+      "surge_bonus_earned": 41334.83,
+      "peak_hour_bonus": 11269.66,
+      "quality_bonus": 0.0,
+      "retention_bonus": 869.86
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.79,
+      "cancellation_rate": 0.13,
+      "on_time_rate": 0.75,
+      "customer_satisfaction": 3.85
+    },
+    "joined_date": "2024-02-28 11:12:11",
+    "last_ride_date": "2025-11-26 08:12:11"
+  },
+  {
+    "driver_id": "DRV-883477",
+    "name": "Oluwaseun Rodriguez",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 3.96,
+    "total_rides_completed": 63,
+    "total_earnings": 17138.72,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-06-13 16:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 260.21
+    },
+    "incentives": {
+      "surge_bonus_earned": 602.81,
+      "peak_hour_bonus": 296.15,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.77,
+      "cancellation_rate": 0.13,
+      "on_time_rate": 0.7,
+      "customer_satisfaction": 3.96
+    },
+    "joined_date": "2024-02-05 22:12:11",
+    "last_ride_date": "2025-06-12 01:12:11"
+  },
+  {
+    "driver_id": "DRV-184786",
+    "name": "William Smith",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 3.96,
+    "total_rides_completed": 166,
+    "total_earnings": 45420.33,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-20 17:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 792.93,
+      "this_month": 7664.99,
+      "average_per_ride": 264.31
+    },
+    "incentives": {
+      "surge_bonus_earned": 2617.0,
+      "peak_hour_bonus": 2150.34,
+      "quality_bonus": 0.0,
+      "retention_bonus": 422.47
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.63,
+      "cancellation_rate": 0.12,
+      "on_time_rate": 0.82,
+      "customer_satisfaction": 3.96
+    },
+    "joined_date": "2024-06-20 04:12:11",
+    "last_ride_date": "2025-11-20 18:12:11"
+  },
+  {
+    "driver_id": "DRV-707237",
+    "name": "Ahmed Anderson",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.21,
+    "total_rides_completed": 1397,
+    "total_earnings": 415482.7,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 1722.66,
+      "this_week": 13494.17,
+      "this_month": 31582.1,
+      "average_per_ride": 287.11
+    },
+    "incentives": {
+      "surge_bonus_earned": 47657.51,
+      "peak_hour_bonus": 11273.9,
+      "quality_bonus": 0.0,
+      "retention_bonus": 695.89
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.83,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.21
+    },
+    "joined_date": "2024-06-20 05:12:11",
+    "last_ride_date": "2025-11-25 10:12:11"
+  },
+  {
+    "driver_id": "DRV-170569",
+    "name": "Ahmed Silva",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.34,
+    "total_rides_completed": 757,
+    "total_earnings": 203654.42,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 03:12:11"
+    },
+    "earnings_stats": {
+      "today": 1097.6,
+      "this_week": 2469.6,
+      "this_month": 13994.4,
+      "average_per_ride": 274.4
+    },
+    "incentives": {
+      "surge_bonus_earned": 25709.21,
+      "peak_hour_bonus": 12780.2,
+      "quality_bonus": 0.0,
+      "retention_bonus": 271.23
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.9,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.34
+    },
+    "joined_date": "2025-04-17 21:12:11",
+    "last_ride_date": "2025-11-26 16:12:11"
+  },
+  {
+    "driver_id": "DRV-207522",
+    "name": "James Park",
+    "status": "On-Break",
+    "vehicle_type": "Economy",
+    "rating": 4.67,
+    "total_rides_completed": 89,
+    "total_earnings": 21541.04,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-20 03:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 2324.34,
+      "this_month": 1807.82,
+      "average_per_ride": 258.26
+    },
+    "incentives": {
+      "surge_bonus_earned": 1444.67,
+      "peak_hour_bonus": 751.15,
+      "quality_bonus": 299.11,
+      "retention_bonus": 336.99
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.93,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.95,
+      "customer_satisfaction": 4.67
+    },
+    "joined_date": "2024-09-27 13:12:11",
+    "last_ride_date": "2025-11-18 23:12:11"
+  },
+  {
+    "driver_id": "DRV-987988",
+    "name": "Robert Williams",
+    "status": "On-Break",
+    "vehicle_type": "Economy",
+    "rating": 4.07,
+    "total_rides_completed": 458,
+    "total_earnings": 141634.6,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-17 09:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 728.91,
+      "this_month": 1457.82,
+      "average_per_ride": 242.97
+    },
+    "incentives": {
+      "surge_bonus_earned": 10806.84,
+      "peak_hour_bonus": 1443.33,
+      "quality_bonus": 0.0,
+      "retention_bonus": 162.74
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.81,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.87,
+      "customer_satisfaction": 4.07
+    },
+    "joined_date": "2025-05-01 07:12:11",
+    "last_ride_date": "2025-11-17 15:12:11"
+  },
+  {
+    "driver_id": "DRV-559808",
+    "name": "Ashley Thomas",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.07,
+    "total_rides_completed": 1458,
+    "total_earnings": 347380.48,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 12:12:11"
+    },
+    "earnings_stats": {
+      "today": 478.7,
+      "this_week": 4308.3,
+      "this_month": 30636.8,
+      "average_per_ride": 239.35
+    },
+    "incentives": {
+      "surge_bonus_earned": 50216.11,
+      "peak_hour_bonus": 21361.73,
+      "quality_bonus": 0.0,
+      "retention_bonus": 847.95
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.76,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.07
+    },
+    "joined_date": "2024-03-02 11:12:11",
+    "last_ride_date": "2025-11-24 17:12:11"
+  },
+  {
+    "driver_id": "DRV-661588",
+    "name": "James Okafor",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.3,
+    "total_rides_completed": 1093,
+    "total_earnings": 377805.11,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-24 23:12:11"
+    },
+    "earnings_stats": {
+      "today": 280.67,
+      "this_week": 4210.05,
+      "this_month": 40977.82,
+      "average_per_ride": 280.67
+    },
+    "incentives": {
+      "surge_bonus_earned": 25380.1,
+      "peak_hour_bonus": 28484.36,
+      "quality_bonus": 0.0,
+      "retention_bonus": 906.85
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.9,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.9,
+      "customer_satisfaction": 4.3
+    },
+    "joined_date": "2024-01-10 01:12:11",
+    "last_ride_date": "2025-11-25 11:12:11"
+  },
+  {
+    "driver_id": "DRV-559756",
+    "name": "Sarah Ali",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.94,
+    "total_rides_completed": 1628,
+    "total_earnings": 365488.6,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 22:12:11"
+    },
+    "earnings_stats": {
+      "today": 809.49,
+      "this_week": 10523.37,
+      "this_month": 11602.69,
+      "average_per_ride": 269.83
+    },
+    "incentives": {
+      "surge_bonus_earned": 32988.56,
+      "peak_hour_bonus": 18772.01,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1047.95
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.62,
+      "cancellation_rate": 0.12,
+      "on_time_rate": 0.84,
+      "customer_satisfaction": 3.94
+    },
+    "joined_date": "2023-10-16 06:12:11",
+    "last_ride_date": "2025-11-26 13:12:11"
+  },
+  {
+    "driver_id": "DRV-571567",
+    "name": "Omar Thomas",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 4.1,
+    "total_rides_completed": 456,
+    "total_earnings": 113406.52,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-23 20:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 1440.95,
+      "this_month": 1440.95,
+      "average_per_ride": 288.19
+    },
+    "incentives": {
+      "surge_bonus_earned": 3522.7,
+      "peak_hour_bonus": 2100.15,
+      "quality_bonus": 0.0,
+      "retention_bonus": 239.18
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.85,
+      "customer_satisfaction": 4.1
+    },
+    "joined_date": "2025-01-25 19:12:11",
+    "last_ride_date": "2025-11-22 17:12:11"
+  },
+  {
+    "driver_id": "DRV-464613",
+    "name": "David Martinez",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.38,
+    "total_rides_completed": 1290,
+    "total_earnings": 314412.57,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 20:12:11"
+    },
+    "earnings_stats": {
+      "today": 1800.05,
+      "this_week": 12086.05,
+      "this_month": 42172.6,
+      "average_per_ride": 257.15
+    },
+    "incentives": {
+      "surge_bonus_earned": 15819.12,
+      "peak_hour_bonus": 9581.13,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1123.29
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.83,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.94,
+      "customer_satisfaction": 4.38
+    },
+    "joined_date": "2023-08-27 10:12:11",
+    "last_ride_date": "2025-11-24 04:12:11"
+  },
+  {
+    "driver_id": "DRV-340547",
+    "name": "Elena Silva",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 4.68,
+    "total_rides_completed": 100,
+    "total_earnings": 24601.55,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-07-08 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 273.93
+    },
+    "incentives": {
+      "surge_bonus_earned": 1078.38,
+      "peak_hour_bonus": 385.72,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.92,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.68
+    },
+    "joined_date": "2024-05-17 10:12:11",
+    "last_ride_date": "2025-07-07 05:12:11"
+  },
+  {
+    "driver_id": "DRV-998662",
+    "name": "Raj Petrov",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 4.68,
+    "total_rides_completed": 120,
+    "total_earnings": 30268.91,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-07-13 06:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 277.29
+    },
+    "incentives": {
+      "surge_bonus_earned": 1038.11,
+      "peak_hour_bonus": 445.62,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.9,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.94,
+      "customer_satisfaction": 4.68
+    },
+    "joined_date": "2025-04-15 10:12:11",
+    "last_ride_date": "2025-07-12 03:12:11"
+  },
+  {
+    "driver_id": "DRV-616105",
+    "name": "William Taylor",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.07,
+    "total_rides_completed": 1457,
+    "total_earnings": 457626.08,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 312.02,
+      "this_week": 312.02,
+      "this_month": 4368.28,
+      "average_per_ride": 312.02
+    },
+    "incentives": {
+      "surge_bonus_earned": 44511.51,
+      "peak_hour_bonus": 24445.67,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1079.45
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.8,
+      "cancellation_rate": 0.1,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.07
+    },
+    "joined_date": "2023-09-13 00:12:11",
+    "last_ride_date": "2025-11-27 07:12:11"
+  },
+  {
+    "driver_id": "DRV-165794",
+    "name": "Priya Park",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.92,
+    "total_rides_completed": 348,
+    "total_earnings": 99026.91,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 16:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 11718.51,
+      "this_month": 22938.36,
+      "average_per_ride": 249.33
+    },
+    "incentives": {
+      "surge_bonus_earned": 5413.71,
+      "peak_hour_bonus": 4875.03,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1008.22
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.77,
+      "cancellation_rate": 0.12,
+      "on_time_rate": 0.76,
+      "customer_satisfaction": 3.92
+    },
+    "joined_date": "2023-11-17 16:12:11",
+    "last_ride_date": "2025-11-25 14:12:11"
+  },
+  {
+    "driver_id": "DRV-912701",
+    "name": "Raj Jones",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 4.06,
+    "total_rides_completed": 396,
+    "total_earnings": 116635.12,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-21 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 888.96,
+      "this_month": 6815.36,
+      "average_per_ride": 296.32
+    },
+    "incentives": {
+      "surge_bonus_earned": 8610.88,
+      "peak_hour_bonus": 2611.28,
+      "quality_bonus": 0.0,
+      "retention_bonus": 283.56
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.84,
+      "cancellation_rate": 0.07,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.06
+    },
+    "joined_date": "2024-12-10 06:12:11",
+    "last_ride_date": "2025-11-21 15:12:11"
+  },
+  {
+    "driver_id": "DRV-922184",
+    "name": "James Williams",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 4.17,
+    "total_rides_completed": 45,
+    "total_earnings": 11651.47,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-06-30 02:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 263.35
+    },
+    "incentives": {
+      "surge_bonus_earned": 697.68,
+      "peak_hour_bonus": 333.0,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.86,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.86,
+      "customer_satisfaction": 4.17
+    },
+    "joined_date": "2025-04-20 02:12:11",
+    "last_ride_date": "2025-06-30 18:12:11"
+  },
+  {
+    "driver_id": "DRV-211820",
+    "name": "Elizabeth Wang",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.39,
+    "total_rides_completed": 1199,
+    "total_earnings": 310107.55,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 2453.85,
+      "this_week": 13087.2,
+      "this_month": 36535.1,
+      "average_per_ride": 272.65
+    },
+    "incentives": {
+      "surge_bonus_earned": 42929.26,
+      "peak_hour_bonus": 10075.83,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1146.58
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.39
+    },
+    "joined_date": "2023-08-11 08:12:11",
+    "last_ride_date": "2025-11-26 19:12:11"
+  },
+  {
+    "driver_id": "DRV-624884",
+    "name": "William Patel",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.15,
+    "total_rides_completed": 1242,
+    "total_earnings": 307310.38,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 973.88,
+      "this_week": 11930.03,
+      "this_month": 35790.09,
+      "average_per_ride": 243.47
+    },
+    "incentives": {
+      "surge_bonus_earned": 42799.64,
+      "peak_hour_bonus": 15287.68,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1167.12
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.81,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.83,
+      "customer_satisfaction": 4.15
+    },
+    "joined_date": "2023-07-26 10:12:11",
+    "last_ride_date": "2025-11-26 09:12:11"
+  },
+  {
+    "driver_id": "DRV-823643",
+    "name": "Joseph Ali",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.08,
+    "total_rides_completed": 589,
+    "total_earnings": 175774.79,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 1135.84,
+      "this_week": 13346.12,
+      "this_month": 43161.92,
+      "average_per_ride": 283.96
+    },
+    "incentives": {
+      "surge_bonus_earned": 22420.38,
+      "peak_hour_bonus": 12709.62,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.84,
+      "customer_satisfaction": 4.08
+    },
+    "joined_date": "2025-09-12 16:12:11",
+    "last_ride_date": "2025-11-27 15:12:11"
+  },
+  {
+    "driver_id": "DRV-294214",
+    "name": "Priya Petrov",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.22,
+    "total_rides_completed": 319,
+    "total_earnings": 76481.11,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 13:12:11"
+    },
+    "earnings_stats": {
+      "today": 3125.65,
+      "this_week": 14207.5,
+      "this_month": 26994.25,
+      "average_per_ride": 284.15
+    },
+    "incentives": {
+      "surge_bonus_earned": 5077.35,
+      "peak_hour_bonus": 2922.74,
+      "quality_bonus": 0.0,
+      "retention_bonus": 547.95
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.78,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.22
+    },
+    "joined_date": "2024-10-05 10:12:11",
+    "last_ride_date": "2025-11-25 06:12:11"
+  },
+  {
+    "driver_id": "DRV-785069",
+    "name": "Patricia Williams",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.88,
+    "total_rides_completed": 629,
+    "total_earnings": 151399.74,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 08:12:11"
+    },
+    "earnings_stats": {
+      "today": 2914.01,
+      "this_week": 2914.01,
+      "this_month": 37087.4,
+      "average_per_ride": 264.91
+    },
+    "incentives": {
+      "surge_bonus_earned": 8067.81,
+      "peak_hour_bonus": 12019.22,
+      "quality_bonus": 0.0,
+      "retention_bonus": 1149.32
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.72,
+      "cancellation_rate": 0.15,
+      "on_time_rate": 0.82,
+      "customer_satisfaction": 3.88
+    },
+    "joined_date": "2023-08-08 08:12:11",
+    "last_ride_date": "2025-11-27 00:12:11"
+  },
+  {
+    "driver_id": "DRV-608355",
+    "name": "Mei Thomas",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.75,
+    "total_rides_completed": 107,
+    "total_earnings": 32384.82,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 21:12:11"
+    },
+    "earnings_stats": {
+      "today": 2465.76,
+      "this_week": 3390.42,
+      "this_month": 42226.14,
+      "average_per_ride": 308.22
+    },
+    "incentives": {
+      "surge_bonus_earned": 4242.85,
+      "peak_hour_bonus": 2417.85,
+      "quality_bonus": 1176.42,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.85,
+      "cancellation_rate": 0.02,
+      "on_time_rate": 0.95,
+      "customer_satisfaction": 4.75
+    },
+    "joined_date": "2025-10-03 02:12:11",
+    "last_ride_date": "2025-11-24 11:12:11"
+  },
+  {
+    "driver_id": "DRV-680560",
+    "name": "Fatima Thomas",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.48,
+    "total_rides_completed": 1153,
+    "total_earnings": 356980.22,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 23:12:11"
+    },
+    "earnings_stats": {
+      "today": 2672.7,
+      "this_week": 2672.7,
+      "this_month": 9621.72,
+      "average_per_ride": 267.27
+    },
+    "incentives": {
+      "surge_bonus_earned": 44983.57,
+      "peak_hour_bonus": 13015.61,
+      "quality_bonus": 0.0,
+      "retention_bonus": 863.01
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.87,
+      "cancellation_rate": 0.05,
+      "on_time_rate": 0.89,
+      "customer_satisfaction": 4.48
+    },
+    "joined_date": "2024-02-06 11:12:11",
+    "last_ride_date": "2025-11-26 14:12:11"
+  },
+  {
+    "driver_id": "DRV-396843",
+    "name": "Fatima Okafor",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.81,
+    "total_rides_completed": 940,
+    "total_earnings": 205991.61,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-25 14:12:11"
+    },
+    "earnings_stats": {
+      "today": 503.6,
+      "this_week": 8813.0,
+      "this_month": 10072.0,
+      "average_per_ride": 251.8
+    },
+    "incentives": {
+      "surge_bonus_earned": 28784.6,
+      "peak_hour_bonus": 7782.97,
+      "quality_bonus": 0.0,
+      "retention_bonus": 645.21
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.75,
+      "cancellation_rate": 0.16,
+      "on_time_rate": 0.81,
+      "customer_satisfaction": 3.81
+    },
+    "joined_date": "2024-07-23 07:12:11",
+    "last_ride_date": "2025-11-24 14:12:11"
+  },
+  {
+    "driver_id": "DRV-978493",
+    "name": "Ahmed Singh",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.32,
+    "total_rides_completed": 847,
+    "total_earnings": 265400.24,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 07:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 935.49,
+      "this_month": 47709.99,
+      "average_per_ride": 311.83
+    },
+    "incentives": {
+      "surge_bonus_earned": 36549.75,
+      "peak_hour_bonus": 16815.9,
+      "quality_bonus": 0.0,
+      "retention_bonus": 413.7
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.88,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.87,
+      "customer_satisfaction": 4.32
+    },
+    "joined_date": "2025-01-03 00:12:11",
+    "last_ride_date": "2025-11-27 16:12:11"
+  },
+  {
+    "driver_id": "DRV-588680",
+    "name": "Fatima Anderson",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 3.86,
+    "total_rides_completed": 120,
+    "total_earnings": 41989.54,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-09-09 18:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 254.64
+    },
+    "incentives": {
+      "surge_bonus_earned": 1625.73,
+      "peak_hour_bonus": 476.22,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.77,
+      "cancellation_rate": 0.16,
+      "on_time_rate": 0.8,
+      "customer_satisfaction": 3.86
+    },
+    "joined_date": "2024-02-15 01:12:11",
+    "last_ride_date": "2025-09-09 03:12:11"
+  },
+  {
+    "driver_id": "DRV-562156",
+    "name": "Joseph Gonzalez",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 4.18,
+    "total_rides_completed": 65,
+    "total_earnings": 15671.25,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-22 00:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 2187.2,
+      "this_month": 5468.0,
+      "average_per_ride": 273.4
+    },
+    "incentives": {
+      "surge_bonus_earned": 491.98,
+      "peak_hour_bonus": 758.27,
+      "quality_bonus": 0.0,
+      "retention_bonus": 265.48
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.89,
+      "cancellation_rate": 0.06,
+      "on_time_rate": 0.82,
+      "customer_satisfaction": 4.18
+    },
+    "joined_date": "2024-12-25 11:12:11",
+    "last_ride_date": "2025-11-21 15:12:11"
+  },
+  {
+    "driver_id": "DRV-179413",
+    "name": "Robert Williams",
+    "status": "On-Break",
+    "vehicle_type": "Premium",
+    "rating": 4.74,
+    "total_rides_completed": 356,
+    "total_earnings": 93887.66,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-23 08:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 862.89,
+      "this_month": 862.89,
+      "average_per_ride": 287.63
+    },
+    "incentives": {
+      "surge_bonus_earned": 7671.46,
+      "peak_hour_bonus": 4160.38,
+      "quality_bonus": 1349.69,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.95,
+      "cancellation_rate": 0.03,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.74
+    },
+    "joined_date": "2025-06-22 03:12:11",
+    "last_ride_date": "2025-11-22 15:12:11"
+  },
+  {
+    "driver_id": "DRV-173708",
+    "name": "David Silva",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.58,
+    "total_rides_completed": 1994,
+    "total_earnings": 494530.04,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 17:12:11"
+    },
+    "earnings_stats": {
+      "today": 2434.95,
+      "this_week": 8387.05,
+      "this_month": 32466.0,
+      "average_per_ride": 270.55
+    },
+    "incentives": {
+      "surge_bonus_earned": 37856.57,
+      "peak_hour_bonus": 16955.42,
+      "quality_bonus": 17244.07,
+      "retention_bonus": 605.48
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.92,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.92,
+      "customer_satisfaction": 4.58
+    },
+    "joined_date": "2024-09-02 03:12:11",
+    "last_ride_date": "2025-11-25 20:12:11"
+  },
+  {
+    "driver_id": "DRV-597192",
+    "name": "Carlos White",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.44,
+    "total_rides_completed": 1114,
+    "total_earnings": 307289.93,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 1397.45,
+      "this_week": 13974.5,
+      "this_month": 16769.4,
+      "average_per_ride": 279.49
+    },
+    "incentives": {
+      "surge_bonus_earned": 22854.8,
+      "peak_hour_bonus": 8030.0,
+      "quality_bonus": 0.0,
+      "retention_bonus": 653.42
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.77,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.84,
+      "customer_satisfaction": 4.44
+    },
+    "joined_date": "2024-07-22 01:12:11",
+    "last_ride_date": "2025-11-26 16:12:11"
+  },
+  {
+    "driver_id": "DRV-783071",
+    "name": "Omar Brown",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 4.36,
+    "total_rides_completed": 1051,
+    "total_earnings": 293788.12,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 21:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 10622.4,
+      "this_month": 24165.96,
+      "average_per_ride": 265.56
+    },
+    "incentives": {
+      "surge_bonus_earned": 37101.17,
+      "peak_hour_bonus": 11326.94,
+      "quality_bonus": 0.0,
+      "retention_bonus": 364.38
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.8,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.88,
+      "customer_satisfaction": 4.36
+    },
+    "joined_date": "2025-02-09 18:12:11",
+    "last_ride_date": "2025-11-26 08:12:11"
+  },
+  {
+    "driver_id": "DRV-471543",
+    "name": "Kenji Silva",
+    "status": "Active",
+    "vehicle_type": "Economy",
+    "rating": 3.86,
+    "total_rides_completed": 656,
+    "total_earnings": 153758.93,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-26 17:12:11"
+    },
+    "earnings_stats": {
+      "today": 708.12,
+      "this_week": 10621.8,
+      "this_month": 27380.64,
+      "average_per_ride": 236.04
+    },
+    "incentives": {
+      "surge_bonus_earned": 18909.8,
+      "peak_hour_bonus": 5504.53,
+      "quality_bonus": 0.0,
+      "retention_bonus": 993.15
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.6,
+      "cancellation_rate": 0.16,
+      "on_time_rate": 0.71,
+      "customer_satisfaction": 3.86
+    },
+    "joined_date": "2023-11-08 11:12:11",
+    "last_ride_date": "2025-11-25 23:12:11"
+  },
+  {
+    "driver_id": "DRV-442355",
+    "name": "Anya Thomas",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 3.87,
+    "total_rides_completed": 1392,
+    "total_earnings": 334876.67,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-27 15:12:11"
+    },
+    "earnings_stats": {
+      "today": 1099.72,
+      "this_week": 1924.51,
+      "this_month": 31616.95,
+      "average_per_ride": 274.93
+    },
+    "incentives": {
+      "surge_bonus_earned": 21660.77,
+      "peak_hour_bonus": 7537.91,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.7,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.71,
+      "customer_satisfaction": 3.87
+    },
+    "joined_date": "2025-10-08 21:12:11",
+    "last_ride_date": "2025-11-27 06:12:11"
+  },
+  {
+    "driver_id": "DRV-151591",
+    "name": "William Brown",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.08,
+    "total_rides_completed": 221,
+    "total_earnings": 62999.49,
+    "current_location": "Rural",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-11-26 22:12:11"
+    },
+    "earnings_stats": {
+      "today": 1934.24,
+      "this_week": 3039.52,
+      "this_month": 24592.48,
+      "average_per_ride": 276.32
+    },
+    "incentives": {
+      "surge_bonus_earned": 5045.48,
+      "peak_hour_bonus": 4937.5,
+      "quality_bonus": 0.0,
+      "retention_bonus": 842.47
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.84,
+      "cancellation_rate": 0.04,
+      "on_time_rate": 0.91,
+      "customer_satisfaction": 4.08
+    },
+    "joined_date": "2024-02-21 00:12:11",
+    "last_ride_date": "2025-11-27 21:12:11"
+  },
+  {
+    "driver_id": "DRV-619866",
+    "name": "Maria Patel",
+    "status": "Inactive",
+    "vehicle_type": "Premium",
+    "rating": 4.64,
+    "total_rides_completed": 95,
+    "total_earnings": 23796.8,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": false,
+      "last_active": "2025-06-01 10:12:11"
+    },
+    "earnings_stats": {
+      "today": 0.0,
+      "this_week": 0.0,
+      "this_month": 0.0,
+      "average_per_ride": 258.06
+    },
+    "incentives": {
+      "surge_bonus_earned": 1098.97,
+      "peak_hour_bonus": 496.43,
+      "quality_bonus": 0.0,
+      "retention_bonus": 0.0
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.91,
+      "cancellation_rate": 0.01,
+      "on_time_rate": 0.93,
+      "customer_satisfaction": 4.64
+    },
+    "joined_date": "2024-02-13 03:12:11",
+    "last_ride_date": "2025-05-31 03:12:11"
+  },
+  {
+    "driver_id": "DRV-593666",
+    "name": "James Chen",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.25,
+    "total_rides_completed": 209,
+    "total_earnings": 49740.63,
+    "current_location": "Urban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-25 07:12:11"
+    },
+    "earnings_stats": {
+      "today": 291.89,
+      "this_week": 2918.9,
+      "this_month": 32691.68,
+      "average_per_ride": 291.89
+    },
+    "incentives": {
+      "surge_bonus_earned": 6383.09,
+      "peak_hour_bonus": 1040.35,
+      "quality_bonus": 0.0,
+      "retention_bonus": 680.82
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.8,
+      "cancellation_rate": 0.08,
+      "on_time_rate": 0.89,
+      "customer_satisfaction": 4.25
+    },
+    "joined_date": "2024-07-18 01:12:11",
+    "last_ride_date": "2025-11-24 03:12:11"
+  },
+  {
+    "driver_id": "DRV-118948",
+    "name": "Carlos Silva",
+    "status": "Active",
+    "vehicle_type": "Premium",
+    "rating": 4.25,
+    "total_rides_completed": 110,
+    "total_earnings": 35899.54,
+    "current_location": "Suburban",
+    "availability": {
+      "is_available": true,
+      "last_active": "2025-11-27 04:12:11"
+    },
+    "earnings_stats": {
+      "today": 1772.04,
+      "this_week": 11813.6,
+      "this_month": 19197.1,
+      "average_per_ride": 295.34
+    },
+    "incentives": {
+      "surge_bonus_earned": 5145.25,
+      "peak_hour_bonus": 1437.06,
+      "quality_bonus": 0.0,
+      "retention_bonus": 513.7
+    },
+    "performance_metrics": {
+      "acceptance_rate": 0.89,
+      "cancellation_rate": 0.09,
+      "on_time_rate": 0.9,
+      "customer_satisfaction": 4.25
+    },
+    "joined_date": "2024-11-03 09:12:11",
+    "last_ride_date": "2025-11-27 02:12:11"
+  }
+]
