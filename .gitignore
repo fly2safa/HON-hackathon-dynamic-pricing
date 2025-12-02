@@ -49,10 +49,23 @@ htmlcov/
 .pytest_cache/
 .tox/
 
-# Database
+# Database files (exclude actual database data)
 *.db
 *.sqlite
 *.sqlite3
+
+# MongoDB local database files (if running locally)
+/data/db/
+/data/mongodb/
+mongodb_data/
+
+# ChromaDB local files
+/data/chromadb/
+chromadb_data/
+
+# BUT: Include MongoDB exports (JSON files for team sharing)
+!/data/mongodb_export/
+!/data/mongodb_export/*.json
 
 # Temporary files
 *.tmp

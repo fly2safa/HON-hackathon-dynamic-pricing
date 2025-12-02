@@ -1,0 +1,13 @@
+{
+  "export_date": "2025-12-01T20:49:05.177374",
+  "source_database": "HoneyGo",
+  "total_collections": 5,
+  "total_documents": 4347,
+  "collections": {
+    "customers": 988,
+    "rides": 1000,
+    "pricing_decisions": 1000,
+    "drivers": 159,
+    "external_data": 1200
+  }
+}
