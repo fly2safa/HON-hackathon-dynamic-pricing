@@ -12,7 +12,7 @@
 - **Team Size:** 6 members (Frontend, Backend, MongoDB, LangChain/Agent, ChromaDB/RAG, n8n/MCP)
 - **Tech Stack:** Next.js, FastAPI, MongoDB, ChromaDB, LangChain, LangSmith
 - **Data:** 4,347 real ride records across 5 collections
-- **Cities Supported:** Phoenix, New York, San Francisco, Chicago, Tampa
+- **Cities Supported:** Phoenix, New York, San Francisco, Chicago, Orlando
 - **Development Time:** 4 days (Dec 1-4, 2025)
 
 ---

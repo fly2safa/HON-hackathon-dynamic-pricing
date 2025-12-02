@@ -18,7 +18,7 @@ interface CityComparisonModalProps {
   onClose: () => void;
 }
 
-const CITIES = ['Phoenix', 'New York', 'San Francisco', 'Chicago', 'Tampa'];
+const CITIES = ['Phoenix', 'New York', 'San Francisco', 'Chicago', 'Orlando'];
 
 export default function CityComparisonModal({ isOpen, onClose }: CityComparisonModalProps) {
   const [city1, setCity1] = useState('Phoenix');
