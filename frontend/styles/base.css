@@ -1,0 +1,21 @@
+/**
+ * Base Styles
+ * 
+ * Global base styles and resets that apply to the entire application.
+ */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-family-sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure consistent box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
