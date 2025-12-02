@@ -1,0 +1,68 @@
+{
+  "phoenix_events": [
+    {
+      "id": "evt_001",
+      "name": "Phoenix Suns vs Lakers",
+      "type": "sports",
+      "venue": "Footprint Center",
+      "city": "Phoenix",
+      "date": "2025-12-05",
+      "start_time": "19:00",
+      "end_time": "22:00",
+      "expected_attendance": 18000,
+      "pricing_multiplier": 1.4,
+      "surge_radius_miles": 3,
+      "reasoning": "Major NBA game creates high demand in downtown area"
+    },
+    {
+      "id": "evt_002",
+      "name": "Taylor Swift - Eras Tour",
+      "type": "concert",
+      "venue": "State Farm Stadium",
+      "city": "Glendale",
+      "date": "2025-12-06",
+      "start_time": "20:00",
+      "end_time": "23:30",
+      "expected_attendance": 72000,
+      "pricing_multiplier": 2.0,
+      "surge_radius_miles": 5,
+      "reasoning": "Major concert with 72k attendees, extreme demand expected"
+    }
+  ],
+  "new_york_events": [
+    {
+      "id": "evt_003",
+      "name": "Knicks vs Celtics",
+      "type": "sports",
+      "venue": "Madison Square Garden",
+      "city": "New York",
+      "date": "2025-12-05",
+      "start_time": "19:30",
+      "end_time": "22:30",
+      "expected_attendance": 19500,
+      "pricing_multiplier": 1.5,
+      "surge_radius_miles": 2,
+      "reasoning": "Rivalry game at MSG, high demand in midtown"
+    },
+    {
+      "id": "evt_004",
+      "name": "Broadway - Hamilton",
+      "type": "theater",
+      "venue": "Richard Rodgers Theatre",
+      "city": "New York",
+      "date": "2025-12-05",
+      "start_time": "20:00",
+      "end_time": "23:00",
+      "expected_attendance": 1300,
+      "pricing_multiplier": 1.15,
+      "surge_radius_miles": 0.5,
+      "reasoning": "Theater district has consistent evening demand"
+    }
+  ],
+  "no_events": {
+    "city": "Suburban Area",
+    "events": [],
+    "pricing_multiplier": 1.0,
+    "reasoning": "No major events detected"
+  }
+}

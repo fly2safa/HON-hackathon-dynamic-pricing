@@ -1,105 +1,105 @@
-# Workflows - n8n/MCP Configurations
+# Workflows - n8n Integration for HoneyGo
 
-**Owner:** Role 6 (Steve - n8n/MCP Workflow Integration Engineer)
+**Owner:** Role 6 (Steve - n8n/MCP Workflow Integration Engineer)  
+**Status:** ✅ Implemented  
+**Last Updated:** Dec 2, 2025
 
-## Purpose
-Workflow automation for external data integration (weather, events, traffic).
+## Overview
 
-## Decision: n8n OR MCP
+External data enrichment workflows for HoneyGo dynamic pricing. These workflows fetch real-time weather, events, and traffic data to inform pricing decisions.
 
-Steve will choose one approach based on familiarity:
+## Architecture
 
-### Option 1: n8n (Visual Workflow Builder)
-- Visual workflow editor
-- Easy to configure and test
-- Export workflows as JSON
-
-### Option 2: MCP (Model Context Protocol)
-- More programmatic approach
-- Better LangChain integration
-- Python-based tools
-
-## Setup Instructions
-
-### If Using n8n:
-
-1. **Install n8n:**
-```bash
-npm install -g n8n
+```
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   Frontend      │────▶│   Backend API   │────▶│   n8n Webhooks  │
+│   (Next.js)     │     │   (FastAPI)     │     │   (localhost)   │
+└─────────────────┘     └─────────────────┘     └────────┬────────┘
+                                                         │
+                        ┌────────────────────────────────┼────────────────────────────────┐
+                        │                                │                                │
+                        ▼                                ▼                                ▼
+               ┌─────────────────┐             ┌─────────────────┐             ┌─────────────────┐
+               │ Weather API     │             │ Events API      │             │ Traffic Calc    │
+               │ (OpenWeather)   │             │ (Ticketmaster)  │             │ (Simulated)     │
+               └─────────────────┘             └─────────────────┘             └─────────────────┘
 ```
 
-2. **Start n8n:**
+## Quick Start
+
+### 1. Start n8n
 ```bash
+nvm use 24
 n8n start
+# Access UI at http://localhost:5678
 ```
 
-Access UI: http://localhost:5678
+### 2. Import Workflows
+1. Open n8n UI → Click "Add Workflow"
+2. Click ⋮ menu → "Import from File"
+3. Import `workflows/n8n/pricing-enrichment-combined.json`
 
-3. **Create Workflows:**
-   - Weather enrichment
-   - Event fetcher
-   - Traffic data
+### 3. Activate Workflow
+Toggle the workflow to "Active" to enable webhooks.
 
-4. **Export Workflows:**
-   - Save as JSON in `workflows/n8n/`
+## Workflows
 
-### If Using MCP:
+| Workflow | Webhook URL | Purpose |
+|----------|-------------|---------|
+| **pricing-enrichment-combined** ⭐ | `/webhook/pricing-enrichment` | All-in-one pricing factors |
+| weather-enrichment | `/webhook/weather-data` | Weather conditions |
+| event-fetcher | `/webhook/event-data` | Nearby events |
+| traffic-data | `/webhook/traffic-data` | Traffic simulation |
 
-1. **Install MCP dependencies:**
+## API Endpoints
+
+The backend exposes these endpoints at `/n8n/`:
+
+```
+GET  /n8n/health              - Check n8n availability
+GET  /n8n/weather/{city}      - Get weather data
+GET  /n8n/events/{city}       - Get events data
+GET  /n8n/traffic             - Get traffic data
+POST /n8n/enrichment          - Combined pricing factors
+GET  /n8n/demo/compare-cities - Compare two cities (for demo)
+```
+
+## Testing
+
 ```bash
-pip install mcp langchain
+# Test weather
+curl http://localhost:8000/n8n/weather/Phoenix
+
+# Test city comparison (Steve's demo idea)
+curl "http://localhost:8000/n8n/demo/compare-cities?city1=Phoenix&city2=New%20York"
 ```
 
-2. **Create Tools:**
-   - `tools/weather_tool.py`
-   - `tools/events_tool.py`
-   - `tools/traffic_tool.py`
+## Mock Data
 
-3. **Configure:**
-   - Create `mcp-config.yaml`
-   - Register tools with LangChain agent
+For demo without API keys, use `data/mock/`:
+- `mock_weather.json` - Weather scenarios
+- `mock_events.json` - Event scenarios  
+- `mock_traffic.json` - Traffic scenarios
 
-## Folder Structure
+## File Structure
 
 ```
 workflows/
-├── README.md                  # This file
-├── n8n/                       # n8n workflows (if using n8n)
-│   ├── weather-enrichment.json
-│   ├── event-fetcher.json
-│   └── traffic-data.json
-├── mcp/                       # MCP configurations (if using MCP)
-│   ├── mcp-config.yaml
-│   └── tools/
-│       ├── weather_tool.py
-│       └── events_tool.py
-└── .env.workflows             # Workflow-specific env vars
+├── README.md
+├── .env.workflows
+└── n8n/
+    ├── pricing-enrichment-combined.json  ⭐ Main workflow
+    ├── weather-enrichment.json
+    ├── event-fetcher.json
+    └── traffic-data.json
+
+backend/
+├── services/n8n_service.py    # n8n webhook client
+└── routers/n8n.py             # API endpoints
 ```
 
-## External APIs
-
-### Weather API (Recommended: OpenWeatherMap)
-- FREE tier: 1,000 calls/day
-- Sign up: https://openweathermap.org/api
-- Add key to `.env`: `WEATHER_API_KEY=your_key`
-
-### Events API (Options)
-- Ticketmaster API (FREE tier)
-- Or use mock data: `data/mock/mock_events.json`
-
-### Traffic API (Options)
-- Google Maps API (requires billing)
-- Or use mock data: `data/mock/mock_traffic.json`
-
 ## Timeline
-- **Dec 1:** Set up n8n or MCP environment
-- **Dec 2:** Create workflows for external data
-- **Dec 3 PM:** Integrate with backend (coordinate with Dari)
-- **Dec 4:** Testing
-
-## Dependencies
-- Backend API endpoints from Dari (Role 3) - Dec 3 PM
-
-## Reference
-See `docs/project-structure-guide.md` for detailed setup instructions.
-
+- [x] Dec 1: Set up n8n, create workflows
+- [x] Dec 2: Backend integration
+- [ ] Dec 3 PM: Test with full system
+- [ ] Dec 4: Final testing
