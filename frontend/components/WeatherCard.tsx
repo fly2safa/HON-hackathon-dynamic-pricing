@@ -245,18 +245,6 @@ export default function WeatherCard({
           </p>
         )}
       </div>
-      
-      {/* CSS animations */}
-      <style jsx>{`
-        @keyframes cloudFloat {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(20px); }
-        }
-        @keyframes rainFall {
-          0% { transform: translateY(0); opacity: 1; }
-          100% { transform: translateY(60px); opacity: 0; }
-        }
-      `}</style>
     </div>
   );
 }
