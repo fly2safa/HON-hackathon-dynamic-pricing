@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { type PricingResult, type RideRequest } from '@/lib/mockData';
+import { formatDistance } from '@/lib/formatUtils';
 
 interface PricingDisplayProps {
   result: PricingResult;
@@ -214,7 +215,7 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
           </div>
           <div>
             <p className="text-gray-500">Distance</p>
-            <p className="font-medium text-gray-800">{ride.distance} miles</p>
+            <p className="font-medium text-gray-800">{formatDistance(ride.distance)}</p>
           </div>
           <div>
             <p className="text-gray-500">Duration</p>

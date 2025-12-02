@@ -6,6 +6,7 @@ import HeroSection from '@/components/HeroSection';
 import RideRequestCard from '@/components/RideRequestCard';
 import PricingDisplay from '@/components/PricingDisplay';
 import AIThinkingAnimation from '@/components/AIThinkingAnimation';
+import BackendStatusBanner from '@/components/BackendStatusBanner';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -76,7 +77,8 @@ export default function Home() {
     setIsProcessing(true);
 
     try {
-      const result = await simulateAIPricing(ride.id, ride);
+      // Use backend integration (with automatic fallback to mock if backend unavailable)
+      const result = await calculatePricingWithBackend(ride, marketConditions.weatherType);
       setPricingResult(result);
     } catch (error) {
       console.error('Error calculating price:', error);
@@ -97,9 +99,12 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-10">
+      {/* Backend Status Banner */}
+      <BackendStatusBanner />
+      
       {/* Header */}
-      <header className="bg-black shadow-md sticky top-0 z-50">
+      <header className="bg-black shadow-md sticky top-10 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
