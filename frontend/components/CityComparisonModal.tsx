@@ -118,8 +118,12 @@ export default function CityComparisonModal({ isOpen, onClose }: CityComparisonM
               <label className="block text-sm font-semibold text-gray-700 mb-2">City 1</label>
               <select
                 value={city1}
-                onChange={(e) => setCity1(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onChange={(e) => {
+                  setCity1(e.target.value);
+                  setResult1(null);
+                  setResult2(null);
+                }}
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 font-semibold text-base cursor-pointer hover:border-blue-400"
               >
                 {CITIES.map(city => (
                   <option key={city} value={city}>{city}</option>
@@ -130,8 +134,12 @@ export default function CityComparisonModal({ isOpen, onClose }: CityComparisonM
               <label className="block text-sm font-semibold text-gray-700 mb-2">City 2</label>
               <select
                 value={city2}
-                onChange={(e) => setCity2(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                onChange={(e) => {
+                  setCity2(e.target.value);
+                  setResult1(null);
+                  setResult2(null);
+                }}
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-gray-900 font-semibold text-base cursor-pointer hover:border-blue-400"
               >
                 {CITIES.map(city => (
                   <option key={city} value={city}>{city}</option>
@@ -147,7 +155,11 @@ export default function CityComparisonModal({ isOpen, onClose }: CityComparisonM
                 min="5"
                 max="30"
                 value={distance}
-                onChange={(e) => setDistance(Number(e.target.value))}
+                onChange={(e) => {
+                  setDistance(Number(e.target.value));
+                  setResult1(null);
+                  setResult2(null);
+                }}
                 className="w-full"
               />
             </div>
