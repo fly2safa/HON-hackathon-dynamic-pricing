@@ -7,6 +7,8 @@ import RideRequestCard from '@/components/RideRequestCard';
 import PricingDisplay from '@/components/PricingDisplay';
 import AIThinkingAnimation from '@/components/AIThinkingAnimation';
 import BackendStatusBanner from '@/components/BackendStatusBanner';
+import WeatherStatusBanner from '@/components/WeatherStatusBanner';
+import StatusBar from '@/components/StatusBar';
 import AIStatusIcon from '@/components/AIStatusIcon';
 import CityComparisonModal from '@/components/CityComparisonModal';
 import { 
@@ -33,6 +35,9 @@ export default function Home() {
   const [selectedLoyaltyTier, setSelectedLoyaltyTier] = useState<LoyaltyTier>('new');
   const [marketConditions, setMarketConditions] = useState<MarketConditions>(generateMarketConditions('Phoenix'));
   const [showCityComparison, setShowCityComparison] = useState(false);
+  const [showBackendBanner, setShowBackendBanner] = useState(true);
+  const [showWeatherBanner, setShowWeatherBanner] = useState(true);
+  const [backendConnected, setBackendConnected] = useState(false);
   const resultsSectionRef = useRef<HTMLDivElement>(null);
 
   // Fetch real-time weather for selected city
@@ -67,7 +72,7 @@ export default function Home() {
   // Scroll when processing starts
   useEffect(() => {
     if (isProcessing && resultsSectionRef.current) {
-      const yOffset = -120; // Extra space above
+      const yOffset = -220; // Extra space above (adjusted for banner layout)
       const element = resultsSectionRef.current;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
@@ -80,10 +85,24 @@ export default function Home() {
     setPricingResult(null);
     setIsProcessing(true);
 
+    // Track total time from user's perspective
+    const totalStartTime = Date.now();
+
     try {
       // Use backend integration (with automatic fallback to mock if backend unavailable)
       const result = await calculatePricingWithBackend(ride, marketConditions.weatherType);
-      setPricingResult(result);
+      
+      // Calculate total time (should always be >= processingTime)
+      const totalTime = (Date.now() - totalStartTime) / 1000;
+      
+      // Ensure totalTime is at least as large as processingTime
+      const adjustedTotalTime = Math.max(totalTime, result.processingTime);
+      
+      // Add total time to result
+      setPricingResult({
+        ...result,
+        totalTime: adjustedTotalTime
+      });
     } catch (error) {
       console.error('Error calculating price:', error);
     } finally {
@@ -102,35 +121,68 @@ export default function Home() {
     setPricingResult(null);
   };
 
+  // Calculate header sticky position based on visible banners
+  const hasStatusBar = !showBackendBanner || !showWeatherBanner;
+  const headerTop = (showBackendBanner && showWeatherBanner) ? 'top-[5.5rem]' : // Both banners (88px)
+                    showBackendBanner ? 'top-[4.5rem]' : // Backend + status bar (72px)
+                    showWeatherBanner ? 'top-[4.5rem]' : // Weather + status bar (72px)
+                    'top-8'; // Status bar only (32px)
+  
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-10">
-      {/* Backend Status Banner */}
-      <BackendStatusBanner />
+    <main className="min-h-screen bg-black">
+      {/* Compact Status Bar - Shows when at least one banner is closed */}
+      {hasStatusBar && (
+        <StatusBar
+          backendConnected={backendConnected}
+          weatherConnected={weather?.isRealData || false}
+          onRestore={() => {
+            setShowBackendBanner(true);
+            setShowWeatherBanner(true);
+          }}
+        />
+      )}
+      
+      {/* Individual Status Banners */}
+      {showBackendBanner && (
+        <BackendStatusBanner 
+          onClose={() => setShowBackendBanner(false)}
+          onStatusChange={setBackendConnected}
+          hasStatusBar={hasStatusBar}
+        />
+      )}
+      {showWeatherBanner && (
+        <WeatherStatusBanner 
+          isRealWeather={weather?.isRealData || false}
+          onClose={() => setShowWeatherBanner(false)}
+          hasStatusBar={hasStatusBar}
+          hasBackendBanner={showBackendBanner}
+        />
+      )}
       
       {/* Header */}
-      <header className="bg-black shadow-md sticky top-10 z-40">
+      <header className={`bg-black shadow-md sticky ${headerTop} z-40`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-5">
               <Image 
                 src="/images/honeygo-logo.png" 
                 alt="HoneyGo Logo" 
-                width={48} 
-                height={48}
+                width={100} 
+                height={100}
                 className="rounded-lg"
               />
               <div>
-                <h1 className="text-2xl font-bold text-white">
+                <h1 className="text-4xl font-bold text-white">
                   HoneyGo
                 </h1>
-                <p className="text-sm text-gray-400">
+                <p className="text-lg text-gray-400">
                   AI-Powered Pricing Platform
                 </p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-xs text-gray-400">Powered by</p>
-              <p className="text-sm font-semibold text-[#FF6A13]">
+              <p className="text-sm text-gray-400">Powered by</p>
+              <p className="text-xl font-semibold text-[#FF6A13]">
                 Honeywell AI
               </p>
             </div>
@@ -138,11 +190,13 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <HeroSection />
+      {/* Content Area with Gradient Background */}
+      <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-24">
+        {/* Hero Section */}
+        <HeroSection />
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Action Bar */}
         <div className="mb-6 flex justify-end">
           <button
@@ -252,7 +306,7 @@ export default function Home() {
               marketConditions.weatherType === 'fog' ? 'from-gray-100 to-gray-50 border-gray-300' :
               marketConditions.weatherType === 'clouds' ? 'from-gray-50 to-white border-gray-300' :
               'from-yellow-50 to-white border-yellow-200'
-            }`}>
+            }`} suppressHydrationWarning>
               {weather && weather.isRealData && (
                 <div className="absolute top-1 right-1">
                   <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 border border-green-300">
@@ -260,7 +314,7 @@ export default function Home() {
                   </span>
                 </div>
               )}
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide flex items-center justify-center gap-1">
+              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide flex items-center justify-center gap-1" suppressHydrationWarning>
                 {marketConditions.weatherType === 'storm' && '⛈️'}
                 {marketConditions.weatherType === 'snow' && '❄️'}
                 {marketConditions.weatherType === 'rain' && '🌧️'}
@@ -273,11 +327,11 @@ export default function Home() {
                 marketConditions.weatherSeverity === 'severe' ? 'text-red-700' :
                 marketConditions.weatherSeverity === 'moderate' ? 'text-orange-700' :
                 'text-gray-800'
-              }`}>
+              }`} suppressHydrationWarning>
                 {marketConditions.weatherCondition}
               </p>
               {weather && weather.location && (
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 mt-1" suppressHydrationWarning>
                   {weather.location}
                 </p>
               )}
@@ -389,6 +443,7 @@ export default function Home() {
               </p>
             </div>
           </div>
+        </div>
         </div>
       </div>
 

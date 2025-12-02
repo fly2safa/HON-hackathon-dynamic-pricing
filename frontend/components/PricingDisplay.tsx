@@ -69,7 +69,20 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
           </div>
           <div>
             <h2 className="text-2xl font-bold text-gray-900">AI Pricing Complete</h2>
-            <p className="text-sm text-gray-500">Processed in {result.processingTime}s</p>
+            <div className="flex gap-4 text-sm text-gray-500">
+              <span>⚡ AI Processing: <span className="font-semibold text-blue-600">
+                {result.processingTime < 1 
+                  ? `${(result.processingTime * 1000).toFixed(0)}ms` 
+                  : `${result.processingTime.toFixed(2)}s`}
+              </span></span>
+              {result.totalTime !== undefined && (
+                <span>⏱️ Total Time: <span className="font-semibold text-gray-700">
+                  {result.totalTime < 1 
+                    ? `${(result.totalTime * 1000).toFixed(0)}ms` 
+                    : `${result.totalTime.toFixed(2)}s`}
+                </span></span>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -72,3 +72,4 @@ chromadb_data/
 *.temp
 .cache/
 
+TEMP-*.md
