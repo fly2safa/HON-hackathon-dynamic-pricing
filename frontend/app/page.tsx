@@ -11,6 +11,7 @@ import WeatherStatusBanner from '@/components/WeatherStatusBanner';
 import StatusBar from '@/components/StatusBar';
 import AIStatusIcon from '@/components/AIStatusIcon';
 import CityComparisonModal from '@/components/CityComparisonModal';
+import ActiveRidesCard from '@/components/ActiveRidesCard';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -297,12 +298,7 @@ export default function Home() {
                 {marketConditions.availableDrivers}
               </p>
             </div>
-            <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Active Rides</p>
-              <p className="text-2xl font-bold text-purple-600">
-                {marketConditions.activeRides}
-              </p>
-            </div>
+            <ActiveRidesCard count={marketConditions.activeRides} />
             <div className={`text-center p-4 bg-gradient-to-br rounded-xl border-2 relative ${
               marketConditions.weatherType === 'storm' ? 'from-red-50 to-orange-50 border-red-300' :
               marketConditions.weatherType === 'snow' ? 'from-blue-50 to-cyan-50 border-blue-300' :
