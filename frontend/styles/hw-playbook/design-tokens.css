@@ -1,0 +1,41 @@
+/**
+ * Honeywell Design Tokens
+ * 
+ * Raw CSS variables (design tokens) for Honeywell brand styling.
+ * These tokens represent design decisions - colors, typography, spacing, breakpoints.
+ * Use these tokens in components.css or directly in components for consistency.
+ */
+
+:root {
+  /* Colors */
+  --hw-color-bg-dark: #000000;
+  --hw-color-text-on-dark: #ffffff;
+  --hw-color-overlay: #000000;
+
+  /* Typography */
+  --hw-font-weight-bold: 700;
+  --hw-font-weight-black: 900;
+  
+  /* Hero Title Typography */
+  --hw-hero-title-size-sm: 32px;
+  --hw-hero-title-line-sm: 35px;
+  --hw-hero-title-size-md: 50px;
+  --hw-hero-title-line-md: 54px;
+  
+  /* Hero Description Typography */
+  --hw-hero-desc-size-sm: 14px;
+  --hw-hero-desc-line-sm: 16px;
+  --hw-hero-desc-size-md: 22px;
+  --hw-hero-desc-line-md: 26px;
+
+  /* Layout / Spacing */
+  --hw-left-rail-padding-x-desktop: 50px;
+  --hw-left-rail-padding-x-tablet: 35px;
+
+  /* Breakpoints (derived from Honeywell media queries) */
+  --hw-break-sm: 480px;
+  --hw-break-md: 768px;
+  --hw-break-lg: 900px;
+  --hw-break-xl: 992px;
+}
+
