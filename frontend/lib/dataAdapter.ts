@@ -44,13 +44,23 @@ function getTimeOfDay(date: Date = new Date()): string {
 function mapWeatherCondition(weatherType: string): string {
   const weatherMap: Record<string, string> = {
     'clear': 'clear',
+    'sunny': 'clear',
+    'clouds': 'cloudy',
+    'cloudy': 'cloudy',
+    'overcast': 'cloudy',
     'rain': 'rainy',
+    'drizzle': 'rainy',
     'storm': 'stormy',
+    'thunderstorm': 'stormy',
     'snow': 'snowy',
     'fog': 'cloudy',
+    'mist': 'cloudy',
+    'haze': 'cloudy',
   };
   
-  return weatherMap[weatherType] || 'clear';
+  // Case-insensitive matching
+  const normalized = weatherType?.toLowerCase() || 'clear';
+  return weatherMap[normalized] || 'cloudy'; // Default to cloudy instead of clear for unknown
 }
 
 /**
