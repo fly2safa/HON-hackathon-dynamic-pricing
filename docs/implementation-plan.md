@@ -962,7 +962,7 @@ churn, and ensures reliable service availability."
 - [ ] Create free LangSmith account
 - [ ] Get LangSmith API key
 - [ ] Install LangSmith SDK: `pip install langsmith`
-- [ ] Configure environment variables (LANGCHAIN_API_KEY, LANGCHAIN_PROJECT)
+- [ ] Configure environment variables (LANGSMITH_API_KEY, LANGCHAIN_PROJECT)
 - [ ] Test LangSmith connection
 - [ ] Review LangSmith proposal document (docs/langsmith-observability-proposal.md)
 
@@ -3517,7 +3517,7 @@ LOG_LEVEL=INFO
 ```bash
 OPENAI_API_KEY=sk-...
 LANGCHAIN_TRACING_V2=true
-LANGCHAIN_API_KEY=...
+LANGSMITH_API_KEY=...
 ```
 
 ---

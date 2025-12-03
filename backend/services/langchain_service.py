@@ -20,7 +20,8 @@ load_dotenv(dotenv_path='../.env')
 logger = logging.getLogger(__name__)
 
 # Configure LangSmith tracing BEFORE importing LangChain
-langsmith_key = os.getenv('LANGCHAIN_API_KEY') or os.getenv('LANGSMITH_API_KEY')
+# LANGSMITH_API_KEY is primary, LANGCHAIN_API_KEY is fallback for compatibility
+langsmith_key = os.getenv('LANGSMITH_API_KEY') or os.getenv('LANGCHAIN_API_KEY')
 if langsmith_key:
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
     os.environ["LANGCHAIN_API_KEY"] = langsmith_key
