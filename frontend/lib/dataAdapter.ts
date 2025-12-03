@@ -109,6 +109,35 @@ function calculateCompetitorPrices(ourPrice: number, city: string) {
 }
 
 /**
+ * Parse AI reasoning into an array of bullet points
+ * Handles multiple formats: numbered lists, newline-separated, or period-separated
+ */
+function parseReasoningToArray(reasoning: string): string[] {
+  // First, try to split by newlines (handles numbered lists like "1. reason\n2. reason")
+  const lines = reasoning.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+  
+  if (lines.length > 1) {
+    // Multiple lines - clean up numbered prefixes like "1.", "2.", "-", "•"
+    return lines.map(line => {
+      // Remove leading numbers, bullets, dashes
+      const cleaned = line.replace(/^[\d]+\.\s*/, '')  // "1. " -> ""
+                          .replace(/^[-•*]\s*/, '')    // "- " or "• " -> ""
+                          .trim();
+      return cleaned.endsWith('.') ? cleaned : cleaned + '.';
+    }).filter(line => line.length > 1); // Filter out empty lines that became just "."
+  }
+  
+  // Single line/paragraph - split by period-space or period followed by capital letter
+  const sentences = reasoning
+    .split(/\.\s+(?=[A-Z])/)  // Split on ". " followed by capital letter
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
+    .map(s => s.endsWith('.') ? s : s + '.');
+  
+  return sentences.length > 0 ? sentences : [reasoning];
+}
+
+/**
  * Convert backend PricingResponse to frontend PricingResult
  */
 export function backendToFrontendResult(
@@ -116,15 +145,8 @@ export function backendToFrontendResult(
   processingTime: number,
   city: string
 ): PricingResult {
-  // Split reasoning string into array
-  // Backend returns single string, frontend expects array
-  const reasoningArray = backendResponse.reasoning
-    .split('. ')
-    .filter(r => r.trim().length > 0)
-    .map(r => {
-      const trimmed = r.trim();
-      return trimmed.endsWith('.') ? trimmed : trimmed + '.';
-    });
+  // Split reasoning string into array - handles multiple formats
+  const reasoningArray = parseReasoningToArray(backendResponse.reasoning);
 
   // Calculate driver earnings (80% of final price)
   const driverEarnings = backendResponse.final_price * 0.8;
