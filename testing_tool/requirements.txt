@@ -1,0 +1,17 @@
+# HoneyGo Testing Tracker Requirements
+
+# Optional: Pillow for better logo/image handling
+# Without Pillow, the app will still work but may not show the logo
+Pillow>=9.0.0
+
+# Note: This tool also uses Python's built-in libraries:
+# - tkinter (GUI) - usually included with Python
+# - json (save/load)
+# - webbrowser (open links)
+# - pathlib (file paths)
+
+# If tkinter is not installed:
+# - Windows: Usually included with Python installer
+# - macOS: brew install python-tk@3.11 (adjust version)
+# - Linux (Ubuntu/Debian): sudo apt-get install python3-tk
+# - Linux (Fedora): sudo dnf install python3-tkinter

@@ -73,3 +73,8 @@ chromadb_data/
 .cache/
 
 TEMP-*.md
+
+# Testing Tool results (personal test progress files)
+testing_tool/results/*.json
+testing_tool/results/*.md
+!testing_tool/results/.gitkeep
