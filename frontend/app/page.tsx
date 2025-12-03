@@ -75,6 +75,24 @@ export default function Home() {
     }
   }, [weather, selectedCity]);
 
+  // Auto-recalculate price when loyalty tier changes (if a ride is already selected and priced)
+  useEffect(() => {
+    if (selectedRide && pricingResult && !isProcessing) {
+      console.log(`🎟️ Loyalty tier changed to ${selectedLoyaltyTier}, recalculating price...`);
+      
+      // Update the selected ride with new loyalty tier
+      const updatedRide = {
+        ...selectedRide,
+        loyaltyTier: selectedLoyaltyTier
+      };
+      
+      setSelectedRide(updatedRide);
+      
+      // Recalculate pricing with new loyalty tier
+      handleCalculatePrice(updatedRide);
+    }
+  }, [selectedLoyaltyTier]); // Only trigger when loyalty tier changes
+
   // Scroll when processing starts
   useEffect(() => {
     if (isProcessing && resultsSectionRef.current) {
@@ -87,7 +105,13 @@ export default function Home() {
   }, [isProcessing]);
 
   const handleCalculatePrice = async (ride: RideRequest) => {
-    setSelectedRide(ride);
+    // Apply the currently selected loyalty tier to the ride
+    const rideWithLoyaltyTier = {
+      ...ride,
+      loyaltyTier: selectedLoyaltyTier
+    };
+    
+    setSelectedRide(rideWithLoyaltyTier);
     setPricingResult(null);
     setIsProcessing(true);
 
@@ -96,7 +120,7 @@ export default function Home() {
 
     try {
       // Use backend integration (with automatic fallback to mock if backend unavailable)
-      const result = await calculatePricingWithBackend(ride, marketConditions.weatherType);
+      const result = await calculatePricingWithBackend(rideWithLoyaltyTier, marketConditions.weatherType);
       
       // Calculate total time (should always be >= processingTime)
       const totalTime = (Date.now() - totalStartTime) / 1000;
@@ -134,7 +158,7 @@ export default function Home() {
   const headerTop = (showBackendBanner && showWeatherBanner) ? 'top-[5.5rem]' : // Both banners (88px)
                     showBackendBanner ? 'top-[4.5rem]' : // Backend + status bar (72px)
                     showWeatherBanner ? 'top-[4.5rem]' : // Weather + status bar (72px)
-                    'top-8'; // Status bar only (32px)
+                    'top-[1.75rem]'; // Status bar only (28px)
   
   return (
     <main className="min-h-screen bg-black">
@@ -168,7 +192,7 @@ export default function Home() {
       )}
       
       {/* Header */}
-      <header className={`bg-black shadow-md sticky ${headerTop} z-40`}>
+      <header className={`bg-black sticky ${headerTop} z-40`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-5">
