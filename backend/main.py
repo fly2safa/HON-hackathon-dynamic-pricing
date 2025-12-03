@@ -7,6 +7,7 @@ Author: Dari (Role 3 - Backend/FastAPI Engineer)
 Created: Dec 1, 2024
 """
 
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from utils.config import settings
@@ -20,33 +21,14 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Create FastAPI application
-app = FastAPI(
-    title=settings.app_name,
-    description="Agentic AI for ride-sharing dynamic pricing with RAG and observability",
-    version=settings.app_version,
-    docs_url="/docs",
-    redoc_url="/redoc",
-    openapi_url="/openapi.json"
-)
 
-# CORS Configuration for Next.js frontend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        settings.frontend_url,
-        "http://localhost:3000",
-        "http://127.0.0.1:3000"
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Run on application startup"""
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Lifespan event handler for startup and shutdown events.
+    Replaces deprecated @app.on_event decorators.
+    """
+    # Startup
     logger.info(f"Starting {settings.app_name} v{settings.app_version}")
     logger.info(f"Environment: {settings.environment}")
     logger.info(f"Debug mode: {settings.debug}")
@@ -66,11 +48,10 @@ async def startup_event():
     # TODO: Initialize other services (Dec 3)
     # - ChromaDB connection
     # - LangChain agent initialization
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Run on application shutdown"""
+    
+    yield
+    
+    # Shutdown
     logger.info("Shutting down HoneyGo API")
     
     # Close MongoDB connection
@@ -82,6 +63,31 @@ async def shutdown_event():
             logger.error(f"Error closing MongoDB connection: {e}")
     
     # TODO: Close other connections (Dec 3)
+
+
+# Create FastAPI application with lifespan handler
+app = FastAPI(
+    title=settings.app_name,
+    description="Agentic AI for ride-sharing dynamic pricing with RAG and observability",
+    version=settings.app_version,
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json",
+    lifespan=lifespan
+)
+
+# CORS Configuration for Next.js frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        settings.frontend_url,
+        "http://localhost:3000",
+        "http://127.0.0.1:3000"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
