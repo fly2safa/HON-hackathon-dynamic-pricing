@@ -204,9 +204,14 @@ export default function Home() {
                 className="rounded-lg"
               />
               <div>
-                <h1 className="text-4xl font-bold text-white">
-                  HoneyGo
-                </h1>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-4xl font-bold text-white">
+                    HoneyGo
+                  </h1>
+                  <span className="px-2 py-0.5 text-xs font-semibold bg-[#FF6A13] text-white rounded-full">
+                    v1.0.0
+                  </span>
+                </div>
                 <p className="text-lg text-gray-400">
                   AI-Powered Pricing Platform
                 </p>
