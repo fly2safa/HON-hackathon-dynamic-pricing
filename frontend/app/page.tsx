@@ -120,7 +120,7 @@ export default function Home() {
 
     try {
       // Use backend integration (with automatic fallback to mock if backend unavailable)
-      const result = await calculatePricingWithBackend(rideWithLoyaltyTier, marketConditions.weatherType);
+      const result = await calculatePricingWithBackend(rideWithLoyaltyTier, marketConditions.weatherType, marketConditions.currentDemand);
       
       // Calculate total time (should always be >= processingTime)
       const totalTime = (Date.now() - totalStartTime) / 1000;

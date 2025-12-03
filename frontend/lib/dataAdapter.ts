@@ -205,7 +205,8 @@ export function backendToFrontendResult(
  */
 export async function calculatePricingWithBackend(
   ride: RideRequest,
-  weatherType?: string
+  weatherType?: string,
+  demandLevel?: string
 ): Promise<PricingResult> {
   const startTime = Date.now();
   
@@ -240,7 +241,7 @@ export async function calculatePricingWithBackend(
     
     // Fallback to mock data if backend fails
     const { simulateAIPricing } = await import('./mockData');
-    return simulateAIPricing(ride.id, ride, weatherType);
+    return simulateAIPricing(ride.id, ride, weatherType, demandLevel);
   }
 }
 

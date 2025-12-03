@@ -203,8 +203,8 @@ export const getWeatherMultiplier = (weatherType?: string) => {
 // - For scheduled rides, backend will use weather forecast API
 // - MongoDB will store historical pricing decisions
 // - ChromaDB will provide similar context for better AI reasoning
-export const simulateAIPricing = async (rideId: string, ride?: RideRequest, weatherType?: string): Promise<PricingResult> => {
-  console.log('🎯 simulateAIPricing called with weatherType:', weatherType);
+export const simulateAIPricing = async (rideId: string, ride?: RideRequest, weatherType?: string, demandLevel?: string): Promise<PricingResult> => {
+  console.log('🎯 simulateAIPricing called with weatherType:', weatherType, 'demandLevel:', demandLevel);
   
   // Record actual start time
   const startTime = Date.now();
@@ -280,8 +280,10 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest, weat
     // Driver gets 80% of dynamic price (company absorbs loyalty discount)
     const driverEarnings = dynamicPrice * 0.8;
     
-    // Generate realistic reasoning
-    const demandLevel = surgeMultiplier > 1.4 ? 'High' : surgeMultiplier > 1.2 ? 'Moderate' : 'Normal';
+    // Generate realistic reasoning - use passed demand level or calculate from surge
+    const displayDemand = demandLevel 
+      ? demandLevel.charAt(0).toUpperCase() + demandLevel.slice(1).toLowerCase()  // "surge" -> "Surge"
+      : (surgeMultiplier > 1.4 ? 'High' : surgeMultiplier > 1.2 ? 'Moderate' : 'Normal');
     const timeOfDay = new Date().getHours();
     const isPeakHour = (timeOfDay >= 7 && timeOfDay <= 9) || (timeOfDay >= 16 && timeOfDay <= 19);
     
@@ -307,7 +309,7 @@ export const simulateAIPricing = async (rideId: string, ride?: RideRequest, weat
       : null;
     
     const reasoning = [
-      `${ride.city} - ${demandLevel} demand detected`,
+      `${ride.city} - ${displayDemand} demand detected`,
       cityPricingNote,
       `Distance: ${ride.distance} miles requires ${ride.estimatedDuration} minutes`,
       `${ride.passengerCount} passenger${ride.passengerCount > 1 ? 's' : ''} - ${ride.passengerCount > 2 ? 'larger vehicle needed' : 'standard vehicle'}`,
