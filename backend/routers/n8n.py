@@ -11,7 +11,7 @@ from fastapi import APIRouter, Query
 from typing import Optional
 import logging
 
-from ..services.n8n_service import get_n8n_service
+from services.n8n_service import get_n8n_service
 
 logger = logging.getLogger(__name__)
 

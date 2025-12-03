@@ -40,6 +40,8 @@ export default function Home() {
   const [showBackendBanner, setShowBackendBanner] = useState(true);
   const [showWeatherBanner, setShowWeatherBanner] = useState(true);
   const [backendConnected, setBackendConnected] = useState(false);
+  const [showSchedulePicker, setShowSchedulePicker] = useState(false);
+  const [scheduledDateTime, setScheduledDateTime] = useState('');
   const resultsSectionRef = useRef<HTMLDivElement>(null);
 
   // Fetch real-time weather for selected city
@@ -112,9 +114,11 @@ export default function Home() {
     }
   };
 
-  const handleAddRandomRide = (scheduled: boolean = false) => {
-    const newRide = generateRandomRide(scheduled, selectedCity, selectedLoyaltyTier);
+  const handleAddRandomRide = (scheduled: boolean = false, customDateTime?: string) => {
+    const newRide = generateRandomRide(scheduled, selectedCity, selectedLoyaltyTier, customDateTime);
     setRides([newRide, ...rides]);
+    setShowSchedulePicker(false);
+    setScheduledDateTime('');
   };
 
   const handleClearAllRides = () => {
@@ -359,15 +363,60 @@ export default function Home() {
                   </svg>
                   Now
                 </button>
-                <button
-                  onClick={() => handleAddRandomRide(true)}
-                  className="px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 border-2 border-gray-300 hover:border-[#FF6A13] rounded-xl font-semibold transition-all duration-300 shadow-sm hover:shadow-md transform hover:scale-105 flex items-center gap-2"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  Schedule
-                </button>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowSchedulePicker(!showSchedulePicker)}
+                    className="px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 border-2 border-gray-300 hover:border-[#FF6A13] rounded-xl font-semibold transition-all duration-300 shadow-sm hover:shadow-md transform hover:scale-105 flex items-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    Schedule
+                    <svg className={`w-3 h-3 transition-transform ${showSchedulePicker ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {/* Schedule Picker Dropdown */}
+                  {showSchedulePicker && (
+                    <div className="absolute top-full mt-2 right-0 bg-white rounded-xl shadow-xl border border-gray-200 p-4 z-50 w-72">
+                      <p className="text-sm font-semibold text-gray-700 mb-3">Select Pickup Date & Time</p>
+                      <input
+                        type="datetime-local"
+                        value={scheduledDateTime}
+                        onChange={(e) => setScheduledDateTime(e.target.value)}
+                        min={new Date().toISOString().slice(0, 16)}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-gray-700 focus:ring-2 focus:ring-[#FF6A13] focus:border-[#FF6A13] mb-3"
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            if (scheduledDateTime) {
+                              handleAddRandomRide(true, scheduledDateTime);
+                            }
+                          }}
+                          disabled={!scheduledDateTime}
+                          className={`flex-1 px-3 py-2 rounded-lg font-semibold text-sm transition-all ${
+                            scheduledDateTime 
+                              ? 'bg-[#FF6A13] text-white hover:bg-[#E55A0A]' 
+                              : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                          }`}
+                        >
+                          Schedule Ride
+                        </button>
+                        <button
+                          onClick={() => handleAddRandomRide(true)}
+                          className="px-3 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-semibold text-sm transition-all"
+                        >
+                          Random
+                        </button>
+                      </div>
+                      <p className="text-xs text-gray-500 mt-2">
+                        💡 Tip: Schedule for night (10PM-6AM) to see lower AI confidence
+                      </p>
+                    </div>
+                  )}
+                </div>
                 {rides.length > 3 && (
                   <button
                     onClick={handleClearAllRides}

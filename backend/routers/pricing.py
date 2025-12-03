@@ -9,7 +9,63 @@ from models.pricing import PricingRequest, PricingResponse
 from typing import Dict, List
 import logging
 
+from services.langchain_service import get_langchain_service
+
 logger = logging.getLogger(__name__)
+
+
+def calculate_confidence_score(
+    weather_condition: str,
+    time_of_day: str,
+    distance_km: float,
+    surge_multiplier: float
+) -> float:
+    """
+    Calculate dynamic confidence score based on pricing factors.
+    
+    Returns a score between 0.60 and 0.95 based on:
+    - Weather severity (storms reduce confidence)
+    - Time of day (night reduces confidence)
+    - Distance (very long trips reduce confidence)
+    - Surge multiplier (high volatility reduces confidence)
+    
+    Args:
+        weather_condition: Current weather (clear, rain, storm, etc.)
+        time_of_day: Time period (morning, afternoon, evening, night)
+        distance_km: Trip distance in kilometers
+        surge_multiplier: Current surge pricing multiplier
+        
+    Returns:
+        Confidence score between 0.60 and 0.95
+    """
+    base_confidence = 0.85  # Start with high confidence
+    
+    # Reduce confidence for severe weather (more uncertainty)
+    if weather_condition:
+        weather_lower = weather_condition.lower()
+        if any(w in weather_lower for w in ['storm', 'snow', 'heavy']):
+            base_confidence -= 0.15
+        elif any(w in weather_lower for w in ['rain', 'fog', 'cloud']):
+            base_confidence -= 0.08
+    
+    # Reduce confidence for unusual times (less historical data)
+    if time_of_day == 'night':
+        base_confidence -= 0.05
+    
+    # Reduce confidence for very long distances (edge cases)
+    if distance_km > 50:
+        base_confidence -= 0.10
+    elif distance_km > 30:
+        base_confidence -= 0.05
+    
+    # Reduce confidence for high surge (volatile market)
+    if surge_multiplier > 2.0:
+        base_confidence -= 0.10
+    elif surge_multiplier > 1.5:
+        base_confidence -= 0.05
+    
+    # Ensure it stays in valid range (60% to 95%)
+    return round(max(0.60, min(0.95, base_confidence)), 2)
 
 router = APIRouter(
     prefix="/api/v1/pricing",
@@ -75,48 +131,85 @@ async def calculate_pricing(request: PricingRequest) -> PricingResponse:
             weather_multiplier = weather_surge_map.get(request.weather_condition.lower(), 1.0)
             surge_multiplier *= weather_multiplier
         
+        # City-based pricing multipliers (regulations, market conditions, cost of living)
+        city_multipliers = {
+            "phoenix": 1.0,        # Base rate - lower cost of living
+            "new york": 1.35,      # Higher regulations, congestion pricing, high demand
+            "san francisco": 1.30, # Tech hub, high cost of living
+            "chicago": 1.20,       # Midwest hub, moderate regulations
+            "orlando": 1.10,       # Tourism market, moderate pricing
+        }
+        
+        # Extract city from pickup location (simple matching)
+        pickup_lower = request.pickup_location.lower()
+        city_multiplier = 1.0
+        detected_city = "unknown"
+        for city, multiplier in city_multipliers.items():
+            if city in pickup_lower or any(
+                loc in pickup_lower for loc in {
+                    "phoenix": ["phoenix", "scottsdale", "tempe", "glendale", "mesa"],
+                    "new york": ["new york", "manhattan", "brooklyn", "queens", "bronx", "nyc"],
+                    "san francisco": ["san francisco", "sf", "oakland", "berkeley"],
+                    "chicago": ["chicago", "wrigley", "o'hare", "midway"],
+                    "orlando": ["orlando", "disney", "universal", "kissimmee"],
+                }.get(city, [city])
+            ):
+                city_multiplier = multiplier
+                detected_city = city.title()
+                break
+        
+        surge_multiplier *= city_multiplier
+        
         # Calculate final price
         final_price = base_price * surge_multiplier
         
-        # Generate reasoning explanation
-        reasoning_parts = [
-            f"Base rate: ${base_price:.2f} ({request.distance_km}km × $2.50/km)"
-        ]
-        
-        if surge_multiplier > 1.0:
-            if time_surge_map.get(request.time_of_day, 1.0) > 1.0:
-                reasoning_parts.append(
-                    f"Time surge: {request.time_of_day} hours (×{time_surge_map[request.time_of_day]})"
-                )
-            
-            if request.weather_condition and request.weather_condition.lower() in ["rainy", "snowy", "stormy"]:
-                weather_mult = weather_surge_map.get(request.weather_condition.lower(), 1.0)
-                reasoning_parts.append(
-                    f"Weather impact: {request.weather_condition} conditions (×{weather_mult})"
-                )
-        else:
-            reasoning_parts.append("Standard pricing - low demand period")
-        
-        reasoning_parts.append(f"Total surge multiplier: ×{surge_multiplier:.2f}")
-        
-        # Note about mock implementation
-        reasoning_parts.append(
-            "[MOCK] Full AI agent with RAG knowledge coming Dec 3"
+        # Calculate dynamic confidence score based on conditions
+        confidence = calculate_confidence_score(
+            weather_condition=request.weather_condition or "clear",
+            time_of_day=request.time_of_day,
+            distance_km=request.distance_km,
+            surge_multiplier=surge_multiplier
         )
         
-        reasoning = ". ".join(reasoning_parts)
+        # Try to get AI-generated reasoning from LangChain
+        langchain_service = get_langchain_service()
+        ai_result = await langchain_service.generate_pricing_reasoning(
+            pickup=request.pickup_location,
+            dropoff=request.dropoff_location,
+            distance_km=request.distance_km,
+            base_price=base_price,
+            final_price=final_price,
+            surge_multiplier=surge_multiplier,
+            time_of_day=request.time_of_day,
+            weather_condition=request.weather_condition,
+            customer_id=request.customer_id,
+            city=detected_city,
+            city_multiplier=city_multiplier
+        )
+        
+        reasoning = ai_result['reasoning']
+        is_ai_generated = ai_result.get('ai_generated', False)
+        model_used = ai_result.get('model', 'unknown')
         
         response = PricingResponse(
             base_price=round(base_price, 2),
             surge_multiplier=round(surge_multiplier, 2),
             final_price=round(final_price, 2),
             reasoning=reasoning,
-            confidence_score=0.75,  # Mock confidence score
-            agent_trace_url=None,   # Will be populated with LangSmith URL (Dec 3)
+            confidence_score=confidence,  # Dynamic confidence based on conditions
+            agent_trace_url=None,   # Will be populated with LangSmith URL later
             metadata={
                 "customer_id": request.customer_id,
-                "implementation": "mock",
-                "version": "1.0.0-mock"
+                "implementation": "langchain" if is_ai_generated else "rule-based",
+                "model": model_used,
+                "version": "2.0.0-ai",
+                "ai_generated": is_ai_generated,
+                "confidence_factors": {
+                    "weather": request.weather_condition or "clear",
+                    "time": request.time_of_day,
+                    "distance_km": request.distance_km,
+                    "surge": surge_multiplier
+                }
             }
         )
         
