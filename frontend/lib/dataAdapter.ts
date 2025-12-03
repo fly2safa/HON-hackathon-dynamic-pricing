@@ -153,23 +153,38 @@ function parseReasoningToArray(reasoning: string): string[] {
 export function backendToFrontendResult(
   backendResponse: BackendPricingResponse,
   processingTime: number,
-  city: string
+  city: string,
+  loyaltyTier?: string
 ): PricingResult {
-  // Split reasoning string into array - handles multiple formats
+  // Import loyalty functions (Jason's fix for loyalty tier pricing)
+  const { getLoyaltyDiscount, getLoyaltyBadge } = require('./mockData');
+  
+  // Apply loyalty discount if provided
+  const loyaltyDiscount = loyaltyTier ? getLoyaltyDiscount(loyaltyTier) : 0;
+  const priceBeforeDiscount = backendResponse.final_price;
+  const finalPrice = priceBeforeDiscount * (1 - loyaltyDiscount);
+  
+  // Split reasoning string into array - handles multiple formats (our improved parser)
   const reasoningArray = parseReasoningToArray(backendResponse.reasoning);
 
-  // Calculate driver earnings (80% of final price)
-  const driverEarnings = backendResponse.final_price * 0.8;
+  // Add loyalty discount to reasoning if applicable
+  if (loyaltyTier && loyaltyTier !== 'new' && loyaltyDiscount > 0) {
+    const loyaltyNote = `${getLoyaltyBadge(loyaltyTier)} ${loyaltyTier.toUpperCase()} member: ${(loyaltyDiscount * 100).toFixed(0)}% loyalty discount applied ($${(priceBeforeDiscount - finalPrice).toFixed(2)} saved).`;
+    reasoningArray.push(loyaltyNote);
+  }
 
-  // Calculate competitor pricing
+  // Calculate driver earnings (80% of final price after loyalty discount)
+  const driverEarnings = finalPrice * 0.8;
+
+  // Calculate competitor pricing (use original price for fair comparison)
   const competitorPricing = calculateCompetitorPrices(
-    backendResponse.final_price,
+    priceBeforeDiscount,
     city
   );
 
   return {
     basePrice: backendResponse.base_price,
-    dynamicPrice: backendResponse.final_price,
+    dynamicPrice: parseFloat(finalPrice.toFixed(2)),
     surgeMultiplier: backendResponse.surge_multiplier,
     driverEarnings: parseFloat(driverEarnings.toFixed(2)),
     reasoning: reasoningArray,
@@ -208,11 +223,12 @@ export async function calculatePricingWithBackend(
     // Calculate processing time
     const processingTime = (Date.now() - startTime) / 1000;
     
-    // Convert backend format to frontend format
+    // Convert backend format to frontend format (with loyalty tier)
     const frontendResult = backendToFrontendResult(
       backendResponse,
       processingTime,
-      ride.city
+      ride.city,
+      ride.loyaltyTier  // Pass loyalty tier for discount calculation
     );
     
     console.log('✅ Frontend result:', frontendResult);
