@@ -75,8 +75,9 @@ export default function AIThinkingAnimation({
           <div
             key={i}
             className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
+            className="animate-bounce-dots"
             style={{
-              animation: `bounce 1.4s ease-in-out ${i * 0.16}s infinite`,
+              animationDelay: `${i * 0.16}s`,
             }}
           />
         ))}
@@ -114,19 +115,6 @@ export default function AIThinkingAnimation({
           </div>
         ))}
       </div>
-
-      <style jsx>{`
-        @keyframes bounce {
-          0%, 80%, 100% {
-            transform: scale(0);
-            opacity: 0.5;
-          }
-          40% {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-      `}</style>
     </div>
   );
 }

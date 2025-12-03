@@ -1,0 +1,55 @@
+/**
+ * TailwindCSS v4 Theme Configuration
+ * 
+ * This file extends TailwindCSS v4's theme system with Honeywell brand colors
+ * and design tokens using CSS custom properties.
+ */
+
+@theme inline {
+  /* Base Theme Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* Honeywell Brand Colors in Tailwind Theme */
+  --color-honeywell-orange: var(--honeywell-orange);
+  --color-honeywell-orange-dark: var(--honeywell-orange-dark);
+  --color-honeywell-orange-darker: var(--honeywell-orange-darker);
+  --color-honeywell-blue: var(--honeywell-blue);
+  --color-honeywell-blue-dark: var(--honeywell-blue-dark);
+  --color-honeywell-red: var(--honeywell-red);
+  --color-honeywell-gray: var(--honeywell-gray);
+  --color-honeywell-gray-light: var(--honeywell-gray-light);
+  --color-honeywell-gray-dark: var(--honeywell-gray-dark);
+  
+  /* Primary/Secondary System */
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-darker: var(--primary-darker);
+  --color-secondary: var(--secondary);
+  --color-success: var(--success);
+  --color-info: var(--info);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-light: var(--light);
+  --color-dark: var(--dark);
+  
+  /* Semantic Colors */
+  --color-blue: var(--blue);
+  --color-indigo: var(--indigo);
+  --color-purple: var(--purple);
+  --color-pink: var(--pink);
+  --color-red: var(--red);
+  --color-orange: var(--orange);
+  --color-yellow: var(--yellow);
+  --color-green: var(--green);
+  --color-teal: var(--teal);
+  --color-cyan: var(--cyan);
+  --color-white: var(--white);
+  --color-gray: var(--gray);
+  --color-gray-dark: var(--gray-dark);
+  
+  /* Font Families */
+  --font-sans: var(--font-geist-sans), var(--font-family-sans-serif);
+  --font-mono: var(--font-geist-mono), var(--font-family-monospace);
+}
+
