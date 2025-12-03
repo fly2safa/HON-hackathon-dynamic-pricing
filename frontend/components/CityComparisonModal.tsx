@@ -81,7 +81,7 @@ export default function CityComparisonModal({ isOpen, onClose }: CityComparisonM
     : 0;
 
   const percentDifference = result1 && result2
-    ? ((priceDifference / Math.min(result1.dynamicPrice, result2.dynamicPrice)) * 100).toFixed(1)
+    ? Math.round(100 - (Math.min(result1.dynamicPrice, result2.dynamicPrice) / Math.max(result1.dynamicPrice, result2.dynamicPrice)) * 100)
     : 0;
 
   const cheaperCity = result1 && result2

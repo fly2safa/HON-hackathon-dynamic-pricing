@@ -19,7 +19,7 @@ export default function StatusBar({ backendConnected, weatherConnected, onRestor
 
   return (
     <div 
-      className="fixed top-0 left-0 right-0 z-50 bg-black text-white shadow-md cursor-pointer hover:bg-gray-900 transition-colors"
+      className="fixed top-0 left-0 right-0 z-50 bg-black text-white cursor-pointer hover:bg-gray-900 transition-colors"
       onClick={onRestore}
       title="Click to restore hidden banners"
     >

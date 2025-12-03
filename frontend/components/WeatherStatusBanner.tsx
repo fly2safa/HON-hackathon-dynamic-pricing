@@ -22,7 +22,7 @@ export default function WeatherStatusBanner({ isRealWeather, onClose, hasStatusB
   // Calculate top position based on what's showing above
   const topPosition = hasStatusBar && hasBackendBanner ? 'top-[8.5rem]' : 
                       hasStatusBar ? 'top-8' : 
-                      hasBackendBanner ? 'top-10' : 
+                      hasBackendBanner ? 'top-[2.25rem]' : 
                       'top-0';
   
   return (
@@ -30,7 +30,7 @@ export default function WeatherStatusBanner({ isRealWeather, onClose, hasStatusB
       isRealWeather 
         ? 'bg-gradient-to-r from-green-500 to-emerald-600' 
         : 'bg-gradient-to-r from-orange-500 to-amber-600'
-    } text-white py-2 shadow-lg`}>
+    } text-white`}>
       <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
         <div className="flex items-center gap-3">
           {isRealWeather ? (
