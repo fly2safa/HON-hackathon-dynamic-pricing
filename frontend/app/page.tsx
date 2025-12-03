@@ -15,6 +15,7 @@ import ActiveRidesCard from '@/components/ActiveRidesCard';
 import AvailableDriversCard from '@/components/AvailableDriversCard';
 import DemandThermometer from '@/components/DemandThermometer';
 import DemandThermometerCard from '@/components/DemandThermometerCard';
+import ChatBot from '@/components/ChatBot';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -524,6 +525,9 @@ export default function Home() {
         isOpen={showCityComparison}
         onClose={() => setShowCityComparison(false)}
       />
+
+      {/* ChatBot - Floating Assistant */}
+      <ChatBot currentCity={selectedCity} />
     </main>
   );
 }
