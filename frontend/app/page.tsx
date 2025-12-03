@@ -14,6 +14,7 @@ import CityComparisonModal from '@/components/CityComparisonModal';
 import DemandThermometer from '@/components/DemandThermometer';
 import DemandThermometerCard from '@/components/DemandThermometerCard';
 import AvailableDriversCard from '@/components/AvailableDriversCard';
+import ActiveRidesCard from '@/components/ActiveRidesCard';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -285,12 +286,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
             <DemandThermometerCard demand={marketConditions.currentDemand as 'low' | 'medium' | 'high' | 'surge'} />
             <AvailableDriversCard count={marketConditions.availableDrivers} />
-            <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Active Rides</p>
-              <p className="text-2xl font-bold text-purple-600">
-                {marketConditions.activeRides}
-              </p>
-            </div>
+            <ActiveRidesCard count={marketConditions.activeRides} />
             <div className={`text-center p-4 bg-gradient-to-br rounded-xl border-2 relative ${
               marketConditions.weatherType === 'storm' ? 'from-red-50 to-orange-50 border-red-300' :
               marketConditions.weatherType === 'snow' ? 'from-blue-50 to-cyan-50 border-blue-300' :
