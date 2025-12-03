@@ -12,6 +12,13 @@ from datetime import datetime
 from pathlib import Path
 import webbrowser
 
+# Try to import PIL for better image handling
+try:
+    from PIL import Image, ImageTk
+    PIL_AVAILABLE = True
+except ImportError:
+    PIL_AVAILABLE = False
+
 # Get the directory where this script is located
 SCRIPT_DIR = Path(__file__).parent.resolve()
 RESULTS_DIR = SCRIPT_DIR / "results"
@@ -40,7 +47,7 @@ class TestCase:
 class HoneyGoTestingTracker:
     """Main GUI application for HoneyGo testing tracker."""
     
-    VERSION = "1.0.0"
+    VERSION = "1.0.0"  # Initial release with color-coded status
     
     def __init__(self, root):
         self.root = root
@@ -125,6 +132,20 @@ class HoneyGoTestingTracker:
                        background=self.colors['danger'],
                        font=('Segoe UI', 10, 'bold'),
                        padding=(10, 5))
+        
+        # Configure colored radio buttons for status
+        style.configure("Pass.TRadiobutton",
+                       foreground="#059669",
+                       font=('Segoe UI', 11, 'bold'))
+        style.configure("Fail.TRadiobutton",
+                       foreground="#dc2626",
+                       font=('Segoe UI', 11, 'bold'))
+        style.configure("Blocked.TRadiobutton",
+                       foreground="#d97706",
+                       font=('Segoe UI', 11, 'bold'))
+        style.configure("NotStarted.TRadiobutton",
+                       foreground="#6b7280",
+                       font=('Segoe UI', 10))
     
     def load_test_cases(self):
         """Load predefined test cases for HoneyGo."""
@@ -471,29 +492,49 @@ class HoneyGoTestingTracker:
         """Create header section."""
         header_frame = ttk.Frame(parent)
         header_frame.grid(row=0, column=0, sticky="ew", pady=(0, 10))
-        header_frame.columnconfigure(1, weight=1)
+        header_frame.columnconfigure(2, weight=1)
+        
+        # Logo
+        self.logo_image = None
+        logo_path = SCRIPT_DIR.parent / "images" / "honeygo-logo.png"
+        if logo_path.exists():
+            try:
+                if PIL_AVAILABLE:
+                    # Use PIL for better image handling and resizing
+                    img = Image.open(logo_path)
+                    img = img.resize((40, 40), Image.Resampling.LANCZOS)
+                    self.logo_image = ImageTk.PhotoImage(img)
+                else:
+                    # Fallback to tkinter PhotoImage (may not work with all PNGs)
+                    self.logo_image = tk.PhotoImage(file=str(logo_path)).subsample(4, 4)
+                
+                logo_label = ttk.Label(header_frame, image=self.logo_image)
+                logo_label.grid(row=0, column=0, sticky="w", padx=(0, 10))
+            except Exception as e:
+                print(f"Could not load logo: {e}")
         
         # Title
         title_label = ttk.Label(header_frame, 
-                               text="🍯 HoneyGo Testing Tracker",
-                               font=('Segoe UI', 18, 'bold'))
-        title_label.grid(row=0, column=0, sticky="w")
+                               text="HoneyGo Testing Tracker",
+                               font=('Segoe UI', 18, 'bold'),
+                               foreground=self.colors['primary'])
+        title_label.grid(row=0, column=1, sticky="w")
         
         # Progress
         self.progress_var = tk.StringVar(value="Progress: 0/0 (0%)")
         progress_label = ttk.Label(header_frame, textvariable=self.progress_var,
                                   font=('Segoe UI', 12))
-        progress_label.grid(row=0, column=1, padx=20)
+        progress_label.grid(row=0, column=2, padx=20)
         
         # Tester name
         self.tester_var = tk.StringVar(value="Tester: Not set")
         tester_label = ttk.Label(header_frame, textvariable=self.tester_var,
                                 font=('Segoe UI', 10))
-        tester_label.grid(row=0, column=2, sticky="e")
+        tester_label.grid(row=0, column=3, sticky="e")
         
         # Buttons frame
         btn_frame = ttk.Frame(header_frame)
-        btn_frame.grid(row=0, column=3, padx=(20, 0))
+        btn_frame.grid(row=0, column=4, padx=(20, 0))
         
         ttk.Button(btn_frame, text="💾 Save", command=self.save_results).pack(side=tk.LEFT, padx=2)
         ttk.Button(btn_frame, text="📂 Load", command=self.load_results).pack(side=tk.LEFT, padx=2)
@@ -534,6 +575,12 @@ class HoneyGoTestingTracker:
         self.tree.grid(row=0, column=0, sticky="nsew")
         scrollbar.grid(row=0, column=1, sticky="ns")
         
+        # Configure color tags for status
+        self.tree.tag_configure("pass", foreground="#059669", background="#ecfdf5")      # Green
+        self.tree.tag_configure("fail", foreground="#dc2626", background="#fef2f2")      # Red
+        self.tree.tag_configure("blocked", foreground="#d97706", background="#fffbeb")   # Orange
+        self.tree.tag_configure("not_started", foreground="#6b7280")                      # Gray
+        
         # Populate tree
         self.populate_tree()
         
@@ -550,10 +597,12 @@ class HoneyGoTestingTracker:
                 sections[tc.section] = self.tree.insert("", "end", text=tc.section, open=True)
             
             status_icon = self.get_status_icon(tc.status)
+            tag = self.get_status_tag(tc.status)
             self.tree.insert(sections[tc.section], "end", 
                            iid=tc.id,
                            text=f"{tc.id}: {tc.title}",
-                           values=(f"{status_icon} {tc.status}",))
+                           values=(f"{status_icon} {tc.status}",),
+                           tags=(tag,))
     
     def get_status_icon(self, status):
         """Get icon for status."""
@@ -564,6 +613,16 @@ class HoneyGoTestingTracker:
             "Blocked": "🚫"
         }
         return icons.get(status, "⬜")
+    
+    def get_status_tag(self, status):
+        """Get color tag for status."""
+        tags = {
+            "Not Started": "not_started",
+            "Pass": "pass",
+            "Fail": "fail",
+            "Blocked": "blocked"
+        }
+        return tags.get(status, "not_started")
     
     def create_test_details(self, parent):
         """Create test details panel."""
@@ -603,18 +662,23 @@ class HoneyGoTestingTracker:
         self.hints_text.grid(row=0, column=0, sticky="ew")
         self.hints_text.configure(state='disabled')
         
-        # Status buttons
+        # Status buttons with color coding
         status_frame = ttk.LabelFrame(parent, text="Set Status", padding="10")
         status_frame.grid(row=3, column=0, sticky="ew", pady=(0, 10))
         
         self.status_var = tk.StringVar(value="Not Started")
-        statuses = [("⬜ Not Started", "Not Started"), ("✅ Pass", "Pass"), 
-                   ("❌ Fail", "Fail"), ("🚫 Blocked", "Blocked")]
+        statuses = [
+            ("⬜ Not Started", "Not Started", "NotStarted.TRadiobutton"),
+            ("✅ Pass", "Pass", "Pass.TRadiobutton"), 
+            ("❌ Fail", "Fail", "Fail.TRadiobutton"),
+            ("🚫 Blocked", "Blocked", "Blocked.TRadiobutton")
+        ]
         
-        for i, (text, value) in enumerate(statuses):
+        for i, (text, value, style_name) in enumerate(statuses):
             rb = ttk.Radiobutton(status_frame, text=text, value=value,
-                               variable=self.status_var, command=self.on_status_change)
-            rb.grid(row=0, column=i, padx=10)
+                               variable=self.status_var, command=self.on_status_change,
+                               style=style_name)
+            rb.grid(row=0, column=i, padx=15)
         
         # Notes
         notes_frame = ttk.LabelFrame(parent, text="Notes / Actual Results", padding="10")
@@ -716,17 +780,20 @@ class HoneyGoTestingTracker:
             self.notes_text.edit_modified(False)
     
     def update_tree_item(self, tc):
-        """Update tree item for test case."""
+        """Update tree item for test case with color coding."""
         status_icon = self.get_status_icon(tc.status)
-        self.tree.item(tc.id, values=(f"{status_icon} {tc.status}",))
+        tag = self.get_status_tag(tc.status)
+        self.tree.item(tc.id, values=(f"{status_icon} {tc.status}",), tags=(tag,))
     
     def update_progress(self):
         """Update progress display."""
         total = len(self.test_cases)
         completed = sum(1 for tc in self.test_cases if tc.status in ["Pass", "Fail"])
         passed = sum(1 for tc in self.test_cases if tc.status == "Pass")
+        failed = sum(1 for tc in self.test_cases if tc.status == "Fail")
+        blocked = sum(1 for tc in self.test_cases if tc.status == "Blocked")
         pct = (completed / total * 100) if total > 0 else 0
-        self.progress_var.set(f"Progress: {completed}/{total} ({pct:.0f}%) | ✅ {passed} Pass")
+        self.progress_var.set(f"Progress: {completed}/{total} ({pct:.0f}%) | ✅ {passed} | ❌ {failed} | 🚫 {blocked}")
     
     def jump_to_section(self, section):
         """Jump to first test in section."""
