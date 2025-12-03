@@ -12,6 +12,9 @@ import StatusBar from '@/components/StatusBar';
 import AIStatusIcon from '@/components/AIStatusIcon';
 import CityComparisonModal from '@/components/CityComparisonModal';
 import ActiveRidesCard from '@/components/ActiveRidesCard';
+import AvailableDriversCard from '@/components/AvailableDriversCard';
+import DemandThermometer from '@/components/DemandThermometer';
+import DemandThermometerCard from '@/components/DemandThermometerCard';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -292,6 +295,8 @@ export default function Home() {
                 {marketConditions.currentDemand.toUpperCase()}
               </p>
             </div>
+            <AvailableDriversCard count={marketConditions.availableDrivers} />
+            <DemandThermometerCard demand={marketConditions.currentDemand as 'low' | 'medium' | 'high' | 'surge'} />
             <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-gray-200">
               <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Available Drivers</p>
               <p className="text-2xl font-bold text-blue-600">
