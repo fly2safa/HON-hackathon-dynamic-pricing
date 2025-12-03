@@ -166,3 +166,47 @@ export async function healthCheck(): Promise<{ status: string }> {
   return response.json();
 }
 
+/**
+ * Chat API - Natural Language Query Interface
+ */
+export interface ChatRequest {
+  message: string;
+  conversation_id?: string;
+  context?: {
+    current_city?: string;
+    current_ride?: string;
+  };
+}
+
+export interface ChatResponse {
+  response: string;
+  data?: {
+    type: string;
+    count?: number;
+    avg_price?: number;
+    [key: string]: any;
+  };
+  suggestions?: string[];
+  confidence: number;
+}
+
+/**
+ * Send a chat message to the HoneyGo AI assistant
+ */
+export async function sendChatMessage(request: ChatRequest): Promise<ChatResponse> {
+  const response = await fetch(`${BACKEND_URL}/api/v1/chat`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Chat API error (${response.status}): ${errorText}`);
+  }
+
+  return response.json();
+}
+

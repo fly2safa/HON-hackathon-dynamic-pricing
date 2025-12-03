@@ -16,7 +16,7 @@ export default function AIStatusIcon({ isProcessing, onClick }: AIStatusIconProp
   return (
     <button
       onClick={onClick}
-      className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center ${
+      className={`fixed bottom-24 right-6 z-50 w-16 h-16 rounded-full shadow-2xl transition-all duration-300 flex items-center justify-center ${
         isProcessing 
           ? 'bg-gradient-to-br from-purple-500 to-pink-500 animate-pulse scale-110' 
           : 'bg-gradient-to-br from-blue-500 to-cyan-500 hover:scale-110'
