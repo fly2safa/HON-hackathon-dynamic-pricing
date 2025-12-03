@@ -44,13 +44,23 @@ function getTimeOfDay(date: Date = new Date()): string {
 function mapWeatherCondition(weatherType: string): string {
   const weatherMap: Record<string, string> = {
     'clear': 'clear',
+    'sunny': 'clear',
+    'clouds': 'cloudy',
+    'cloudy': 'cloudy',
+    'overcast': 'cloudy',
     'rain': 'rainy',
+    'drizzle': 'rainy',
     'storm': 'stormy',
+    'thunderstorm': 'stormy',
     'snow': 'snowy',
     'fog': 'cloudy',
+    'mist': 'cloudy',
+    'haze': 'cloudy',
   };
   
-  return weatherMap[weatherType] || 'clear';
+  // Case-insensitive matching
+  const normalized = weatherType?.toLowerCase() || 'clear';
+  return weatherMap[normalized] || 'cloudy'; // Default to cloudy instead of clear for unknown
 }
 
 /**
@@ -109,6 +119,35 @@ function calculateCompetitorPrices(ourPrice: number, city: string) {
 }
 
 /**
+ * Parse AI reasoning into an array of bullet points
+ * Handles multiple formats: numbered lists, newline-separated, or period-separated
+ */
+function parseReasoningToArray(reasoning: string): string[] {
+  // First, try to split by newlines (handles numbered lists like "1. reason\n2. reason")
+  const lines = reasoning.split('\n').map(line => line.trim()).filter(line => line.length > 0);
+  
+  if (lines.length > 1) {
+    // Multiple lines - clean up numbered prefixes like "1.", "2.", "-", "•"
+    return lines.map(line => {
+      // Remove leading numbers, bullets, dashes
+      const cleaned = line.replace(/^[\d]+\.\s*/, '')  // "1. " -> ""
+                          .replace(/^[-•*]\s*/, '')    // "- " or "• " -> ""
+                          .trim();
+      return cleaned.endsWith('.') ? cleaned : cleaned + '.';
+    }).filter(line => line.length > 1); // Filter out empty lines that became just "."
+  }
+  
+  // Single line/paragraph - split by period-space or period followed by capital letter
+  const sentences = reasoning
+    .split(/\.\s+(?=[A-Z])/)  // Split on ". " followed by capital letter
+    .map(s => s.trim())
+    .filter(s => s.length > 0)
+    .map(s => s.endsWith('.') ? s : s + '.');
+  
+  return sentences.length > 0 ? sentences : [reasoning];
+}
+
+/**
  * Convert backend PricingResponse to frontend PricingResult
  */
 export function backendToFrontendResult(
@@ -117,7 +156,7 @@ export function backendToFrontendResult(
   city: string,
   loyaltyTier?: string
 ): PricingResult {
-  // Import loyalty functions
+  // Import loyalty functions (Jason's fix for loyalty tier pricing)
   const { getLoyaltyDiscount, getLoyaltyBadge } = require('./mockData');
   
   // Apply loyalty discount if provided
@@ -125,15 +164,8 @@ export function backendToFrontendResult(
   const priceBeforeDiscount = backendResponse.final_price;
   const finalPrice = priceBeforeDiscount * (1 - loyaltyDiscount);
   
-  // Split reasoning string into array
-  // Backend returns single string, frontend expects array
-  const reasoningArray = backendResponse.reasoning
-    .split('. ')
-    .filter(r => r.trim().length > 0)
-    .map(r => {
-      const trimmed = r.trim();
-      return trimmed.endsWith('.') ? trimmed : trimmed + '.';
-    });
+  // Split reasoning string into array - handles multiple formats (our improved parser)
+  const reasoningArray = parseReasoningToArray(backendResponse.reasoning);
 
   // Add loyalty discount to reasoning if applicable
   if (loyaltyTier && loyaltyTier !== 'new' && loyaltyDiscount > 0) {
@@ -173,7 +205,8 @@ export function backendToFrontendResult(
  */
 export async function calculatePricingWithBackend(
   ride: RideRequest,
-  weatherType?: string
+  weatherType?: string,
+  demandLevel?: string
 ): Promise<PricingResult> {
   const startTime = Date.now();
   
@@ -208,7 +241,7 @@ export async function calculatePricingWithBackend(
     
     // Fallback to mock data if backend fails
     const { simulateAIPricing } = await import('./mockData');
-    return simulateAIPricing(ride.id, ride, weatherType);
+    return simulateAIPricing(ride.id, ride, weatherType, demandLevel);
   }
 }
 

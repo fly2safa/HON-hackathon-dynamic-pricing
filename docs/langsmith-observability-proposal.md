@@ -516,7 +516,8 @@ import os
 # Initialize LangSmith
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_PROJECT"] = "honeygo-pricing"
-os.environ["LANGCHAIN_API_KEY"] = "your-api-key"
+# LANGSMITH_API_KEY is the primary env var name
+os.environ["LANGSMITH_API_KEY"] = "your-api-key"
 
 # Create tracer
 tracer = LangChainTracer(project_name="honeygo-pricing")

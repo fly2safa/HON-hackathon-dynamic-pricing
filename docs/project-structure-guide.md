@@ -531,9 +531,10 @@ if __name__ == "__main__":
 # ============================================
 # LangSmith (Agent Observability)
 # ============================================
-LANGCHAIN_API_KEY=lsv2_pt_your_key_here
+# LANGSMITH_API_KEY is primary; LANGCHAIN_API_KEY also works
+LANGSMITH_API_KEY=lsv2_pt_your_key_here
 LANGCHAIN_TRACING_V2=true
-LANGCHAIN_PROJECT=HoneyGo-Hackathon
+LANGCHAIN_PROJECT=honeygo-pricing
 
 # ============================================
 # LLM Provider (REQUIRED - Choose One)
@@ -820,8 +821,9 @@ services:
     environment:
       - MONGODB_URI=${MONGODB_URI}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
       - LANGCHAIN_PROJECT=${LANGCHAIN_PROJECT}
+      - LANGCHAIN_TRACING_V2=${LANGCHAIN_TRACING_V2}
     depends_on:
       - chromadb
     networks:

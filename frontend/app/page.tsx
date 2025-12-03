@@ -120,7 +120,7 @@ export default function Home() {
 
     try {
       // Use backend integration (with automatic fallback to mock if backend unavailable)
-      const result = await calculatePricingWithBackend(rideWithLoyaltyTier, marketConditions.weatherType);
+      const result = await calculatePricingWithBackend(rideWithLoyaltyTier, marketConditions.weatherType, marketConditions.currentDemand);
       
       // Calculate total time (should always be >= processingTime)
       const totalTime = (Date.now() - totalStartTime) / 1000;
@@ -204,9 +204,14 @@ export default function Home() {
                 className="rounded-lg"
               />
               <div>
-                <h1 className="text-4xl font-bold text-white">
-                  HoneyGo
-                </h1>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-4xl font-bold text-white">
+                    HoneyGo
+                  </h1>
+                  <span className="px-2 py-0.5 text-xs font-semibold bg-[#FF6A13] text-white rounded-full">
+                    v1.0.0
+                  </span>
+                </div>
                 <p className="text-lg text-gray-400">
                   AI-Powered Pricing Platform
                 </p>
@@ -307,26 +312,9 @@ export default function Home() {
               Live Market Conditions
             </h2>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-            <div className="text-center p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Demand</p>
-              <p className={`text-2xl font-bold ${
-                marketConditions.currentDemand === 'surge' ? 'text-red-600' :
-                marketConditions.currentDemand === 'high' ? 'text-orange-600' :
-                marketConditions.currentDemand === 'medium' ? 'text-yellow-600' :
-                'text-green-600'
-              }`}>
-                {marketConditions.currentDemand.toUpperCase()}
-              </p>
-            </div>
-            <AvailableDriversCard count={marketConditions.availableDrivers} />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <DemandThermometerCard demand={marketConditions.currentDemand as 'low' | 'medium' | 'high' | 'surge'} />
-            <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-white rounded-xl border border-gray-200">
-              <p className="text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Available Drivers</p>
-              <p className="text-2xl font-bold text-blue-600">
-                {marketConditions.availableDrivers}
-              </p>
-            </div>
+            <AvailableDriversCard count={marketConditions.availableDrivers} />
             <ActiveRidesCard count={marketConditions.activeRides} />
             <div className={`text-center p-4 bg-gradient-to-br rounded-xl border-2 relative ${
               marketConditions.weatherType === 'storm' ? 'from-red-50 to-orange-50 border-red-300' :
