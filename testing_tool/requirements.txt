@@ -1,0 +1,16 @@
+# HoneyGo Testing Tracker Requirements
+# 
+# Note: This tool uses Python's built-in tkinter library.
+# No additional packages required!
+#
+# If tkinter is not installed (rare on Windows/Mac):
+# - Windows: Usually included with Python
+# - Mac: brew install python-tk
+# - Linux: sudo apt-get install python3-tk
+
+# No external dependencies needed - all built-in:
+# - tkinter (GUI)
+# - json (save/load)
+# - webbrowser (open links)
+# - pathlib (file paths)
+
