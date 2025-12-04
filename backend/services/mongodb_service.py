@@ -77,19 +77,42 @@ class MongoDBService:
     
     async def _create_indexes(self):
         """
-        Create database indexes for performance
+        Create database indexes for performance.
+        Using sparse=True to allow documents without the indexed field (or with null values).
         """
         try:
-            # Rides indexes
-            self.db.rides.create_index("ride_id", unique=True)
-            self.db.rides.create_index("customer_id")
-            self.db.rides.create_index("created_at")
+            # Helper to safely create index (drops existing if options differ)
+            def safe_create_index(collection, field, **kwargs):
+                try:
+                    collection.create_index(field, **kwargs)
+                except Exception as idx_err:
+                    if "already exists with different options" in str(idx_err):
+                        # Drop and recreate with new options
+                        index_name = f"{field}_1"
+                        try:
+                            collection.drop_index(index_name)
+                            collection.create_index(field, **kwargs)
+                            logger.info(f"♻️ Recreated index {index_name} with new options")
+                        except Exception:
+                            pass  # Index might not exist or other issue
+                    else:
+                        raise idx_err
             
-            # Customers indexes
-            self.db.customers.create_index("customer_id", unique=True)
-            self.db.customers.create_index("loyalty_status")
+            # Rides indexes - sparse allows null/missing ride_id documents
+            safe_create_index(self.db.rides, "ride_id", unique=True, sparse=True)
+            safe_create_index(self.db.rides, "customer_id", sparse=True)
+            safe_create_index(self.db.rides, "created_at")
             
-            logger.info("✅ Database indexes created")
+            # Customers indexes - sparse allows null/missing customer_id documents
+            safe_create_index(self.db.customers, "customer_id", unique=True, sparse=True)
+            safe_create_index(self.db.customers, "loyalty_status", sparse=True)
+            
+            # Pricing decisions indexes
+            safe_create_index(self.db.pricing_decisions, "ride_id", unique=True, sparse=True)
+            safe_create_index(self.db.pricing_decisions, "customer_id", sparse=True)
+            safe_create_index(self.db.pricing_decisions, "timestamp")
+            
+            logger.info("✅ Database indexes created/updated")
         except Exception as e:
             logger.warning(f"Index creation warning: {e}")
     
