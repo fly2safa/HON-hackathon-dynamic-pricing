@@ -42,6 +42,15 @@ const MaximizeIcon = () => (
   </svg>
 );
 
+const MicrophoneIcon = ({ isActive }: { isActive?: boolean }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={isActive ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+    <line x1="12" y1="19" x2="12" y2="23"></line>
+    <line x1="8" y1="23" x2="16" y2="23"></line>
+  </svg>
+);
+
 interface Message {
   id: string;
   role: 'user' | 'bot';
@@ -68,11 +77,68 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
   const [tempInput, setTempInput] = useState(''); // Store current input when navigating history
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  
+  // Voice features
+  const [isListening, setIsListening] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+  const recognitionRef = useRef<any>(null);
+
+  // Check speech support and initialize
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Check speech synthesis support
+      const synthSupported = 'speechSynthesis' in window;
+      
+      // Check speech recognition support
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const recognitionSupported = !!SpeechRecognition;
+      
+      setSpeechSupported(synthSupported && recognitionSupported);
+      
+      // Initialize speech recognition
+      if (recognitionSupported) {
+        const recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+        
+        recognition.onresult = (event: any) => {
+          const transcript = event.results[0][0].transcript;
+          setInput(transcript);
+          setIsListening(false);
+          // Auto-send after speech recognition
+          setTimeout(() => sendMessage(transcript), 100);
+        };
+        
+        recognition.onerror = (event: any) => {
+          console.error('Speech recognition error:', event.error);
+          setIsListening(false);
+        };
+        
+        recognition.onend = () => {
+          setIsListening(false);
+        };
+        
+        recognitionRef.current = recognition;
+      }
+    }
+  }, []);
 
   // Scroll to bottom on new message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+  
+  // Speak bot responses when voice is enabled
+  useEffect(() => {
+    if (voiceEnabled && messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      if (lastMessage.role === 'bot') {
+        speakText(lastMessage.content);
+      }
+    }
+  }, [messages, voiceEnabled]);
 
   // Focus input when opened
   useEffect(() => {
@@ -207,6 +273,44 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
 
   const toggleMinimize = () => {
     setIsMinimized(!isMinimized);
+  };
+
+  const toggleMicrophone = () => {
+    if (!speechSupported) {
+      alert('Voice features are not supported in your browser. Please use Chrome, Edge, or Safari.');
+      return;
+    }
+
+    if (isListening) {
+      // Stop listening
+      recognitionRef.current?.stop();
+      setIsListening(false);
+    } else {
+      // Start listening
+      try {
+        recognitionRef.current?.start();
+        setIsListening(true);
+        setVoiceEnabled(true); // Enable voice responses when mic is activated
+      } catch (error) {
+        console.error('Error starting speech recognition:', error);
+      }
+    }
+  };
+
+  const speakText = (text: string) => {
+    if (!speechSupported || typeof window === 'undefined') return;
+
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+
+    // Create utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.95;
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+
+    // Speak
+    window.speechSynthesis.speak(utterance);
   };
 
   // Floating button when chat is closed
@@ -359,13 +463,32 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Ask me anything... (↑↓ for history)"
-                  disabled={isLoading}
+                  placeholder={isListening ? "Listening..." : "Ask me anything... (↑↓ for history)"}
+                  disabled={isLoading || isListening}
                   className="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 
                              text-sm text-white placeholder-gray-500
                              focus:outline-none focus:border-[#FF6A13] focus:ring-1 focus:ring-[#FF6A13]
                              disabled:opacity-50"
                 />
+                {/* Microphone Button */}
+                {speechSupported && (
+                  <button
+                    onClick={toggleMicrophone}
+                    disabled={isLoading}
+                    className={`p-2 rounded-lg transition-all duration-200 ${
+                      isListening 
+                        ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
+                        : voiceEnabled
+                          ? 'bg-green-600 hover:bg-green-700'
+                          : 'bg-gray-700 hover:bg-gray-600'
+                    } disabled:opacity-50 disabled:cursor-not-allowed`}
+                    title={isListening ? 'Stop listening' : 'Start voice input'}
+                  >
+                    <span className="text-white">
+                      <MicrophoneIcon isActive={isListening || voiceEnabled} />
+                    </span>
+                  </button>
+                )}
                 <button
                   onClick={() => sendMessage(input)}
                   disabled={!input.trim() || isLoading}
@@ -376,9 +499,17 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
                   <span className="text-white"><SendIcon /></span>
                 </button>
               </div>
-              <p className="text-[10px] text-gray-600 mt-1 text-center">
-                Enter to send • ↑↓ history • Powered by LangChain
-              </p>
+              <div className="flex items-center justify-between mt-1">
+                <p className="text-[10px] text-gray-600">
+                  Enter to send • ↑↓ history • Powered by LangChain
+                </p>
+                {voiceEnabled && (
+                  <p className="text-[10px] text-green-400 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                    Voice ON
+                  </p>
+                )}
+              </div>
             </div>
           </>
         )}
