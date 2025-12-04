@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import HeroSection from '@/components/HeroSection';
 import RideRequestCard from '@/components/RideRequestCard';
 import PricingDisplay from '@/components/PricingDisplay';
@@ -188,11 +189,27 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-400">Powered by</p>
-              <p className="text-xl font-semibold text-[#FF6A13]">
-                Honeywell AI
-              </p>
+            <div className="flex items-center gap-6">
+              <nav className="flex items-center gap-4">
+                <Link
+                  href="/"
+                  className="text-white border-b-2 border-[#FF6A13] pb-1 transition-colors font-medium"
+                >
+                  Pricing
+                </Link>
+                <Link
+                  href="/surge-pricing"
+                  className="text-gray-300 hover:text-white transition-colors font-medium"
+                >
+                  Surge Pricing
+                </Link>
+              </nav>
+              <div className="text-right border-l border-gray-700 pl-6">
+                <p className="text-sm text-gray-400">Powered by</p>
+                <p className="text-xl font-semibold text-[#FF6A13]">
+                  Honeywell AI
+                </p>
+              </div>
             </div>
           </div>
         </div>
