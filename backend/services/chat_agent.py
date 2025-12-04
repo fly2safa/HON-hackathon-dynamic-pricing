@@ -42,16 +42,18 @@ class HoneyGoChatAgent:
     - "What's the average surge in New York?"
     """
     
-    def __init__(self, mongodb_service=None, n8n_service=None):
+    def __init__(self, mongodb_service=None, n8n_service=None, chromadb_service=None):
         """
         Initialize the chat agent.
         
         Args:
             mongodb_service: MongoDB service instance for data queries
             n8n_service: N8N service instance for external data (weather, events, traffic)
+            chromadb_service: ChromaDB service instance for RAG/semantic search
         """
         self.mongodb_service = mongodb_service
         self.n8n_service = n8n_service
+        self.chromadb_service = chromadb_service
         self.llm = None
         self.is_initialized = False
         self._initialize_llm()
@@ -251,6 +253,35 @@ class HoneyGoChatAgent:
             'confidence': 1.0
         }
     
+    async def _query_chromadb_similar(
+        self,
+        query: str,
+        n_results: int = 5
+    ) -> List[Dict[str, Any]]:
+        """
+        Query ChromaDB for similar rides using semantic search (RAG).
+        
+        Args:
+            query: Natural language query
+            n_results: Number of results to return
+            
+        Returns:
+            List of similar rides with similarity scores
+        """
+        if not self.chromadb_service or not self.chromadb_service.connected:
+            return []
+        
+        try:
+            results = await self.chromadb_service.query_similar_rides(
+                query=query,
+                n_results=n_results
+            )
+            logger.info(f"🔍 ChromaDB RAG: Found {len(results)} similar rides")
+            return results
+        except Exception as e:
+            logger.error(f"ChromaDB query error: {e}")
+            return []
+    
     async def _handle_rides_query(
         self,
         message: str,
@@ -266,6 +297,45 @@ class HoneyGoChatAgent:
             # Map city to location category if needed
             pass
         
+        # First, try ChromaDB semantic search (RAG)
+        chromadb_results = await self._query_chromadb_similar(message, n_results=5)
+        
+        if chromadb_results and len(chromadb_results) > 0:
+            # Use ChromaDB results for semantic search
+            avg_price = sum(r.get('metadata', {}).get('historical_cost_of_ride', 0) for r in chromadb_results) / len(chromadb_results)
+            avg_similarity = sum(r.get('similarity', 0) for r in chromadb_results) / len(chromadb_results)
+            
+            # Build response with RAG context
+            response = f"Using semantic search (RAG), I found {len(chromadb_results)} similar rides. "
+            response += f"Average price for similar rides: ${avg_price:.2f} "
+            response += f"(similarity: {avg_similarity:.0%})"
+            
+            # Include top result details
+            top_result = chromadb_results[0]
+            meta = top_result.get('metadata', {})
+            if meta:
+                response += f"\n\nTop match: {meta.get('location_category', 'Unknown')} {meta.get('vehicle_type', 'Standard')} ride "
+                response += f"at {meta.get('time_of_booking', 'Unknown')} - ${meta.get('historical_cost_of_ride', 0):.2f}"
+            
+            return {
+                'response': response,
+                'data': {
+                    'type': 'rides_rag',
+                    'source': 'chromadb',
+                    'count': len(chromadb_results),
+                    'avg_price': round(avg_price, 2),
+                    'avg_similarity': round(avg_similarity, 2),
+                    'top_results': chromadb_results[:3]
+                },
+                'suggestions': [
+                    "Find Urban rides at Night",
+                    "Show Premium vehicle rides",
+                    "What's the average price?"
+                ],
+                'confidence': avg_similarity
+            }
+        
+        # Fallback to MongoDB if ChromaDB has no results
         # Query MongoDB if available
         if self.mongodb_service and self.mongodb_service.connected:
             try:
@@ -992,26 +1062,29 @@ class HoneyGoChatAgent:
 _chat_agent: Optional[HoneyGoChatAgent] = None
 
 
-def get_chat_agent(mongodb_service=None, n8n_service=None) -> HoneyGoChatAgent:
+def get_chat_agent(mongodb_service=None, n8n_service=None, chromadb_service=None) -> HoneyGoChatAgent:
     """
     Get or create the chat agent singleton.
     
     Args:
         mongodb_service: Optional MongoDB service to inject
         n8n_service: Optional N8N service for external data
+        chromadb_service: Optional ChromaDB service for RAG queries
         
     Returns:
         HoneyGoChatAgent instance
     """
     global _chat_agent
     if _chat_agent is None:
-        _chat_agent = HoneyGoChatAgent(mongodb_service, n8n_service)
+        _chat_agent = HoneyGoChatAgent(mongodb_service, n8n_service, chromadb_service)
     else:
         # Update services if provided
         if mongodb_service and _chat_agent.mongodb_service is None:
             _chat_agent.mongodb_service = mongodb_service
         if n8n_service and _chat_agent.n8n_service is None:
             _chat_agent.n8n_service = n8n_service
+        if chromadb_service and _chat_agent.chromadb_service is None:
+            _chat_agent.chromadb_service = chromadb_service
     return _chat_agent
 
 
