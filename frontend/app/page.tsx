@@ -217,54 +217,56 @@ export default function Home() {
       )}
       
       {/* Header */}
-      <header className={`bg-black sticky ${headerTop} z-40 transition-all duration-300`}>
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300 ${isScrolled ? 'py-1' : 'py-4'}`}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-5">
+      <header className={`bg-black shadow-md sticky ${headerTop} z-40 transition-all duration-300`}>
+        <div className={`max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-2 sm:py-3'}`}>
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
               <Image 
                 src="/images/honeygo-logo.png" 
                 alt="HoneyGo Logo" 
-                width={isScrolled ? 25 : 100} 
-                height={isScrolled ? 25 : 100}
-                className="rounded-lg transition-all duration-300"
+                width={isScrolled ? 32 : 40} 
+                height={isScrolled ? 32 : 40}
+                className="rounded-lg flex-shrink-0 transition-all duration-300 w-8 h-8 sm:w-10 sm:h-10"
               />
-              <div>
-                <div className="flex items-center gap-3">
-                  <h1 className={`font-bold text-white transition-all duration-300 ${isScrolled ? 'text-xl' : 'text-4xl'}`}>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <h1 className={`font-bold text-white transition-all duration-300 ${isScrolled ? 'text-lg sm:text-xl' : 'text-lg sm:text-xl md:text-2xl'} truncate`}>
                     HoneyGo
                   </h1>
-                  <span className={`px-2 font-semibold bg-[#FF6A13] text-white rounded-full transition-all duration-300 ${isScrolled ? 'py-0 text-[8px]' : 'py-0.5 text-xs'}`}>
-                    v1.0.0
-                  </span>
+                  {!isScrolled && (
+                    <span className="px-2 font-semibold bg-[#FF6A13] text-white rounded-full py-0.5 text-xs hidden sm:inline-block">
+                      v1.0.0
+                    </span>
+                  )}
                 </div>
                 {!isScrolled && (
-                  <p className="text-lg text-gray-400">
+                  <p className="text-xs sm:text-sm text-gray-400 hidden sm:block">
                     AI-Powered Pricing Platform
                   </p>
                 )}
               </div>
             </div>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 flex-shrink-0">
               {!isScrolled && (
-                <nav className="flex items-center gap-4">
+                <nav className="flex items-center gap-2 sm:gap-3 lg:gap-4">
                   <Link
                     href="/"
-                    className="text-white border-b-2 border-[#FF6A13] pb-1 transition-colors font-medium"
+                    className="text-sm sm:text-base text-white border-b-2 border-[#FF6A13] pb-0.5 sm:pb-1 transition-colors font-medium whitespace-nowrap"
                   >
                     Pricing
                   </Link>
                   <Link
                     href="/surge-pricing"
-                    className="text-gray-300 hover:text-white transition-colors font-medium"
+                    className="text-sm sm:text-base text-gray-300 hover:text-white transition-colors font-medium whitespace-nowrap"
                   >
                     Surge Pricing
                   </Link>
                 </nav>
               )}
               {!isScrolled && (
-                <div className="text-right border-l border-gray-700 pl-6">
-                  <p className="text-sm text-gray-400">Powered by</p>
-                  <p className="text-xl font-semibold text-[#FF6A13]">
+                <div className="text-right border-l border-gray-700 pl-2 sm:pl-4 lg:pl-6 hidden md:block">
+                  <p className="text-xs text-gray-400">Powered by</p>
+                  <p className="text-sm lg:text-base font-semibold text-[#FF6A13]">
                     Honeywell AI
                   </p>
                 </div>
@@ -275,7 +277,7 @@ export default function Home() {
       </header>
 
       {/* Content Area with Gradient Background */}
-      <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-24">
+      <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-12 sm:pt-16 md:pt-20">
         {/* Hero Section */}
         <HeroSection />
 
