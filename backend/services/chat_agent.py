@@ -3,9 +3,11 @@ HoneyGo Chat Agent - Natural Language Query Interface
 
 Allows users to query the HoneyGo system using natural language.
 Uses LangChain to interpret queries and return human-friendly responses.
+Enhanced with real-time external data integration.
 
 Author: Safa (Role 4 - LangChain/Agent Engineer)
 Created: Dec 3, 2025
+Updated: Dec 4, 2025 - Added external data integration
 """
 
 import os
@@ -40,14 +42,16 @@ class HoneyGoChatAgent:
     - "What's the average surge in New York?"
     """
     
-    def __init__(self, mongodb_service=None):
+    def __init__(self, mongodb_service=None, n8n_service=None):
         """
         Initialize the chat agent.
         
         Args:
             mongodb_service: MongoDB service instance for data queries
+            n8n_service: N8N service instance for external data (weather, events, traffic)
         """
         self.mongodb_service = mongodb_service
+        self.n8n_service = n8n_service
         self.llm = None
         self.is_initialized = False
         self._initialize_llm()
@@ -308,9 +312,13 @@ class HoneyGoChatAgent:
         intent: Dict[str, Any],
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Handle queries about pricing."""
+        """Handle queries about pricing with real-time context."""
         
         aggregation = intent.get('aggregation', 'average')
+        city = context.get('current_city') if context else None
+        
+        # Fetch real-time external data for pricing context
+        external_data = await self._fetch_external_data(city)
         
         # Query MongoDB if available
         if self.mongodb_service and self.mongodb_service.connected:
@@ -321,6 +329,18 @@ class HoneyGoChatAgent:
                     price = stats.get('average_price', 0)
                     surge = stats.get('average_surge_multiplier', 1.0)
                     response = f"The average price is ${price:.2f} with an average surge multiplier of {surge:.2f}x."
+                    
+                    # Add real-time pricing factors
+                    if external_data['weather']:
+                        weather = external_data['weather']
+                        weather_multiplier = weather.get('pricing_multiplier', 1.0)
+                        if weather_multiplier > 1.0:
+                            response += f" Currently, weather conditions ({weather.get('conditions', 'adverse')}) are adding a {weather_multiplier}x multiplier."
+                    
+                    if external_data['events']:
+                        events = external_data['events']
+                        if events.get('event_count', 0) > 0:
+                            response += f" There are {events['event_count']} events happening, which may increase demand."
                 else:
                     price = stats.get('average_price', 0)
                     response = f"Pricing statistics: Average ${price:.2f}"
@@ -329,14 +349,16 @@ class HoneyGoChatAgent:
                     'response': response,
                     'data': {
                         'type': 'pricing',
-                        'statistics': stats
+                        'statistics': stats,
+                        'external_factors': external_data,
+                        'real_time': True
                     },
                     'suggestions': [
-                        "Compare prices by city",
-                        "Show surge trends",
-                        "What affects pricing?"
+                        "What's the current weather?",
+                        "Show events affecting prices",
+                        "Compare prices by city"
                     ],
-                    'confidence': 0.9
+                    'confidence': 0.95
                 }
             except Exception as e:
                 logger.error(f"Error querying pricing: {e}")
@@ -466,17 +488,104 @@ class HoneyGoChatAgent:
             'confidence': 0.75
         }
     
+    async def _fetch_external_data(self, city: Optional[str] = None) -> Dict[str, Any]:
+        """
+        Fetch real-time external data (weather, events, traffic).
+        
+        Args:
+            city: Optional city name for location-specific data
+            
+        Returns:
+            Dict with weather, events, and traffic data
+        """
+        external_data = {
+            'weather': None,
+            'events': None,
+            'traffic': None
+        }
+        
+        if not city:
+            return external_data
+        
+        # Try N8N service first for real-time data
+        if self.n8n_service:
+            try:
+                weather = await self.n8n_service.get_weather_data(city)
+                if weather:
+                    external_data['weather'] = weather
+                    logger.info(f"✅ Fetched real-time weather for {city}")
+            except Exception as e:
+                logger.warning(f"N8N weather fetch failed: {e}")
+        
+        # Fallback to MongoDB cached data
+        if not external_data['weather'] and self.mongodb_service:
+            try:
+                location_category = self._city_to_location_category(city)
+                weather = await self.mongodb_service.get_weather_data(location_category)
+                if weather:
+                    external_data['weather'] = weather.get('data', {})
+                    logger.info(f"✅ Fetched cached weather for {city}")
+            except Exception as e:
+                logger.warning(f"MongoDB weather fetch failed: {e}")
+        
+        # Try to fetch events data
+        if self.n8n_service:
+            try:
+                events = await self.n8n_service.get_events_data(city)
+                if events:
+                    external_data['events'] = events
+                    logger.info(f"✅ Fetched events for {city}")
+            except Exception as e:
+                logger.warning(f"Events fetch failed: {e}")
+        
+        return external_data
+    
+    def _city_to_location_category(self, city: str) -> str:
+        """Map city name to location category."""
+        city_lower = city.lower()
+        city_map = {
+            'new york': 'Urban',
+            'nyc': 'Urban',
+            'san francisco': 'Urban',
+            'chicago': 'Urban',
+            'phoenix': 'Suburban',
+            'orlando': 'Suburban'
+        }
+        return city_map.get(city_lower, 'Urban')
+    
     async def _handle_general_query(
         self,
         message: str,
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Handle general/unclassified queries using LLM."""
+        """Handle general/unclassified queries using LLM with real-time data."""
         
+        # Fetch external data for context
+        city = context.get('current_city') if context else None
+        external_data = await self._fetch_external_data(city)
+        
+        # Check if query is about weather/conditions
+        message_lower = message.lower()
+        if any(word in message_lower for word in ['weather', 'condition', 'rain', 'storm', 'temperature', 'forecast']):
+            return await self._handle_weather_query(message, city, external_data)
+        
+        if any(word in message_lower for word in ['event', 'concert', 'game', 'happening']):
+            return await self._handle_events_query(message, city, external_data)
+        
+        # Use LLM for complex queries
         if self.is_initialized and self.llm:
             try:
-                system_prompt = """You are HoneyGo's AI assistant. You help users understand 
-                the ride-sharing pricing system. Be concise, helpful, and friendly.
+                # Build enhanced context with external data
+                context_info = ""
+                if external_data['weather']:
+                    weather = external_data['weather']
+                    context_info += f"\nCurrent weather in {city}: {weather.get('conditions', 'N/A')}, {weather.get('temperature', 'N/A')}°F"
+                if external_data['events']:
+                    events = external_data['events']
+                    context_info += f"\nEvents: {events.get('event_count', 0)} happening"
+                
+                system_prompt = f"""You are HoneyGo's AI assistant with access to real-time data. 
+                Be concise, helpful, and friendly.
                 
                 HoneyGo features:
                 - Dynamic pricing based on demand, weather, and events
@@ -484,6 +593,8 @@ class HoneyGoChatAgent:
                 - Real-time surge pricing during high demand
                 - AI-powered pricing explanations
                 - Multi-city support (NYC, SF, Chicago, Phoenix, Orlando)
+                
+                Current Context:{context_info}
                 
                 Keep responses brief (2-3 sentences max)."""
                 
@@ -496,11 +607,14 @@ class HoneyGoChatAgent:
                 
                 return {
                     'response': response.content,
-                    'data': {'type': 'general'},
+                    'data': {
+                        'type': 'general',
+                        'external_data': external_data
+                    },
                     'suggestions': [
-                        "Show ride statistics",
-                        "How does pricing work?",
-                        "What cities are supported?"
+                        "Show current weather",
+                        "What events are happening?",
+                        "How does pricing work?"
                     ],
                     'confidence': 0.8
                 }
@@ -509,15 +623,114 @@ class HoneyGoChatAgent:
         
         # Fallback response
         return {
-            'response': "I can help you with HoneyGo data! Try asking about rides, customers, pricing, or drivers. For example: 'Find all Urban rides at Night' or 'How many Gold customers do we have?'",
+            'response': "I can help you with HoneyGo data! Try asking about rides, customers, pricing, weather, or events. For example: 'What's the weather like?' or 'Find all Urban rides at Night'",
             'data': {'type': 'help'},
             'suggestions': [
+                "What's the current weather?",
                 "Find all Urban rides at Night",
-                "How many Gold customers?",
-                "What's the average price?"
+                "What events are happening?"
             ],
             'confidence': 0.6
         }
+    
+    async def _handle_weather_query(
+        self,
+        message: str,
+        city: Optional[str],
+        external_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Handle weather-related queries."""
+        weather = external_data.get('weather')
+        
+        if weather and city:
+            conditions = weather.get('conditions', 'Unknown')
+            temp = weather.get('temperature', 'N/A')
+            pricing_impact = weather.get('pricing_multiplier', 1.0)
+            
+            response = f"🌤️ Current weather in {city}: {conditions}, {temp}°F. "
+            if pricing_impact > 1.0:
+                response += f"Weather is affecting prices with a {pricing_impact}x multiplier for driver safety."
+            else:
+                response += "Weather conditions are favorable - normal pricing applies."
+            
+            return {
+                'response': response,
+                'data': {
+                    'type': 'weather',
+                    'city': city,
+                    'weather': weather,
+                    'real_time': True
+                },
+                'suggestions': [
+                    "How does weather affect pricing?",
+                    "Show pricing for current conditions",
+                    "Check traffic conditions"
+                ],
+                'confidence': 0.95
+            }
+        else:
+            return {
+                'response': f"I couldn't fetch current weather data for {city or 'your location'}. Please try again or specify a city.",
+                'data': {'type': 'weather', 'error': 'no_data'},
+                'suggestions': [
+                    "Try: What's the weather in Phoenix?",
+                    "Show pricing factors",
+                    "View historical rides"
+                ],
+                'confidence': 0.5
+            }
+    
+    async def _handle_events_query(
+        self,
+        message: str,
+        city: Optional[str],
+        external_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Handle events-related queries."""
+        events = external_data.get('events')
+        
+        if events and city:
+            event_count = events.get('event_count', 0)
+            major_events = events.get('major_events', [])
+            pricing_impact = events.get('pricing_multiplier', 1.0)
+            
+            if event_count > 0:
+                response = f"🎉 There are {event_count} events happening in {city}. "
+                if major_events:
+                    response += f"Major events: {', '.join(major_events[:2])}. "
+                if pricing_impact > 1.0:
+                    response += f"High demand expected - prices may increase by {pricing_impact}x."
+                else:
+                    response += "Standard pricing applies."
+            else:
+                response = f"No major events currently in {city}. Standard pricing applies."
+            
+            return {
+                'response': response,
+                'data': {
+                    'type': 'events',
+                    'city': city,
+                    'events': events,
+                    'real_time': True
+                },
+                'suggestions': [
+                    "Show event pricing impact",
+                    "Compare demand across cities",
+                    "Check weather conditions"
+                ],
+                'confidence': 0.9
+            }
+        else:
+            return {
+                'response': f"I couldn't fetch current events data for {city or 'your location'}. Events may increase ride demand and affect pricing.",
+                'data': {'type': 'events', 'error': 'no_data'},
+                'suggestions': [
+                    "Check weather instead",
+                    "Show current prices",
+                    "View historical data"
+                ],
+                'confidence': 0.5
+            }
     
     def _describe_filters(self, filters: Dict[str, Any]) -> str:
         """Create a human-readable description of filters."""
@@ -564,21 +777,26 @@ class HoneyGoChatAgent:
 _chat_agent: Optional[HoneyGoChatAgent] = None
 
 
-def get_chat_agent(mongodb_service=None) -> HoneyGoChatAgent:
+def get_chat_agent(mongodb_service=None, n8n_service=None) -> HoneyGoChatAgent:
     """
     Get or create the chat agent singleton.
     
     Args:
         mongodb_service: Optional MongoDB service to inject
+        n8n_service: Optional N8N service for external data
         
     Returns:
         HoneyGoChatAgent instance
     """
     global _chat_agent
     if _chat_agent is None:
-        _chat_agent = HoneyGoChatAgent(mongodb_service)
-    elif mongodb_service and _chat_agent.mongodb_service is None:
-        _chat_agent.mongodb_service = mongodb_service
+        _chat_agent = HoneyGoChatAgent(mongodb_service, n8n_service)
+    else:
+        # Update services if provided
+        if mongodb_service and _chat_agent.mongodb_service is None:
+            _chat_agent.mongodb_service = mongodb_service
+        if n8n_service and _chat_agent.n8n_service is None:
+            _chat_agent.n8n_service = n8n_service
     return _chat_agent
 
 

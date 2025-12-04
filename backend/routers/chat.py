@@ -15,8 +15,12 @@ import logging
 
 from services.chat_agent import get_chat_agent
 from services import mongodb_service as mongo_module
+from services.n8n_service import N8nService
 
 logger = logging.getLogger(__name__)
+
+# Initialize N8N service for external data
+n8n_service = N8nService()
 
 router = APIRouter(
     prefix="/api/v1/chat",
@@ -122,9 +126,10 @@ async def chat(request: ChatRequest) -> ChatResponse:
     try:
         logger.info(f"📝 Processing chat query: '{request.message[:50]}...'")
         
-        # Get the chat agent with MongoDB service
+        # Get the chat agent with MongoDB and N8N services
         agent = get_chat_agent(
-            mongodb_service=mongo_module.mongodb_service
+            mongodb_service=mongo_module.mongodb_service,
+            n8n_service=n8n_service
         )
         
         # Process the query

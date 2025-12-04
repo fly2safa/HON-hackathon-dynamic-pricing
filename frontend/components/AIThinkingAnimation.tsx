@@ -74,8 +74,7 @@ export default function AIThinkingAnimation({
         {[0, 1, 2, 3, 4].map((i) => (
           <div
             key={i}
-            className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
-            className="animate-bounce-dots"
+            className="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-bounce-dots"
             style={{
               animationDelay: `${i * 0.16}s`,
             }}
