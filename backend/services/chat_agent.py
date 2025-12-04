@@ -101,7 +101,9 @@ class HoneyGoChatAgent:
         logger.info(f"🎯 Detected intent: {intent['type']}")
         
         # Execute the appropriate query based on intent
-        if intent['type'] == 'rides_query':
+        if intent['type'] == 'booking_request':
+            result = self._handle_booking_request(message)
+        elif intent['type'] == 'rides_query':
             result = await self._handle_rides_query(message, intent, context)
         elif intent['type'] == 'customers_query':
             result = await self._handle_customers_query(message, intent, context)
@@ -131,6 +133,12 @@ class HoneyGoChatAgent:
             'filters': {},
             'aggregation': None
         }
+        
+        # Check for booking/action requests first (not supported - we're a query system)
+        booking_words = ['book', 'schedule', 'reserve', 'order', 'request a', 'get me a', 'i need a', 'i want a', 'call a', 'hail']
+        if any(word in message_lower for word in booking_words):
+            intent['type'] = 'booking_request'
+            return intent
         
         # Rides queries
         if any(word in message_lower for word in ['ride', 'rides', 'trip', 'trips', 'journey']):
@@ -191,6 +199,30 @@ class HoneyGoChatAgent:
                 intent['filters']['status'] = 'Active'
         
         return intent
+    
+    def _handle_booking_request(self, message: str) -> Dict[str, Any]:
+        """
+        Handle booking/action requests with a helpful redirect message.
+        
+        This chat interface is for QUERYING data, not booking rides.
+        """
+        return {
+            'response': "🚕 I can't book rides directly - I'm a data query assistant! "
+                       "To book a ride, please use the HoneyGo app or main interface. "
+                       "However, I can help you analyze ride data, pricing trends, "
+                       "and customer statistics. Try asking: 'What's the average price for Urban rides?'",
+            'data': {
+                'type': 'booking_redirect',
+                'original_intent': 'booking'
+            },
+            'suggestions': [
+                "What's the average ride price?",
+                "Find all Urban rides at Night",
+                "How many Gold customers are there?",
+                "Show me driver statistics"
+            ],
+            'confidence': 1.0
+        }
     
     async def _handle_rides_query(
         self,
