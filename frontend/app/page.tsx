@@ -45,10 +45,33 @@ export default function Home() {
   const [backendConnected, setBackendConnected] = useState(false);
   const [showSchedulePicker, setShowSchedulePicker] = useState(false);
   const [scheduledDateTime, setScheduledDateTime] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
   const resultsSectionRef = useRef<HTMLDivElement>(null);
 
   // Fetch real-time weather for selected city
   const { weather, loading: weatherLoading, error: weatherError } = useRealWeather(selectedCity);
+
+  // Scroll detection to auto-hide/show banners with hysteresis to prevent flickering
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      // Hide banners when scrolled down more than 150px
+      if (scrollPosition > 150 && !isScrolled) {
+        setIsScrolled(true);
+        setShowBackendBanner(false);
+        setShowWeatherBanner(false);
+      } 
+      // Show banners only when scrolled to the very top (within 10px)
+      else if (scrollPosition <= 10 && isScrolled) {
+        setIsScrolled(false);
+        setShowBackendBanner(true);
+        setShowWeatherBanner(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isScrolled]);
 
   // Update market conditions when city or weather changes
   const handleCityChange = (city: string) => {
@@ -193,37 +216,41 @@ export default function Home() {
       )}
       
       {/* Header */}
-      <header className={`bg-black sticky ${headerTop} z-40`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className={`bg-black sticky ${headerTop} z-40 transition-all duration-300`}>
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300 ${isScrolled ? 'py-1' : 'py-4'}`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-5">
               <Image 
                 src="/images/honeygo-logo.png" 
                 alt="HoneyGo Logo" 
-                width={100} 
-                height={100}
-                className="rounded-lg"
+                width={isScrolled ? 25 : 100} 
+                height={isScrolled ? 25 : 100}
+                className="rounded-lg transition-all duration-300"
               />
               <div>
                 <div className="flex items-center gap-3">
-                  <h1 className="text-4xl font-bold text-white">
+                  <h1 className={`font-bold text-white transition-all duration-300 ${isScrolled ? 'text-xl' : 'text-4xl'}`}>
                     HoneyGo
                   </h1>
-                  <span className="px-2 py-0.5 text-xs font-semibold bg-[#FF6A13] text-white rounded-full">
+                  <span className={`px-2 font-semibold bg-[#FF6A13] text-white rounded-full transition-all duration-300 ${isScrolled ? 'py-0 text-[8px]' : 'py-0.5 text-xs'}`}>
                     v1.0.0
                   </span>
                 </div>
-                <p className="text-lg text-gray-400">
-                  AI-Powered Pricing Platform
-                </p>
+                {!isScrolled && (
+                  <p className="text-lg text-gray-400">
+                    AI-Powered Pricing Platform
+                  </p>
+                )}
               </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-gray-400">Powered by</p>
-              <p className="text-xl font-semibold text-[#FF6A13]">
-                Honeywell AI
-              </p>
-            </div>
+            {!isScrolled && (
+              <div className="text-right">
+                <p className="text-sm text-gray-400">Powered by</p>
+                <p className="text-xl font-semibold text-[#FF6A13]">
+                  Honeywell AI
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </header>
