@@ -160,7 +160,7 @@ export const generateMarketConditions = (city: string): MarketConditions => {
   
   // City-specific market data
   const cityMarkets: Record<string, { drivers: number; rides: number; demand: 'low' | 'medium' | 'high' | 'surge'; traffic: 'light' | 'moderate' | 'heavy' }> = {
-    'Phoenix': { drivers: 42, rides: 87, demand: 'high', traffic: 'moderate' },
+    'Phoenix': { drivers: 42, rides: 87, demand: 'medium', traffic: 'moderate' },
     'New York': { drivers: 125, rides: 340, demand: 'surge', traffic: 'heavy' },
     'San Francisco': { drivers: 78, rides: 210, demand: 'high', traffic: 'heavy' },
     'Chicago': { drivers: 95, rides: 180, demand: 'high', traffic: 'moderate' },

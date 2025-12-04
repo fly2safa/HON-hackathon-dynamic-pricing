@@ -114,6 +114,7 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
         recognition.onerror = (event: any) => {
           console.error('Speech recognition error:', event.error);
           setIsListening(false);
+          setVoiceEnabled(false); // Reset on error
         };
         
         recognition.onend = () => {
@@ -478,14 +479,12 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
                     className={`p-2 rounded-lg transition-all duration-200 ${
                       isListening 
                         ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                        : voiceEnabled
-                          ? 'bg-green-600 hover:bg-green-700'
-                          : 'bg-gray-700 hover:bg-gray-600'
+                        : 'bg-gray-700 hover:bg-gray-600'
                     } disabled:opacity-50 disabled:cursor-not-allowed`}
-                    title={isListening ? 'Stop listening' : 'Start voice input'}
+                    title={isListening ? 'Stop listening' : 'Click to speak a command'}
                   >
                     <span className="text-white">
-                      <MicrophoneIcon isActive={isListening || voiceEnabled} />
+                      <MicrophoneIcon isActive={isListening} />
                     </span>
                   </button>
                 )}

@@ -667,6 +667,12 @@ class HoneyGoChatAgent:
             except Exception as e:
                 logger.warning(f"MongoDB weather fetch failed: {e}")
         
+        # Final fallback: mock weather data for demo
+        if not external_data['weather'] and city:
+            mock_weather = self._get_mock_weather(city)
+            external_data['weather'] = mock_weather
+            logger.info(f"📋 Using mock weather for {city}")
+        
         # Try to fetch events data
         if self.n8n_service:
             try:
@@ -692,6 +698,53 @@ class HoneyGoChatAgent:
         }
         return city_map.get(city_lower, 'Urban')
     
+    def _extract_city_from_message(self, message: str) -> Optional[str]:
+        """Extract city name from user message."""
+        message_lower = message.lower()
+        
+        # List of supported cities and their variations
+        city_keywords = {
+            'phoenix': 'Phoenix',
+            'new york': 'New York',
+            'nyc': 'New York',
+            'san francisco': 'San Francisco',
+            'sf': 'San Francisco',
+            'chicago': 'Chicago',
+            'orlando': 'Orlando'
+        }
+        
+        for keyword, city_name in city_keywords.items():
+            if keyword in message_lower:
+                return city_name
+        
+        return None
+    
+    def _get_mock_weather(self, city: str) -> Dict[str, Any]:
+        """Get mock weather data for demo purposes."""
+        import random
+        
+        # Realistic mock weather for each city
+        city_weather = {
+            'Phoenix': {'conditions': 'Clear', 'temperature': 72, 'pricing_multiplier': 1.0},
+            'New York': {'conditions': 'Cloudy', 'temperature': 45, 'pricing_multiplier': 1.0},
+            'San Francisco': {'conditions': 'Foggy', 'temperature': 58, 'pricing_multiplier': 1.1},
+            'Chicago': {'conditions': 'Windy', 'temperature': 38, 'pricing_multiplier': 1.1},
+            'Orlando': {'conditions': 'Partly Cloudy', 'temperature': 78, 'pricing_multiplier': 1.0},
+        }
+        
+        # Get city-specific weather or generate random
+        if city in city_weather:
+            weather = city_weather[city].copy()
+        else:
+            weather = {
+                'conditions': random.choice(['Clear', 'Cloudy', 'Partly Cloudy']),
+                'temperature': random.randint(40, 85),
+                'pricing_multiplier': 1.0
+            }
+        
+        weather['is_mock'] = True
+        return weather
+    
     async def _handle_general_query(
         self,
         message: str,
@@ -699,8 +752,14 @@ class HoneyGoChatAgent:
     ) -> Dict[str, Any]:
         """Handle general/unclassified queries using LLM with real-time data."""
         
-        # Fetch external data for context
+        # Get city from context or extract from message
         city = context.get('current_city') if context else None
+        
+        # Try to extract city from message if not in context
+        if not city:
+            city = self._extract_city_from_message(message)
+        
+        # Fetch external data for context
         external_data = await self._fetch_external_data(city)
         
         # Check if query is about weather/conditions
