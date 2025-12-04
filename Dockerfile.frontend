@@ -2,7 +2,7 @@
 # Role 11: Docker/DevOps Engineer
 # TODO: Finalize this during Dec 2-3 implementation
 
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
