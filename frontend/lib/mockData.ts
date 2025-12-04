@@ -26,6 +26,8 @@ export interface PricingResult {
   confidence: number;
   processingTime: number; // AI calculation time only
   totalTime?: number; // Total user wait time (includes UI/network)
+  savedToDb?: boolean; // Whether pricing was saved to MongoDB
+  rideId?: string; // Unique ride ID if saved
   competitorPricing?: {
     uber: number;
     lyft: number;

@@ -8,8 +8,11 @@ from fastapi import APIRouter, HTTPException
 from models.pricing import PricingRequest, PricingResponse
 from typing import Dict, List
 import logging
+import uuid
+from datetime import datetime
 
 from services.langchain_service import get_langchain_service
+from services import mongodb_service as mongo_module
 
 logger = logging.getLogger(__name__)
 
@@ -191,6 +194,51 @@ async def calculate_pricing(request: PricingRequest) -> PricingResponse:
         is_ai_generated = ai_result.get('ai_generated', False)
         model_used = ai_result.get('model', 'unknown')
         
+        # Generate unique ride ID for this pricing decision
+        ride_id = f"RIDE-{uuid.uuid4().hex[:8].upper()}"
+        
+        # Track if saved to DB
+        saved_to_db = False
+        
+        # Auto-save pricing decision to MongoDB
+        if mongo_module.mongodb_service and mongo_module.mongodb_service.connected:
+            try:
+                pricing_decision_data = {
+                    "ride_id": ride_id,
+                    "calculated_price": round(final_price, 2),
+                    "base_price": round(base_price, 2),
+                    "surge_multiplier": round(surge_multiplier, 2),
+                    "reasoning": {
+                        "method": "langchain" if is_ai_generated else "rule-based",
+                        "factors": {
+                            "time_of_day": request.time_of_day,
+                            "weather": request.weather_condition or "clear",
+                            "base_rate_per_km": 2.5,
+                            "city": detected_city,
+                            "city_multiplier": city_multiplier
+                        },
+                        "explanation": reasoning
+                    },
+                    "agent_trace": [],
+                    "applied": True,
+                    "customer_id": request.customer_id,
+                    "pickup_location": request.pickup_location,
+                    "dropoff_location": request.dropoff_location,
+                    "distance_km": request.distance_km,
+                    "time_of_day": request.time_of_day,
+                    "weather_condition": request.weather_condition or "clear",
+                    "confidence_score": confidence,
+                    "model_used": model_used,
+                    "ai_generated": is_ai_generated,
+                    "timestamp": datetime.now()
+                }
+                
+                await mongo_module.mongodb_service.create_pricing_decision(pricing_decision_data)
+                saved_to_db = True
+                logger.info(f"✅ Pricing decision auto-saved to MongoDB: {ride_id} - ${final_price:.2f}")
+            except Exception as db_error:
+                logger.warning(f"⚠️ MongoDB save failed: {db_error}. Returning pricing without persistence.")
+        
         response = PricingResponse(
             base_price=round(base_price, 2),
             surge_multiplier=round(surge_multiplier, 2),
@@ -200,10 +248,12 @@ async def calculate_pricing(request: PricingRequest) -> PricingResponse:
             agent_trace_url=None,   # Will be populated with LangSmith URL later
             metadata={
                 "customer_id": request.customer_id,
+                "ride_id": ride_id,
                 "implementation": "langchain" if is_ai_generated else "rule-based",
                 "model": model_used,
                 "version": "2.0.0-ai",
                 "ai_generated": is_ai_generated,
+                "saved_to_db": saved_to_db,
                 "confidence_factors": {
                     "weather": request.weather_condition or "clear",
                     "time": request.time_of_day,
@@ -213,7 +263,7 @@ async def calculate_pricing(request: PricingRequest) -> PricingResponse:
             }
         )
         
-        logger.info(f"Pricing calculated: ${response.final_price:.2f} (surge: {response.surge_multiplier}x)")
+        logger.info(f"Pricing calculated: ${response.final_price:.2f} (surge: {response.surge_multiplier}x, saved: {saved_to_db})")
         
         return response
         

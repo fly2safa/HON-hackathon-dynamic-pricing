@@ -53,7 +53,7 @@ class MongoDBService:
             self.client.admin.command('ping')
             
             # Get database
-            self.db = self.client["honeygo"]
+            self.db = self.client["HoneyGo"]
             self.connected = True
             
             logger.info("✅ MongoDB connected successfully")
