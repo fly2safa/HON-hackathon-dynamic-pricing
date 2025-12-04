@@ -63,6 +63,9 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
   const [isLoading, setIsLoading] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [isVisible, setIsVisible] = useState(isOpen);
+  const [inputHistory, setInputHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [tempInput, setTempInput] = useState(''); // Store current input when navigating history
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -85,6 +88,13 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
 
   const sendMessage = async (text: string) => {
     if (!text.trim() || isLoading) return;
+
+    // Add to input history (avoid duplicates of last entry)
+    if (inputHistory[inputHistory.length - 1] !== text.trim()) {
+      setInputHistory(prev => [...prev, text.trim()]);
+    }
+    setHistoryIndex(-1);
+    setTempInput('');
 
     const userMessage: Message = {
       id: `user-${Date.now()}`,
@@ -155,10 +165,38 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
     return "I can help you with HoneyGo data! Try asking about rides, customers, pricing, or drivers. (Note: Backend is currently offline, using cached responses)";
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       sendMessage(input);
+    }
+    // Navigate history with Up/Down arrows
+    else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (inputHistory.length === 0) return;
+      
+      if (historyIndex === -1) {
+        // Save current input before navigating
+        setTempInput(input);
+        setHistoryIndex(inputHistory.length - 1);
+        setInput(inputHistory[inputHistory.length - 1]);
+      } else if (historyIndex > 0) {
+        setHistoryIndex(historyIndex - 1);
+        setInput(inputHistory[historyIndex - 1]);
+      }
+    }
+    else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (historyIndex === -1) return;
+      
+      if (historyIndex < inputHistory.length - 1) {
+        setHistoryIndex(historyIndex + 1);
+        setInput(inputHistory[historyIndex + 1]);
+      } else {
+        // Back to current input
+        setHistoryIndex(-1);
+        setInput(tempInput);
+      }
     }
   };
 
@@ -320,8 +358,8 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Ask me anything..."
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask me anything... (↑↓ for history)"
                   disabled={isLoading}
                   className="flex-1 bg-gray-800 border border-gray-600 rounded-lg px-3 py-2 
                              text-sm text-white placeholder-gray-500
@@ -339,7 +377,7 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
                 </button>
               </div>
               <p className="text-[10px] text-gray-600 mt-1 text-center">
-                Press Enter to send • Powered by LangChain
+                Enter to send • ↑↓ history • Powered by LangChain
               </p>
             </div>
           </>

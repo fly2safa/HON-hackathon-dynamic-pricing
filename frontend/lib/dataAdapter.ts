@@ -191,6 +191,8 @@ export function backendToFrontendResult(
     confidence: backendResponse.confidence_score || 0.75,
     processingTime: processingTime,
     competitorPricing: competitorPricing,
+    savedToDb: backendResponse.metadata?.saved_to_db || false,
+    rideId: backendResponse.metadata?.ride_id,
   };
 }
 

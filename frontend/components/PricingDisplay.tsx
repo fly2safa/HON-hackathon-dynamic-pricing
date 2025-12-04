@@ -214,6 +214,19 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
         </div>
       </div>
 
+      {/* Database Save Indicator */}
+      {result.savedToDb && (
+        <div className="mt-4 flex items-center gap-2 p-3 bg-green-50 rounded-lg border border-green-200">
+          <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+          <span className="text-sm text-green-700 font-medium">
+            ✅ Saved to database
+            {result.rideId && <span className="text-green-600 font-mono text-xs ml-2">({result.rideId})</span>}
+          </span>
+        </div>
+      )}
+
       {/* Trip Summary */}
       <div className="mt-6 pt-6 border-t border-gray-200">
         <h4 className="text-sm font-semibold text-gray-600 mb-3">Trip Summary</h4>

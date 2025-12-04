@@ -101,7 +101,11 @@ class HoneyGoChatAgent:
         logger.info(f"🎯 Detected intent: {intent['type']}")
         
         # Execute the appropriate query based on intent
-        if intent['type'] == 'rides_query':
+        if intent['type'] == 'greeting':
+            result = self._handle_greeting()
+        elif intent['type'] == 'booking_request':
+            result = self._handle_booking_request(message)
+        elif intent['type'] == 'rides_query':
             result = await self._handle_rides_query(message, intent, context)
         elif intent['type'] == 'customers_query':
             result = await self._handle_customers_query(message, intent, context)
@@ -131,6 +135,18 @@ class HoneyGoChatAgent:
             'filters': {},
             'aggregation': None
         }
+        
+        # Check for greetings first - provide helpful guidance
+        greeting_words = ['hi', 'hello', 'hey', 'howdy', 'good morning', 'good afternoon', 'good evening', 'sup', 'yo', 'greetings']
+        if any(message_lower.strip() == word or message_lower.startswith(word + ' ') or message_lower.startswith(word + ',') for word in greeting_words):
+            intent['type'] = 'greeting'
+            return intent
+        
+        # Check for booking/action requests (not supported - we're a query system)
+        booking_words = ['book', 'schedule', 'reserve', 'order', 'request a', 'get me a', 'i need a', 'i want a', 'call a', 'hail']
+        if any(word in message_lower for word in booking_words):
+            intent['type'] = 'booking_request'
+            return intent
         
         # Rides queries
         if any(word in message_lower for word in ['ride', 'rides', 'trip', 'trips', 'journey']):
@@ -192,6 +208,49 @@ class HoneyGoChatAgent:
         
         return intent
     
+    def _handle_greeting(self) -> Dict[str, Any]:
+        """
+        Handle greetings with a helpful introduction.
+        """
+        return {
+            'response': "Hello! 👋 I'm your HoneyGo data assistant. I can help you explore "
+                       "ride statistics, customer data, pricing trends, and more!",
+            'data': {
+                'type': 'greeting'
+            },
+            'suggestions': [
+                "How many Gold customers?",
+                "Find Urban rides at Night",
+                "What's the average price?",
+                "Show me overall statistics"
+            ],
+            'confidence': 1.0
+        }
+    
+    def _handle_booking_request(self, message: str) -> Dict[str, Any]:
+        """
+        Handle booking/action requests with a helpful redirect message.
+        
+        This chat interface is for QUERYING data, not booking rides.
+        """
+        return {
+            'response': "🚕 I can't book rides directly - I'm a data query assistant! "
+                       "To book a ride, please use the HoneyGo app or main interface. "
+                       "However, I can help you analyze ride data, pricing trends, "
+                       "and customer statistics.",
+            'data': {
+                'type': 'booking_redirect',
+                'original_intent': 'booking'
+            },
+            'suggestions': [
+                "How many Gold customers are there?",
+                "What's the average surge multiplier?",
+                "Show me overall statistics",
+                "How many active drivers?"
+            ],
+            'confidence': 1.0
+        }
+    
     async def _handle_rides_query(
         self,
         message: str,
@@ -235,29 +294,21 @@ class HoneyGoChatAgent:
                             'filters': filters
                         },
                         'suggestions': [
-                            "Show pricing trends",
-                            "Compare with other locations",
-                            "What's the surge multiplier?"
+                            "What's the average price?",
+                            "Find night rides",
+                            "How many active drivers?"
                         ],
                         'confidence': 0.9
                     }
                 else:
-                    filter_desc = self._describe_filters(filters)
-                    return {
-                        'response': f"I didn't find any {filter_desc}rides matching your criteria.",
-                        'data': {'type': 'rides', 'count': 0},
-                        'suggestions': [
-                            "Try a different location",
-                            "Try a different time",
-                            "Show all rides"
-                        ],
-                        'confidence': 0.8
-                    }
+                    # No data in MongoDB - return mock with explanation
+                    logger.info("No rides in MongoDB, using mock data")
+                    return self._mock_rides_response(filters, db_connected=True)
             except Exception as e:
                 logger.error(f"Error querying rides: {e}")
         
-        # Fallback response (mock data)
-        return self._mock_rides_response(filters)
+        # Fallback response (mock data - backend/DB not available)
+        return self._mock_rides_response(filters, db_connected=False)
     
     async def _handle_customers_query(
         self,
@@ -266,6 +317,22 @@ class HoneyGoChatAgent:
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Handle queries about customers."""
+        
+        message_lower = message.lower()
+        
+        # Check for unsupported customer queries
+        unsupported_terms = ['spend', 'spending', 'revenue', 'earned', 'retention', 'satisfaction', 'rating']
+        if any(term in message_lower for term in unsupported_terms):
+            return {
+                'response': "I can tell you about customer counts by loyalty tier, but I don't have data on spending or retention yet. Try asking: 'How many Gold customers are there?'",
+                'data': {'type': 'customers', 'unsupported_query': True},
+                'suggestions': [
+                    "How many Gold customers?",
+                    "How many Silver customers?",
+                    "Show me overall statistics"
+                ],
+                'confidence': 0.6
+            }
         
         filters = intent.get('filters', {})
         
@@ -299,9 +366,9 @@ class HoneyGoChatAgent:
                 'breakdown': mock_counts
             },
             'suggestions': [
-                "Show Gold customer details",
-                "What's the average customer spend?",
-                "Customer retention rate"
+                "How many Gold customers?",
+                "How many Silver customers?",
+                "Show me overall statistics"
             ],
             'confidence': 0.85
         }
@@ -325,56 +392,80 @@ class HoneyGoChatAgent:
             try:
                 stats = await self.mongodb_service.get_ride_statistics()
                 
-                if aggregation == 'average':
-                    price = stats.get('average_price', 0)
-                    surge = stats.get('average_surge_multiplier', 1.0)
-                    response = f"The average price is ${price:.2f} with an average surge multiplier of {surge:.2f}x."
-                    
-                    # Add real-time pricing factors
-                    if external_data['weather']:
-                        weather = external_data['weather']
-                        weather_multiplier = weather.get('pricing_multiplier', 1.0)
-                        if weather_multiplier > 1.0:
-                            response += f" Currently, weather conditions ({weather.get('conditions', 'adverse')}) are adding a {weather_multiplier}x multiplier."
-                    
-                    if external_data['events']:
-                        events = external_data['events']
-                        if events.get('event_count', 0) > 0:
-                            response += f" There are {events['event_count']} events happening, which may increase demand."
-                else:
-                    price = stats.get('average_price', 0)
-                    response = f"Pricing statistics: Average ${price:.2f}"
+                # Check if we have real data (not zeros)
+                price = stats.get('average_price', 0)
+                surge = stats.get('average_surge_multiplier', 0)
                 
-                return {
-                    'response': response,
-                    'data': {
-                        'type': 'pricing',
-                        'statistics': stats,
-                        'external_factors': external_data,
-                        'real_time': True
-                    },
-                    'suggestions': [
-                        "What's the current weather?",
-                        "Show events affecting prices",
-                        "Compare prices by city"
-                    ],
-                    'confidence': 0.95
-                }
+                if price > 0:  # Only use MongoDB data if we have real data
+                    if aggregation == 'average':
+                        response = f"The average price is ${price:.2f} with an average surge multiplier of {surge:.2f}x."
+                        
+                        # Add real-time pricing factors
+                        if external_data['weather']:
+                            weather = external_data['weather']
+                            weather_multiplier = weather.get('pricing_multiplier', 1.0)
+                            if weather_multiplier > 1.0:
+                                response += f" Currently, weather conditions ({weather.get('conditions', 'adverse')}) are adding a {weather_multiplier}x multiplier."
+                        
+                        if external_data['events']:
+                            events = external_data['events']
+                            if events.get('event_count', 0) > 0:
+                                response += f" There are {events['event_count']} events happening, which may increase demand."
+                    else:
+                        response = f"Pricing statistics: Average ${price:.2f}"
+                    
+                    return {
+                        'response': response,
+                        'data': {
+                            'type': 'pricing',
+                            'statistics': stats,
+                            'external_factors': external_data,
+                            'real_time': True
+                        },
+                        'suggestions': [
+                            "What's the current weather?",
+                            "What events are happening?",
+                            "Find Urban rides at Night"
+                        ],
+                        'confidence': 0.95
+                    }
+                else:
+                    # No real data in MongoDB - return mock with explanation
+                    logger.info("No pricing data in MongoDB, using mock data")
+                    return {
+                        'response': "📡 Connected to database, but no pricing data exists yet. "
+                                   "Reverting to demo data:\n\n"
+                                   "The average ride price is $32.50 with a typical surge multiplier of 1.25x during peak hours.",
+                        'data': {
+                            'type': 'pricing',
+                            'avg_price': 32.50,
+                            'avg_surge': 1.25,
+                            'is_mock': True,
+                            'db_connected': True
+                        },
+                        'suggestions': [
+                            "Find Urban rides at Night",
+                            "How many active drivers?",
+                            "Show me overall statistics"
+                        ],
+                        'confidence': 0.75
+                    }
             except Exception as e:
                 logger.error(f"Error querying pricing: {e}")
         
-        # Fallback mock response
+        # Fallback mock response (backend/DB not available)
         return {
-            'response': "The average ride price is $285 with a typical surge multiplier of 1.15x during peak hours.",
+            'response': "The average ride price is $32.50 with a typical surge multiplier of 1.25x during peak hours. (Using cached data)",
             'data': {
                 'type': 'pricing',
-                'avg_price': 285,
-                'avg_surge': 1.15
+                'avg_price': 32.50,
+                'avg_surge': 1.25,
+                'is_mock': True
             },
             'suggestions': [
-                "Compare prices by city",
-                "Show surge trends",
-                "What affects pricing?"
+                "Find Urban rides at Night",
+                "How many active drivers?",
+                "Show me overall statistics"
             ],
             'confidence': 0.75
         }
@@ -393,38 +484,64 @@ class HoneyGoChatAgent:
                 ride_stats = await self.mongodb_service.get_ride_statistics()
                 driver_stats = await self.mongodb_service.get_driver_statistics()
                 
-                response = f"📊 HoneyGo Statistics:\n"
-                response += f"• Total pricing decisions: {ride_stats.get('total_pricing_decisions', 0)}\n"
-                response += f"• Total revenue: ${ride_stats.get('total_revenue', 0):,.2f}\n"
-                response += f"• Average price: ${ride_stats.get('average_price', 0):.2f}\n"
-                response += f"• Active drivers: {driver_stats.get('active_drivers', 0)}\n"
-                response += f"• Average driver rating: {driver_stats.get('average_rating', 0):.1f}⭐"
+                # Check if we have real data
+                total_decisions = ride_stats.get('total_pricing_decisions', 0)
+                avg_price = ride_stats.get('average_price', 0)
                 
-                return {
-                    'response': response,
-                    'data': {
-                        'type': 'statistics',
-                        'ride_stats': ride_stats,
-                        'driver_stats': driver_stats
-                    },
-                    'suggestions': [
-                        "Show revenue breakdown",
-                        "Driver performance details",
-                        "Customer satisfaction metrics"
-                    ],
-                    'confidence': 0.95
-                }
+                if total_decisions > 0 or avg_price > 0:
+                    response = f"📊 HoneyGo Statistics:\n"
+                    response += f"• Total pricing decisions: {total_decisions}\n"
+                    response += f"• Total revenue: ${ride_stats.get('total_revenue', 0):,.2f}\n"
+                    response += f"• Average price: ${avg_price:.2f}\n"
+                    response += f"• Active drivers: {driver_stats.get('active_drivers', 0)}\n"
+                    response += f"• Average driver rating: {driver_stats.get('average_rating', 0):.1f}⭐"
+                    
+                    return {
+                        'response': response,
+                        'data': {
+                            'type': 'statistics',
+                            'ride_stats': ride_stats,
+                            'driver_stats': driver_stats
+                        },
+                        'suggestions': [
+                            "How many active drivers?",
+                            "How many Gold customers?",
+                            "Find Urban rides at Night"
+                        ],
+                        'confidence': 0.95
+                    }
+                else:
+                    # No real data - return mock with explanation
+                    logger.info("No statistics in MongoDB, using mock data")
+                    return {
+                        'response': "📡 Connected to database, but no statistics exist yet. "
+                                   "Reverting to demo data:\n\n"
+                                   "📊 HoneyGo has processed over 1,000 rides with $32,500 in total revenue. "
+                                   "Average price is $32.50 with 50 active drivers maintaining a 4.7⭐ average rating.",
+                        'data': {
+                            'type': 'statistics',
+                            'is_mock': True,
+                            'db_connected': True
+                        },
+                        'suggestions': [
+                            "How many active drivers?",
+                            "How many Gold customers?",
+                            "What's the average price?"
+                        ],
+                        'confidence': 0.7
+                    }
             except Exception as e:
                 logger.error(f"Error querying statistics: {e}")
         
-        # Fallback mock response
+        # Fallback mock response (backend/DB not available)
         return {
-            'response': "📊 HoneyGo has processed over 1,000 rides with $285,000 in total revenue. Average price is $285 with 50 active drivers maintaining a 4.7⭐ average rating.",
-            'data': {'type': 'statistics'},
+            'response': "📊 HoneyGo has processed over 1,000 rides with $32,500 in total revenue. "
+                       "Average price is $32.50 with 50 active drivers maintaining a 4.7⭐ average rating. (Using cached data)",
+            'data': {'type': 'statistics', 'is_mock': True},
             'suggestions': [
-                "Show revenue breakdown",
-                "Driver performance",
-                "Customer metrics"
+                "How many active drivers?",
+                "How many Gold customers?",
+                "What's the average price?"
             ],
             'confidence': 0.7
         }
@@ -452,38 +569,60 @@ class HoneyGoChatAgent:
                 if count > 0:
                     avg_rating = sum(d.get('rating', 0) for d in drivers) / count
                     response = f"There are {count} {'active ' if filters.get('status') == 'Active' else ''}drivers with an average rating of {avg_rating:.1f}⭐."
+                    
+                    return {
+                        'response': response,
+                        'data': {
+                            'type': 'drivers',
+                            'count': count,
+                            'avg_rating': round(avg_rating, 1)
+                        },
+                        'suggestions': [
+                            "Show me overall statistics",
+                            "Find Urban rides",
+                            "How many Gold customers?"
+                        ],
+                        'confidence': 0.9
+                    }
                 else:
-                    response = "No drivers found matching your criteria."
-                
-                return {
-                    'response': response,
-                    'data': {
-                        'type': 'drivers',
-                        'count': count,
-                        'avg_rating': round(avg_rating, 1) if count > 0 else 0
-                    },
-                    'suggestions': [
-                        "Top rated drivers",
-                        "Driver earnings breakdown",
-                        "Driver availability by location"
-                    ],
-                    'confidence': 0.9
-                }
+                    # No drivers in MongoDB - return mock with explanation
+                    logger.info("No drivers in MongoDB, using mock data")
+                    return {
+                        'response': "📡 Connected to database, but no driver data exists yet. "
+                                   "Reverting to demo data:\n\n"
+                                   "There are 50 active drivers with an average rating of 4.7⭐. "
+                                   "Top performers earn over $300 per day.",
+                        'data': {
+                            'type': 'drivers',
+                            'count': 50,
+                            'avg_rating': 4.7,
+                            'is_mock': True,
+                            'db_connected': True
+                        },
+                        'suggestions': [
+                            "Show me overall statistics",
+                            "How many Gold customers?",
+                            "What's the average price?"
+                        ],
+                        'confidence': 0.75
+                    }
             except Exception as e:
                 logger.error(f"Error querying drivers: {e}")
         
-        # Fallback mock response
+        # Fallback mock response (backend/DB not available)
         return {
-            'response': "There are 50 active drivers with an average rating of 4.7⭐. Top performers earn over $300 per day.",
+            'response': "There are 50 active drivers with an average rating of 4.7⭐. "
+                       "Top performers earn over $300 per day. (Using cached data)",
             'data': {
                 'type': 'drivers',
                 'count': 50,
-                'avg_rating': 4.7
+                'avg_rating': 4.7,
+                'is_mock': True
             },
             'suggestions': [
-                "Top rated drivers",
-                "Driver earnings",
-                "Driver availability"
+                "Show me overall statistics",
+                "How many Gold customers?",
+                "What's the average price?"
             ],
             'confidence': 0.75
         }
@@ -747,27 +886,44 @@ class HoneyGoChatAgent:
             return " ".join(parts) + " "
         return ""
     
-    def _mock_rides_response(self, filters: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate a mock rides response when MongoDB is unavailable."""
+    def _mock_rides_response(self, filters: Dict[str, Any], db_connected: bool = False) -> Dict[str, Any]:
+        """Generate a mock rides response when MongoDB has no data or is unavailable."""
         filter_desc = self._describe_filters(filters)
         
-        # Mock data based on filters
+        # Mock data based on filters - realistic ride prices
         mock_count = 127 if 'Urban' in str(filters) else 85
-        mock_avg = 285 if 'Night' in str(filters) else 245
+        
+        # Realistic pricing: Night rides have surge, Urban is slightly higher
+        base_price = 28.50  # Base average ride price
+        if 'Night' in str(filters):
+            mock_avg = round(base_price * 1.35, 2)  # 35% night surge = $38.48
+        elif 'Urban' in str(filters):
+            mock_avg = round(base_price * 1.15, 2)  # 15% urban premium = $32.78
+        else:
+            mock_avg = base_price
+        
+        # Different message based on DB connection status
+        if db_connected:
+            response = (f"📡 Connected to database, but no {filter_desc}ride data exists yet. "
+                       f"Reverting to demo data:\n\n"
+                       f"I found {mock_count} {filter_desc}rides. The average price is ${mock_avg}.")
+        else:
+            response = f"I found {mock_count} {filter_desc}rides. The average price is ${mock_avg}. (Using cached data)"
         
         return {
-            'response': f"I found {mock_count} {filter_desc}rides (using cached data). The average price is ${mock_avg}.",
+            'response': response,
             'data': {
                 'type': 'rides',
                 'count': mock_count,
                 'avg_price': mock_avg,
                 'filters': filters,
-                'is_mock': True
+                'is_mock': True,
+                'db_connected': db_connected
             },
             'suggestions': [
-                "Show pricing trends",
-                "Compare locations",
-                "View surge patterns"
+                "What's the average price?",
+                "How many active drivers?",
+                "Show me overall statistics"
             ],
             'confidence': 0.7
         }
