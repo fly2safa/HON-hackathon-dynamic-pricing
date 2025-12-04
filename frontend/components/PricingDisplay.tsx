@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { type PricingResult, type RideRequest } from '@/lib/mockData';
 import { formatDistance } from '@/lib/formatUtils';
 
@@ -12,6 +12,76 @@ interface PricingDisplayProps {
 export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
   const savingsForDriver = result.driverEarnings - (result.basePrice * 0.8);
   const savingsPercentage = ((savingsForDriver / (result.basePrice * 0.8)) * 100).toFixed(0);
+  
+  // Voice playback state
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [speechSupported, setSpeechSupported] = useState(false);
+
+  // Check if speech synthesis is supported
+  useEffect(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      setSpeechSupported(true);
+    }
+  }, []);
+
+  const speakReasoning = () => {
+    if (!speechSupported) {
+      alert('Text-to-speech is not supported in your browser.');
+      return;
+    }
+
+    // If already playing, stop
+    if (isPlaying) {
+      window.speechSynthesis.cancel();
+      setIsPlaying(false);
+      setIsPaused(false);
+      return;
+    }
+
+    // If paused, resume
+    if (isPaused) {
+      window.speechSynthesis.resume();
+      setIsPaused(false);
+      setIsPlaying(true);
+      return;
+    }
+
+    // Create the speech text
+    const introText = "The AI Reasoning for the price above is: ";
+    const reasoningText = result.reasoning.map((reason, index) => {
+      // Convert numbered points to full sentences
+      return `Point ${index + 1}. ${reason}`;
+    }).join('. ');
+    
+    const fullText = introText + reasoningText;
+
+    // Create speech utterance
+    const utterance = new SpeechSynthesisUtterance(fullText);
+    utterance.rate = 0.9; // Slightly slower for clarity
+    utterance.pitch = 1.0;
+    utterance.volume = 1.0;
+
+    // Event handlers
+    utterance.onstart = () => {
+      setIsPlaying(true);
+      setIsPaused(false);
+    };
+
+    utterance.onend = () => {
+      setIsPlaying(false);
+      setIsPaused(false);
+    };
+
+    utterance.onerror = (event) => {
+      console.error('Speech synthesis error:', event);
+      setIsPlaying(false);
+      setIsPaused(false);
+    };
+
+    // Speak
+    window.speechSynthesis.speak(utterance);
+  };
 
   return (
     <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-200 animate-fadeIn">
@@ -193,12 +263,45 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
 
       {/* AI Reasoning */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-          <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
-          AI Reasoning
-        </h3>
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
+            <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            AI Reasoning
+          </h3>
+          
+          {/* Voice Playback Button */}
+          {speechSupported && (
+            <button
+              onClick={speakReasoning}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                isPlaying 
+                  ? 'bg-red-500 hover:bg-red-600 text-white' 
+                  : 'bg-purple-500 hover:bg-purple-600 text-white'
+              } shadow-md hover:shadow-lg`}
+              title={isPlaying ? 'Stop voice playback' : 'Play AI reasoning aloud'}
+            >
+              {isPlaying ? (
+                <>
+                  {/* Stop Square Icon */}
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <rect x="6" y="6" width="8" height="8" rx="1" />
+                  </svg>
+                  <span>Stop</span>
+                </>
+              ) : (
+                <>
+                  {/* Play Triangle Icon */}
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
+                  </svg>
+                  <span>Play</span>
+                </>
+              )}
+            </button>
+          )}
+        </div>
         <div className="space-y-2">
           {result.reasoning.map((reason, index) => (
             <div 
