@@ -150,11 +150,11 @@ async def calculate_pricing(request: PricingRequest) -> PricingResponse:
         for city, multiplier in city_multipliers.items():
             if city in pickup_lower or any(
                 loc in pickup_lower for loc in {
-                    "phoenix": ["phoenix", "scottsdale", "tempe", "glendale", "mesa"],
-                    "new york": ["new york", "manhattan", "brooklyn", "queens", "bronx", "nyc"],
-                    "san francisco": ["san francisco", "sf", "oakland", "berkeley"],
-                    "chicago": ["chicago", "wrigley", "o'hare", "midway"],
-                    "orlando": ["orlando", "disney", "universal", "kissimmee"],
+                    "phoenix": ["phoenix", "scottsdale", "tempe", "glendale", "mesa", "sky harbor", "asu", "arizona state"],
+                    "new york": ["new york", "manhattan", "brooklyn", "queens", "bronx", "nyc", "times square", "jfk", "laguardia", "central park", "empire state", "statue of liberty"],
+                    "san francisco": ["san francisco", "sf", "oakland", "berkeley", "golden gate", "sfo"],
+                    "chicago": ["chicago", "wrigley", "o'hare", "midway", "navy pier", "magnificent mile"],
+                    "orlando": ["orlando", "disney", "universal", "kissimmee", "epcot", "magic kingdom"],
                 }.get(city, [city])
             ):
                 city_multiplier = multiplier

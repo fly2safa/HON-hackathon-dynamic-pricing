@@ -12,6 +12,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from utils.config import settings
 from services import mongodb_service as mongo_module
+from services import chromadb_service as chroma_module
 import logging
 
 # Configure logging
@@ -45,9 +46,18 @@ async def lifespan(app: FastAPI):
         logger.warning("⚠️  API will run in degraded mode (without database persistence)")
         mongo_module.mongodb_service = None
     
-    # TODO: Initialize other services (Dec 3)
-    # - ChromaDB connection
-    # - LangChain agent initialization
+    # Initialize ChromaDB connection
+    try:
+        logger.info("🔗 Connecting to ChromaDB...")
+        await chroma_module.init_chromadb_service(
+            persist_directory=settings.chroma_persist_directory
+        )
+        stats = chroma_module.chromadb_service.get_stats()
+        logger.info(f"✅ ChromaDB connected - Collections: {stats.get('collections', {})}")
+    except Exception as e:
+        logger.error(f"❌ ChromaDB connection failed: {e}")
+        logger.warning("⚠️  RAG queries will be unavailable")
+        chroma_module.chromadb_service = None
     
     yield
     
@@ -62,7 +72,13 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.error(f"Error closing MongoDB connection: {e}")
     
-    # TODO: Close other connections (Dec 3)
+    # Close ChromaDB connection
+    if chroma_module.chromadb_service:
+        try:
+            await chroma_module.chromadb_service.disconnect()
+            logger.info("✅ ChromaDB connection closed")
+        except Exception as e:
+            logger.error(f"Error closing ChromaDB connection: {e}")
 
 
 # Create FastAPI application with lifespan handler

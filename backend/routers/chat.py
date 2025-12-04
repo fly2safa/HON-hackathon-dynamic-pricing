@@ -15,6 +15,7 @@ import logging
 
 from services.chat_agent import get_chat_agent
 from services import mongodb_service as mongo_module
+from services import chromadb_service as chroma_module
 from services.n8n_service import N8nService
 
 logger = logging.getLogger(__name__)
@@ -126,10 +127,11 @@ async def chat(request: ChatRequest) -> ChatResponse:
     try:
         logger.info(f"📝 Processing chat query: '{request.message[:50]}...'")
         
-        # Get the chat agent with MongoDB and N8N services
+        # Get the chat agent with MongoDB, N8N, and ChromaDB services
         agent = get_chat_agent(
             mongodb_service=mongo_module.mongodb_service,
-            n8n_service=n8n_service
+            n8n_service=n8n_service,
+            chromadb_service=chroma_module.chromadb_service
         )
         
         # Process the query
@@ -172,7 +174,10 @@ async def chat_health_check() -> Dict[str, Any]:
         Dict with health status information
     """
     try:
-        agent = get_chat_agent(mongodb_service=mongo_module.mongodb_service)
+        agent = get_chat_agent(
+            mongodb_service=mongo_module.mongodb_service,
+            chromadb_service=chroma_module.chromadb_service
+        )
         
         return {
             "status": "healthy",
