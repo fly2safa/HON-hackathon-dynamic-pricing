@@ -85,6 +85,7 @@ export function frontendToBackendRequest(
     customer_id: `CUST_${ride.id.replace('ride-', '')}`, // Generate customer ID from ride ID
     time_of_day: timeOfDay,
     weather_condition: weatherCondition,
+    loyalty_tier: ride.loyaltyTier || 'new',  // Send loyalty tier to backend
   };
 }
 
@@ -156,29 +157,31 @@ export function backendToFrontendResult(
   city: string,
   loyaltyTier?: string
 ): PricingResult {
-  // Import loyalty functions (Jason's fix for loyalty tier pricing)
+  // Import loyalty functions for badge display
   const { getLoyaltyDiscount, getLoyaltyBadge } = require('./mockData');
   
-  // Apply loyalty discount if provided
-  const loyaltyDiscount = loyaltyTier ? getLoyaltyDiscount(loyaltyTier) : 0;
-  const priceBeforeDiscount = backendResponse.final_price;
-  const finalPrice = priceBeforeDiscount * (1 - loyaltyDiscount);
+  // Backend now applies loyalty discount, so use final_price directly
+  const finalPrice = backendResponse.final_price;
+  const priceBeforeDiscount = backendResponse.base_price * backendResponse.surge_multiplier;
   
   // Split reasoning string into array - handles multiple formats (our improved parser)
   const reasoningArray = parseReasoningToArray(backendResponse.reasoning);
 
-  // Add loyalty discount to reasoning if applicable
+  // Add loyalty discount to reasoning if applicable (display only - discount already applied by backend)
+  const loyaltyDiscount = loyaltyTier ? getLoyaltyDiscount(loyaltyTier) : 0;
   if (loyaltyTier && loyaltyTier !== 'new' && loyaltyDiscount > 0) {
-    const loyaltyNote = `${getLoyaltyBadge(loyaltyTier)} ${loyaltyTier.toUpperCase()} member: ${(loyaltyDiscount * 100).toFixed(0)}% loyalty discount applied ($${(priceBeforeDiscount - finalPrice).toFixed(2)} saved).`;
+    const savings = priceBeforeDiscount - finalPrice;
+    const loyaltyNote = `${getLoyaltyBadge(loyaltyTier)} ${loyaltyTier.toUpperCase()} member: ${(loyaltyDiscount * 100).toFixed(0)}% loyalty discount applied ($${savings.toFixed(2)} saved).`;
     reasoningArray.push(loyaltyNote);
   }
 
   // Calculate driver earnings (80% of final price after loyalty discount)
   const driverEarnings = finalPrice * 0.8;
 
-  // Calculate competitor pricing (use original price for fair comparison)
+  // Calculate competitor pricing (use base price with surge for fair comparison)
+  const baseWithSurge = backendResponse.base_price * backendResponse.surge_multiplier;
   const competitorPricing = calculateCompetitorPrices(
-    priceBeforeDiscount,
+    baseWithSurge,
     city
   );
 

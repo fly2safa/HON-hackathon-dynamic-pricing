@@ -593,6 +593,8 @@ export default function Home() {
       <CityComparisonModal 
         isOpen={showCityComparison}
         onClose={() => setShowCityComparison(false)}
+        loyaltyTier={selectedLoyaltyTier}
+        currentWeather={weather?.weatherType}
       />
 
       {/* ChatBot - Floating Assistant */}
