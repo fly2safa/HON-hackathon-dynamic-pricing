@@ -77,19 +77,25 @@ class MongoDBService:
     
     async def _create_indexes(self):
         """
-        Create database indexes for performance
+        Create database indexes for performance.
+        Using sparse=True to match existing indexes and allow null values.
         """
         try:
-            # Rides indexes
-            self.db.rides.create_index("ride_id", unique=True)
-            self.db.rides.create_index("customer_id")
+            # Rides indexes - sparse to match existing and allow nulls
+            self.db.rides.create_index("ride_id", unique=True, sparse=True)
+            self.db.rides.create_index("customer_id", sparse=True)
             self.db.rides.create_index("created_at")
             
-            # Customers indexes
-            self.db.customers.create_index("customer_id", unique=True)
-            self.db.customers.create_index("loyalty_status")
+            # Customers indexes - sparse to match existing and allow nulls
+            self.db.customers.create_index("customer_id", unique=True, sparse=True)
+            self.db.customers.create_index("loyalty_status", sparse=True)
             
-            logger.info("✅ Database indexes created")
+            # Pricing decisions indexes
+            self.db.pricing_decisions.create_index("ride_id", unique=True, sparse=True)
+            self.db.pricing_decisions.create_index("customer_id", sparse=True)
+            self.db.pricing_decisions.create_index("timestamp")
+            
+            logger.info("✅ Database indexes created/verified")
         except Exception as e:
             logger.warning(f"Index creation warning: {e}")
     

@@ -51,6 +51,21 @@ const MicrophoneIcon = ({ isActive }: { isActive?: boolean }) => (
   </svg>
 );
 
+const SpeakerIcon = ({ isActive }: { isActive?: boolean }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill={isActive ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    {isActive && (
+      <>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+      </>
+    )}
+    {!isActive && (
+      <line x1="23" y1="9" x2="17" y2="15"></line>
+    )}
+  </svg>
+);
+
 interface Message {
   id: string;
   role: 'user' | 'bot';
@@ -278,7 +293,7 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
 
   const toggleMicrophone = () => {
     if (!speechSupported) {
-      alert('Voice features are not supported in your browser. Please use Chrome, Edge, or Safari.');
+      alert('Voice input is not supported in your browser. Please use Chrome, Edge, or Safari.');
       return;
     }
 
@@ -287,14 +302,28 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
       recognitionRef.current?.stop();
       setIsListening(false);
     } else {
-      // Start listening
+      // Start listening (does NOT auto-enable speaker)
       try {
         recognitionRef.current?.start();
         setIsListening(true);
-        setVoiceEnabled(true); // Enable voice responses when mic is activated
       } catch (error) {
         console.error('Error starting speech recognition:', error);
       }
+    }
+  };
+
+  const toggleSpeaker = () => {
+    if (!speechSupported) {
+      alert('Text-to-speech is not supported in your browser.');
+      return;
+    }
+    
+    if (voiceEnabled) {
+      // Disable and stop any current speech
+      window.speechSynthesis.cancel();
+      setVoiceEnabled(false);
+    } else {
+      setVoiceEnabled(true);
     }
   };
 
@@ -472,6 +501,24 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
                              disabled:opacity-50"
                 />
                 {/* Microphone Button */}
+                {/* Speaker Toggle Button */}
+                {speechSupported && (
+                  <button
+                    onClick={toggleSpeaker}
+                    disabled={isLoading}
+                    className={`p-2 rounded-lg transition-all duration-200 ${
+                      voiceEnabled 
+                        ? 'bg-green-500 hover:bg-green-600' 
+                        : 'bg-gray-700 hover:bg-gray-600'
+                    } disabled:opacity-50 disabled:cursor-not-allowed`}
+                    title={voiceEnabled ? 'Disable voice responses' : 'Enable voice responses'}
+                  >
+                    <span className="text-white">
+                      <SpeakerIcon isActive={voiceEnabled} />
+                    </span>
+                  </button>
+                )}
+                {/* Microphone Button */}
                 {speechSupported && (
                   <button
                     onClick={toggleMicrophone}
@@ -502,12 +549,20 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
                 <p className="text-[10px] text-gray-600">
                   Enter to send • ↑↓ history • Powered by LangChain
                 </p>
-                {voiceEnabled && (
-                  <p className="text-[10px] text-green-400 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-                    Voice ON
-                  </p>
-                )}
+                <div className="flex items-center gap-2">
+                  {voiceEnabled && (
+                    <span className="text-[10px] text-green-400 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 bg-green-400 rounded-full"></span>
+                      🔊 ON
+                    </span>
+                  )}
+                  {isListening && (
+                    <span className="text-[10px] text-red-400 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full animate-pulse"></span>
+                      🎤 Listening
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </>
