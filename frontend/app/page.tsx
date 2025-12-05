@@ -518,18 +518,26 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Footer Info */}
-        <div className="mt-8 bg-blue-50 rounded-xl p-6 border border-blue-200">
+        {/* Footer Info - Dynamic based on connection status */}
+        <div className={`mt-8 rounded-xl p-6 border ${
+          backendConnected 
+            ? 'bg-green-50 border-green-200' 
+            : 'bg-blue-50 border-blue-200'
+        }`}>
           <div className="flex items-start gap-3">
-            <div className="text-2xl">ℹ️</div>
+            <div className="text-2xl">{backendConnected ? '✅' : 'ℹ️'}</div>
             <div>
-              <h3 className="font-semibold text-blue-900 mb-2">
-                Demo Mode - Using Mock Data
+              <h3 className={`font-semibold mb-2 ${
+                backendConnected ? 'text-green-900' : 'text-blue-900'
+              }`}>
+                {backendConnected 
+                  ? 'Live Mode - Connected to Backend & Database' 
+                  : 'Demo Mode - Using Mock Data'}
               </h3>
-              <p className="text-sm text-blue-800">
-                This frontend is currently running with mock data to demonstrate the UI/UX. 
-                Once the backend (FastAPI + LangChain Agent) and databases (MongoDB + ChromaDB) 
-                are ready, this will connect to real AI-powered pricing decisions.
+              <p className={`text-sm ${backendConnected ? 'text-green-800' : 'text-blue-800'}`}>
+                {backendConnected 
+                  ? 'Real-time AI pricing with LangChain Agent, MongoDB persistence, and ChromaDB RAG. All pricing decisions are saved and affect live statistics.'
+                  : 'This frontend is currently running with mock data to demonstrate the UI/UX. Once the backend (FastAPI + LangChain Agent) and databases (MongoDB + ChromaDB) are ready, this will connect to real AI-powered pricing decisions.'}
               </p>
             </div>
           </div>
