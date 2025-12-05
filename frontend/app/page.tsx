@@ -17,6 +17,8 @@ import AvailableDriversCard from '@/components/AvailableDriversCard';
 import DemandThermometer from '@/components/DemandThermometer';
 import DemandThermometerCard from '@/components/DemandThermometerCard';
 import ChatBot from '@/components/ChatBot';
+import N8nNotificationContainer from '@/components/N8nNotificationContainer';
+import ExecutiveAlertNotification, { ExecutiveAlertNotificationRef } from '@/components/ExecutiveAlertNotification';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -48,6 +50,7 @@ export default function Home() {
   const [scheduledDateTime, setScheduledDateTime] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const resultsSectionRef = useRef<HTMLDivElement>(null);
+  const executiveAlertRef = useRef<ExecutiveAlertNotificationRef>(null);
 
   // Fetch real-time weather for selected city
   const { weather, loading: weatherLoading, error: weatherError } = useRealWeather(selectedCity);
@@ -284,7 +287,17 @@ export default function Home() {
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Action Bar */}
-        <div className="mb-6 flex justify-end">
+        <div className="mb-6 flex justify-end items-center gap-3">
+          <button
+            onClick={() => executiveAlertRef.current?.triggerAlert()}
+            className="p-3 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-xl transition-all duration-300 flex items-center justify-center shadow-md hover:shadow-lg"
+            title="Trigger Executive Alert"
+            aria-label="Trigger Executive Alert"
+          >
+            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </button>
           <button
             onClick={() => setShowCityComparison(true)}
             className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
@@ -576,6 +589,12 @@ export default function Home() {
 
       {/* ChatBot - Floating Assistant */}
       <ChatBot currentCity={selectedCity} />
+
+      {/* N8n Notifications - Pop-out notifications for workflow events */}
+      <N8nNotificationContainer />
+
+      {/* Executive Alert Notification - n8n executive alerts */}
+      <ExecutiveAlertNotification ref={executiveAlertRef} />
     </main>
   );
 }

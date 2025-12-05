@@ -1,0 +1,315 @@
+{
+  "name": "HoneyGo Executive Alert - Q4 Metric Achievement",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "trigger-executive-alert",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Demo Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1.1,
+      "position": [250, 300],
+      "webhookId": "honeygo-exec-alert"
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "metric-name",
+              "name": "metricName",
+              "value": "Q4 Revenue Target",
+              "type": "string"
+            },
+            {
+              "id": "target-value",
+              "name": "targetValue",
+              "value": 2500000,
+              "type": "number"
+            },
+            {
+              "id": "actual-value",
+              "name": "actualValue",
+              "value": 2547832,
+              "type": "number"
+            },
+            {
+              "id": "achievement-pct",
+              "name": "achievementPct",
+              "value": 101.9,
+              "type": "number"
+            },
+            {
+              "id": "timestamp",
+              "name": "timestamp",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-metric-data",
+      "name": "Set Metric Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "check-target-met",
+              "leftValue": "={{ $json.actualValue }}",
+              "rightValue": "={{ $json.targetValue }}",
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-target-met",
+      "name": "Target Met?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "alert-type",
+              "name": "alertType",
+              "value": "success",
+              "type": "string"
+            },
+            {
+              "id": "alert-title",
+              "name": "title",
+              "value": "Q4 Target Achieved",
+              "type": "string"
+            },
+            {
+              "id": "alert-message",
+              "name": "message",
+              "value": "={{ 'Revenue target of $' + $json.targetValue.toLocaleString() + ' exceeded by ' + ($json.achievementPct - 100).toFixed(1) + '%' }}",
+              "type": "string"
+            },
+            {
+              "id": "alert-detail",
+              "name": "detail",
+              "value": "={{ 'Actual: $' + $json.actualValue.toLocaleString() + ' | Dynamic pricing contributed 23% uplift' }}",
+              "type": "string"
+            },
+            {
+              "id": "priority",
+              "name": "priority",
+              "value": "high",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "format-success-alert",
+      "name": "Format Success Alert",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "mode": "manual",
+        "duplicateItem": false,
+        "assignments": {
+          "assignments": [
+            {
+              "id": "alert-type",
+              "name": "alertType",
+              "value": "warning",
+              "type": "string"
+            },
+            {
+              "id": "alert-title",
+              "name": "title",
+              "value": "Q4 Progress Update",
+              "type": "string"
+            },
+            {
+              "id": "alert-message",
+              "name": "message",
+              "value": "={{ 'Revenue at ' + $json.achievementPct.toFixed(1) + '% of target' }}",
+              "type": "string"
+            },
+            {
+              "id": "priority",
+              "name": "priority",
+              "value": "medium",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "format-progress-alert",
+      "name": "Format Progress Alert",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [850, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/notifications/executive-alert",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-Alert-Source",
+              "value": "n8n-automation"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "send-to-backend",
+      "name": "Send to HoneyGo Backend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [1100, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ {status: 'success', alertSent: true, timestamp: $now.toISO()} }}",
+        "options": {}
+      },
+      "id": "respond-webhook",
+      "name": "Respond Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1300, 300]
+    }
+  ],
+  "connections": {
+    "Demo Trigger": {
+      "main": [
+        [
+          {
+            "node": "Set Metric Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Metric Data": {
+      "main": [
+        [
+          {
+            "node": "Target Met?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Target Met?": {
+      "main": [
+        [
+          {
+            "node": "Format Success Alert",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Progress Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Success Alert": {
+      "main": [
+        [
+          {
+            "node": "Send to HoneyGo Backend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Progress Alert": {
+      "main": [
+        [
+          {
+            "node": "Send to HoneyGo Backend",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to HoneyGo Backend": {
+      "main": [
+        [
+          {
+            "node": "Respond Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "HoneyGo",
+      "createdAt": "2024-12-03T00:00:00.000Z",
+      "updatedAt": "2024-12-03T00:00:00.000Z"
+    },
+    {
+      "name": "Demo",
+      "createdAt": "2024-12-03T00:00:00.000Z",
+      "updatedAt": "2024-12-03T00:00:00.000Z"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2024-12-03T00:00:00.000Z",
+  "versionId": "1"
+}
+
