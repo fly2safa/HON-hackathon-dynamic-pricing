@@ -1,10 +1,10 @@
 # 🚖 HoneyGo: Intelligent Ride-Sharing Platform
 
 **Presentation Slides:** 
-- Presentation:  https://www.canva.com/design/DAG6mrQ8m6o/DIbzwOQzS8fNMocYqRcpUA/view?utm_content=DAG6mrQ8m6o&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6d54794bee#1
+- Presentation:  [HoneyGo: Agentic AI Dynamic Pricing Slides](https://www.canva.com/design/DAG6mrQ8m6o/DIbzwOQzS8fNMocYqRcpUA/view?utm_content=DAG6mrQ8m6o&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h6d54794bee#1)
 
 **Video Link:** 
-- Video:  https://www.youtube.com/watch?v=XKJh-7hi7Ek
+- Video:  [HoneyGo: Agentic AI Dynamic Pricing | Honeywell Hackathon 2025 | Team #1](https://www.youtube.com/watch?v=XKJh-7hi7Ek)
 
 > **Agentic AI-Powered Dynamic Pricing for Honeywell's Ride-Sharing Division**
 
