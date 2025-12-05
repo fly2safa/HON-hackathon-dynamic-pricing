@@ -70,6 +70,60 @@
       "position": [1000, 300]
     },
     {
+      "parameters": {
+        "jsCode": "// Format notification for frontend pop-out\nconst data = $input.first().json;\nconst backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';\nconst frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';\n\n// Determine notification type based on multiplier\nlet notificationType = 'info';\nif (data.pricing.final_multiplier >= 1.5) {\n  notificationType = 'warning';\n} else if (data.pricing.final_multiplier >= 2.0) {\n  notificationType = 'error';\n} else if (data.pricing.final_multiplier <= 1.0) {\n  notificationType = 'success';\n}\n\nreturn {\n  json: {\n    title: `🚗 Pricing Update: ${data.city}`,\n    message: `Surge multiplier: ${data.pricing.final_multiplier}x\\n${data.pricing.reasoning}`,\n    type: notificationType,\n    duration: 6000,\n    action: {\n      label: 'View Details',\n      url: `${frontendUrl}/surge-pricing`\n    }\n  }\n};"
+      },
+      "id": "format-notification",
+      "name": "Format Notification",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1000, 500]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.BACKEND_URL || 'http://localhost:8000' }}/api/v1/n8n/notifications",
+        "authentication": "none",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ $json }}",
+        "options": {}
+      },
+      "id": "send-notification",
+      "name": "Send Pop-out Notification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 500],
+      "notes": "Sends pop-out notification to frontend for presentation."
+    },
+    {
+      "parameters": {
+        "jsCode": "// Format Slack message with button\nconst data = $input.first().json;\nconst frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';\n\nreturn {\n  json: {\n    channel: process.env.SLACK_CHANNEL || '#general',\n    text: '🚗 HoneyGo Pricing Update',\n    blocks: [\n      {\n        type: 'section',\n        text: {\n          type: 'mrkdwn',\n          text: `*🚗 HoneyGo Pricing Update*\\n\\n*City:* ${data.city}\\n*Route:* ${data.origin} → ${data.destination}\\n*Final Multiplier:* ${data.pricing.final_multiplier}x\\n*Reasoning:* ${data.pricing.reasoning}`\n        }\n      },\n      {\n        type: 'actions',\n        elements: [\n          {\n            type: 'button',\n            text: {\n              type: 'plain_text',\n              text: 'View Details'\n            },\n            url: `${frontendUrl}/surge-pricing`,\n            style: 'primary'\n          }\n        ]\n      }\n    ]\n  }\n};"
+      },
+      "id": "format-slack-message",
+      "name": "Format Slack Message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1000, 700]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.SLACK_WEBHOOK_URL }}",
+        "authentication": "none",
+        "sendBody": true,
+        "contentType": "json",
+        "body": "={{ $json }}",
+        "options": {}
+      },
+      "id": "slack-notification",
+      "name": "Slack Notification",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 700],
+      "notes": "Sends Slack notification with button. Set SLACK_WEBHOOK_URL env variable."
+    },
+    {
       "parameters": {"options": {}},
       "id": "respond-final",
       "name": "Respond",
@@ -98,7 +152,17 @@
       "main": [[{"node": "Calculate Pricing", "type": "main", "index": 0}]]
     },
     "Calculate Pricing": {
-      "main": [[{"node": "Respond", "type": "main", "index": 0}]]
+      "main": [
+        [{"node": "Respond", "type": "main", "index": 0}],
+        [{"node": "Format Notification", "type": "main", "index": 0}],
+        [{"node": "Format Slack Message", "type": "main", "index": 0}]
+      ]
+    },
+    "Format Notification": {
+      "main": [[{"node": "Send Pop-out Notification", "type": "main", "index": 0}]]
+    },
+    "Format Slack Message": {
+      "main": [[{"node": "Slack Notification", "type": "main", "index": 0}]]
     }
   },
   "settings": {"executionOrder": "v1"},

@@ -7,15 +7,21 @@ Owner: Steve (Role 6)
 Created: Dec 2, 2025
 """
 
-from fastapi import APIRouter, Query
-from typing import Optional
+from fastapi import APIRouter, Query, Body
+from typing import Optional, List, Dict, Any
 import logging
+from datetime import datetime, timedelta
+from collections import deque
 
 from services.n8n_service import get_n8n_service
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/n8n", tags=["n8n-workflows"])
+
+# In-memory notification store (for demo/presentation purposes)
+# In production, use Redis or a database
+_notification_store: deque = deque(maxlen=50)  # Keep last 50 notifications
 
 
 @router.get("/health")
@@ -173,4 +179,88 @@ async def compare_cities(
             (data2["combined_multiplier"] - data1["combined_multiplier"]) / data1["combined_multiplier"] * 100, 
             1
         )
+    }
+
+
+@router.post("/notifications")
+async def create_notification(
+    notification: Dict[str, Any] = Body(..., description="Notification data")
+):
+    """
+    Create a notification from n8n workflow.
+    
+    This endpoint is called by n8n workflows to trigger pop-out notifications
+    in the frontend during presentations.
+    
+    Expected format:
+    {
+        "title": "Pricing Update",
+        "message": "Surge pricing activated in Phoenix",
+        "type": "info",  # success, info, warning, error
+        "duration": 5000,  # milliseconds (optional)
+        "action": {  # optional
+            "label": "View Details",
+            "url": "http://localhost:3000/surge-pricing"
+        }
+    }
+    """
+    notification_data = {
+        "id": f"n8n-{datetime.now().timestamp()}-{len(_notification_store)}",
+        "title": notification.get("title", "n8n Notification"),
+        "message": notification.get("message", ""),
+        "type": notification.get("type", "info"),
+        "duration": notification.get("duration", 5000),
+        "timestamp": datetime.now().isoformat(),
+    }
+    
+    if "action" in notification:
+        notification_data["action"] = notification["action"]
+    
+    _notification_store.append(notification_data)
+    logger.info(f"Notification created: {notification_data['title']}")
+    
+    return {"success": True, "notification_id": notification_data["id"]}
+
+
+@router.get("/notifications")
+async def get_notifications(
+    since: Optional[str] = Query(None, description="ISO timestamp to get notifications since")
+):
+    """
+    Get pending notifications for the frontend.
+    
+    Frontend polls this endpoint to display pop-out notifications.
+    Notifications are returned once and then removed from the queue.
+    """
+    now = datetime.now()
+    cutoff_time = None
+    
+    if since:
+        try:
+            cutoff_time = datetime.fromisoformat(since.replace('Z', '+00:00'))
+        except:
+            pass
+    
+    # Get notifications that haven't expired (older than 1 minute are considered stale)
+    stale_cutoff = now - timedelta(minutes=1)
+    fresh_notifications = []
+    
+    while _notification_store:
+        notif = _notification_store.popleft()
+        notif_time = datetime.fromisoformat(notif["timestamp"])
+        
+        # Skip stale notifications
+        if notif_time < stale_cutoff:
+            continue
+        
+        # If since parameter provided, only return newer notifications
+        if cutoff_time and notif_time <= cutoff_time:
+            _notification_store.appendleft(notif)  # Put it back
+            break
+        
+        fresh_notifications.append(notif)
+    
+    return {
+        "notifications": fresh_notifications,
+        "count": len(fresh_notifications)
     }
