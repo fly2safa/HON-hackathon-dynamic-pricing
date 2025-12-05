@@ -19,20 +19,55 @@ export interface ExecutiveAlertNotificationRef {
 const ExecutiveAlertNotification = forwardRef<ExecutiveAlertNotificationRef>((props, ref) => {
   const [alert, setAlert] = useState<AlertData | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [alertIndex, setAlertIndex] = useState(0);
 
-  // Simulated alert for demo - in production, this would come from WebSocket or polling
-  const triggerDemoAlert = (customAlert?: AlertData) => {
-    const demoAlert: AlertData = customAlert || {
+  // Demo alerts that rotate - first one shows on first click
+  const demoAlerts: AlertData[] = [
+    {
       alertType: 'success',
       title: 'Q4 Target Achieved',
       message: 'Revenue target of $2,500,000 exceeded by 1.9%',
       detail: 'Actual: $2,547,832 | Dynamic pricing contributed 23% uplift',
       priority: 'high',
       timestamp: new Date().toISOString()
+    },
+    {
+      alertType: 'warning',
+      title: 'Surge Pricing Active',
+      message: 'High demand detected in Phoenix metropolitan area',
+      detail: '2.1x multiplier applied | 847 ride requests in queue',
+      priority: 'high',
+      timestamp: new Date().toISOString()
+    },
+    {
+      alertType: 'success',
+      title: 'New Market Milestone',
+      message: 'Phoenix coverage expanded to 95% of metro area',
+      detail: '12 new zones added | Expected +$180K monthly revenue',
+      priority: 'medium',
+      timestamp: new Date().toISOString()
+    },
+    {
+      alertType: 'info',
+      title: 'Driver Performance Report',
+      message: 'Top 10% of drivers earned average $285 today',
+      detail: 'Fleet utilization at 89% | Customer satisfaction 4.8★',
+      priority: 'medium',
+      timestamp: new Date().toISOString()
+    }
+  ];
+
+  // Simulated alert for demo - rotates through different messages
+  const triggerDemoAlert = (customAlert?: AlertData) => {
+    const demoAlert: AlertData = customAlert || {
+      ...demoAlerts[alertIndex],
+      timestamp: new Date().toISOString()
     };
     
     setAlert(demoAlert);
     setIsVisible(true);
+    // Rotate to next alert for next click
+    setAlertIndex((prev) => (prev + 1) % demoAlerts.length);
   };
 
   // Expose trigger function via ref
