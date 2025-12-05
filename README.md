@@ -437,6 +437,43 @@ docker-compose down
 
 ---
 
+## 🧪 Testing Tool
+
+The **HoneyGo Testing Tracker** (`testing_tool/honeygo_test_tracker.py`) is a standalone GUI application for tracking manual testing progress during QA and demos.
+
+### Features
+- 📋 **40+ Test Cases** organized by category (Backend, Frontend, LangSmith, Weather, Demand, Loyalty, Cities, UI, E2E)
+- 💡 **Hints** for each test to guide execution
+- 📊 **Progress Tracking** with pass/fail/blocked statistics
+- 💾 **Save/Load** test progress as JSON
+- 📝 **Generate Reports** as Markdown
+- 🔗 **Quick Links** to Frontend, API Docs, LangSmith
+
+### How to Run
+
+**Windows (PowerShell):**
+```powershell
+cd testing_tool
+pip install -r requirements.txt
+python honeygo_test_tracker.py
+```
+
+**macOS/Linux (Bash):**
+```bash
+cd testing_tool
+pip3 install -r requirements.txt
+python3 honeygo_test_tracker.py
+```
+
+> **Note:** Requires Python 3.8+ with tkinter (usually included). See [`testing_tool/README.md`](testing_tool/README.md) for detailed instructions and troubleshooting.
+
+### Results Location
+Test results are saved to `testing_tool/results/`:
+- `test_progress_<name>_<timestamp>.json` - Raw data (can be loaded later)
+- `test_report_<name>_<timestamp>.md` - Markdown report for sharing
+
+---
+
 ## 🏗️ Project Structure
 
 ```
