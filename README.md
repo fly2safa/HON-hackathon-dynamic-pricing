@@ -4,7 +4,8 @@
 
 [![Team](https://img.shields.io/badge/Team-%231-blue)]()
 [![Hackathon](https://img.shields.io/badge/Hackathon-HON%20Dynamic%20Pricing-orange)]()
-[![Status](https://img.shields.io/badge/Status-In%20Development-yellow)]()
+[![Status](https://img.shields.io/badge/Status-Demo%20Ready-brightgreen)]()
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue)]()
 
 ---
 
@@ -21,21 +22,227 @@
 
 ---
 
-## 👥 Team #1
+## 👥 Development Team
+
+**Course:** AI Vibe Coding  |  Fall 2025  
+**Offered by:** Arizona State University (https://www.asu.edu)  
+**Taught through:** Revature (https://www.revature.com)  
+**Instructor:** Charles J.
+
+**Project:** Hackathon  |  Agentic AI solution for dynamic pricing in a ride-sharing context for Honeywell  
+**Timeline:** 1 Week | 4 days Development, 1 day Presentation  
+**Branch Strategy (GitHub):** Feature branches → dev → main  
+**Company/Product name chosen by Contributors:** <span style="color: #FF6A13; font-weight: bold; font-size: 1.1em;">HoneyGo</span>
+
+**Project Contributors/Developers (Alphabetical Order):**
+- Darimar C.
+- Jason M.
+- Safa M.
+- Steven J.
+
+---
+
+**Video Link:** _(Coming soon)_
+
+---
+
+## 👥 Team Roles
 
 | Role | Name | Responsibilities |
 |------|------|------------------|
-| **Frontend + Voice Features** | Jason (Primary), Safa (Backup) | Next.js UI, Voice I/O |
+| **Frontend + Voice Features** | Jason, Safa | Next.js UI, Voice I/O |
 | **MongoDB Engineer** | Jason | Database design, data import |
 | **Backend/FastAPI Engineer** | Dari | API development, integration |
-| **LangChain/Agent + LangSmith** | OPEN (Safa backup) | AI agent, observability |
-| **ChromaDB/Vector DB Engineer** | OPEN (Safa backup) | RAG, semantic search |
+| **LangChain/Agent + LangSmith** | Safa | AI agent, observability |
+| **ChromaDB/Vector DB Engineer** | Safa | RAG, semantic search |
 | **n8n/MCP Workflow Engineer** | Steve | Workflow automation |
-| **Project Lead/Coordinator** | OPEN (Safa natural fit) | Integration, coordination |
+| **Project Lead/Coordinator** | Safa | Integration, coordination |
 | **Presentation Slides** | Steve | Slide deck creation |
-| **Live Demo Presenter** | Dari (Primary), Team (Support) | Demo execution |
-| **Demo Video Creator** | OPEN | Backup video recording |
-| **Docker/DevOps Engineer** | OPEN (Safa backup) | Containerization, deployment |
+| **Slides Presenter** | Dari | Presenting slides during demo |
+| **Live Demo Presenter** | Safa (Primary), Team (Support) | Live app demo execution |
+| **Demo Video Creator** | Dari, Safa | Backup video recording |
+| **Docker/DevOps Engineer** | Dari | Containerization, deployment |
+
+---
+
+## 🏗️ System Architecture
+
+### Architecture & Technology Stack
+
+```mermaid
+graph TB
+    subgraph "Frontend Layer"
+        UI[Next.js UI]
+        Dashboard[Pricing Dashboard]
+        ChatBot[AI ChatBot]
+        Voice[Voice Features]
+    end
+    
+    subgraph "API Layer"
+        API[FastAPI Server]
+        PricingAPI[Pricing API]
+        ChatAPI[Chat API]
+        HealthAPI[Health API]
+    end
+    
+    subgraph "AI Layer"
+        Agent[LangChain ReAct Agent]
+        LLM[OpenAI GPT-3.5/4]
+        Tools[Agent Tools]
+    end
+    
+    subgraph "Data Layer"
+        MongoDB[(MongoDB Atlas)]
+        ChromaDB[(ChromaDB - RAG)]
+    end
+    
+    subgraph "External Services"
+        Weather[OpenWeatherMap API]
+        LangSmith[LangSmith Observability]
+    end
+    
+    UI --> Dashboard
+    UI --> ChatBot
+    UI --> Voice
+    
+    Dashboard --> API
+    ChatBot --> API
+    
+    API --> PricingAPI
+    API --> ChatAPI
+    API --> HealthAPI
+    
+    PricingAPI --> Agent
+    ChatAPI --> Agent
+    
+    Agent --> LLM
+    Agent --> Tools
+    Agent --> LangSmith
+    
+    Tools --> MongoDB
+    Tools --> ChromaDB
+    Tools --> Weather
+    
+    style UI fill:#FF6A13,stroke:#CC5500,stroke-width:3px,color:#fff
+    style API fill:#F5A623,stroke:#C17D11,stroke-width:3px,color:#fff
+    style Agent fill:#9013FE,stroke:#6B0FB8,stroke-width:3px,color:#fff
+    style MongoDB fill:#00ED64,stroke:#00A847,stroke-width:3px,color:#fff
+    style ChromaDB fill:#FF6B6B,stroke:#CC5555,stroke-width:3px,color:#fff
+    style LangSmith fill:#7C3AED,stroke:#5B21B6,stroke-width:3px,color:#fff
+```
+
+### Agent Reasoning Workflow
+
+```mermaid
+flowchart TD
+    Start([Ride Request Received]) --> Parse[Parse Request Parameters]
+    Parse --> Demand[Calculate Demand/Supply Ratio]
+    
+    Demand --> External{Fetch External Context}
+    External --> Weather[Weather Conditions]
+    External --> City[City Multiplier]
+    External --> Time[Time of Day]
+    
+    Weather --> Customer{Assess Customer Value}
+    City --> Customer
+    Time --> Customer
+    
+    Customer --> CustData[Loyalty Tier & Discount]
+    
+    CustData --> Calculate{Calculate Final Price}
+    Calculate --> AI[AI Reasoning Generation]
+    
+    AI --> Store[Store to MongoDB]
+    Store --> Return([Return Price + Reasoning])
+    
+    style Start fill:#2ECC71,stroke:#27AE60,stroke-width:3px,color:#fff
+    style Return fill:#2ECC71,stroke:#27AE60,stroke-width:3px,color:#fff
+    style AI fill:#9013FE,stroke:#6B0FB8,stroke-width:3px,color:#fff
+    style Store fill:#00ED64,stroke:#00A847,stroke-width:3px,color:#fff
+```
+
+### Data Flow
+
+**Pricing Flow:**
+```
+User → Frontend → FastAPI → LangChain AI → MongoDB (save) → Response with Reasoning
+```
+
+**ChatBot Flow:**
+```
+User → Frontend → FastAPI → LangChain AI → ChromaDB (RAG) → Response with Suggestions
+```
+
+```mermaid
+flowchart LR
+    subgraph "Pricing Request"
+        U1[User] --> F1[Frontend]
+        F1 --> A1[FastAPI]
+        A1 --> L1[LangChain]
+        L1 --> M1[(MongoDB)]
+        M1 --> L1
+        L1 --> A1
+        A1 --> F1
+        F1 --> U1
+    end
+```
+
+```mermaid
+flowchart LR
+    subgraph "ChatBot Query"
+        U2[User] --> F2[Frontend]
+        F2 --> A2[FastAPI]
+        A2 --> L2[LangChain]
+        L2 --> C2[(ChromaDB)]
+        C2 --> L2
+        L2 --> A2
+        A2 --> F2
+        F2 --> U2
+    end
+```
+
+### Project Folder Structure
+
+```mermaid
+graph LR
+    Root[HON-hackathon-dynamic-pricing/]
+    
+    Root --> Frontend[frontend/]
+    Root --> Backend[backend/]
+    Root --> Demo[demo/]
+    Root --> Docs[docs/]
+    Root --> Data[data/]
+    
+    Frontend --> FApp[app/]
+    Frontend --> FComp[components/]
+    Frontend --> FLib[lib/]
+    Frontend --> FHooks[hooks/]
+    
+    FComp --> ChatBot[ChatBot.tsx]
+    FComp --> Pricing[PricingDisplay.tsx]
+    FComp --> Voice[Voice Features]
+    
+    Backend --> BRouters[routers/]
+    Backend --> BServices[services/]
+    Backend --> BModels[models/]
+    
+    BServices --> LangChainSvc[langchain_service.py]
+    BServices --> MongoSvc[mongodb_service.py]
+    BServices --> ChromaSvc[chromadb_service.py]
+    BServices --> ChatAgent[chat_agent.py]
+    
+    Demo --> CheatSheet[DEMO-CHEATSHEET.md]
+    
+    Docs --> ImplPlan[implementation-plan.md]
+    
+    style Root fill:#FF6A13,stroke:#CC5500,color:#fff
+    style Frontend fill:#61DAFB,stroke:#4FA8C7,color:#000
+    style Backend fill:#009688,stroke:#00695C,color:#fff
+    style Demo fill:#FFD93D,stroke:#CCA600,color:#000
+    style Docs fill:#9C27B0,stroke:#7B1FA2,color:#fff
+```
+
+> 📖 **For complete architecture details, see [Implementation Plan](docs/implementation-plan.md)**
 
 ---
 
@@ -45,7 +252,6 @@
 - **Next.js 14** (App Router)
 - **React 18** with TypeScript
 - **Tailwind CSS** for styling
-- **Recharts/Chart.js** for data visualization
 - **Web Speech API** for voice features (Mic 🎤 & Speaker 🔊)
 
 ### **Backend**
@@ -55,19 +261,15 @@
 
 ### **AI & Intelligence**
 - **LangChain** (ReAct agent framework)
-- **OpenAI GPT-4** or **Claude 3.5 Sonnet** (LLM)
+- **OpenAI GPT-3.5-Turbo / GPT-4** (LLM)
 - **LangSmith** (Agent observability & debugging)
 
 ### **Databases**
-- **MongoDB Atlas** (Structured data: rides, customers, drivers, pricing)
+- **MongoDB Atlas** (Structured data: 988 rides, 500 customers, pricing decisions)
 - **ChromaDB** (Vector database for RAG & semantic search)
 
-### **Workflow Automation**
-- **n8n** or **MCP (Model Context Protocol)** (Workflow orchestration)
-
-### **DevOps & Deployment**
-- **Docker** & **Docker Compose** (Containerization)
-- **Git/GitHub** (Version control, branching strategy)
+### **External APIs**
+- **OpenWeatherMap** (Real-time weather data)
 
 ---
 
@@ -78,47 +280,137 @@
 - **Node.js** 18+ and **npm**
 - **Python** 3.11+
 - **MongoDB Atlas** account (FREE M0 tier)
-- **Docker** & **Docker Compose** (optional, for containerized deployment)
 - **Git**
 
-### Setup
+---
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/fly2safa/HON-hackathon-dynamic-pricing.git
-   cd HON-hackathon-dynamic-pricing
-   ```
+### Setup Instructions
 
-2. **Set up environment variables**:
-   ```bash
-   cp env.example .env
-   # Edit .env with your API keys and connection strings
-   ```
+#### 1. Clone the Repository
 
-3. **Install dependencies**:
-   ```bash
-   # Frontend
-   cd frontend
-   npm install
-   
-   # Backend
-   cd ../backend
-   pip install -r requirements.txt
-   ```
+**Windows (PowerShell) & macOS/Linux (Bash):**
+```bash
+git clone https://github.com/fly2safa/HON-hackathon-dynamic-pricing.git
+cd HON-hackathon-dynamic-pricing
+```
 
-4. **Run the application**:
-   ```bash
-   # Frontend (from frontend/)
-   npm run dev
-   
-   # Backend (from backend/)
-   uvicorn main:app --reload
-   ```
+---
 
-5. **Access the application**:
-   - Frontend: `http://localhost:3000`
-   - Backend API: `http://localhost:8000`
-   - API Docs: `http://localhost:8000/docs`
+#### 2. Set Up Environment Variables
+
+**Windows (PowerShell) & macOS/Linux (Bash):**
+```bash
+cp env.example .env
+```
+
+Edit `.env` with your API keys:
+- `OPENAI_API_KEY` - Required for AI pricing
+- `MONGODB_URI` - MongoDB Atlas connection string
+- `LANGSMITH_API_KEY` - Optional, for observability
+- `NEXT_PUBLIC_OPENWEATHER_API_KEY` - Optional, for live weather
+
+---
+
+#### 3. Install Frontend Dependencies
+
+**Windows (PowerShell):**
+```powershell
+cd frontend
+npm install
+cd ..
+```
+
+**macOS/Linux (Bash):**
+```bash
+cd frontend
+npm install
+cd ..
+```
+
+---
+
+#### 4. Install Backend Dependencies
+
+**Windows (PowerShell):**
+```powershell
+cd backend
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+**macOS/Linux (Bash):**
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+---
+
+#### 5. Seed ChromaDB (One-Time Setup for RAG)
+
+**Windows (PowerShell):**
+```powershell
+cd backend
+.\venv\Scripts\Activate.ps1
+python seed_chromadb.py
+```
+
+**macOS/Linux (Bash):**
+```bash
+cd backend
+source venv/bin/activate
+python seed_chromadb.py
+```
+
+This seeds 988 historical rides for semantic search.
+
+---
+
+#### 6. Run the Application
+
+**Windows (PowerShell) - Backend:**
+```powershell
+cd backend
+.\venv\Scripts\Activate.ps1
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+**macOS/Linux (Bash) - Backend:**
+```bash
+cd backend
+source venv/bin/activate
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+**Frontend - Development Mode (same for both OS):**
+```bash
+cd frontend
+npm run dev
+```
+
+**Frontend - Production Mode (same for both OS):**
+```bash
+cd frontend
+npm run build
+npm run start
+```
+
+> **Note:** Production mode is recommended for demo (cleaner UI, no dev tools overlay).
+
+---
+
+#### 7. Access the Application
+
+| Service | URL |
+|---------|-----|
+| **Frontend** | http://localhost:3000 |
+| **Backend API** | http://localhost:8000 |
+| **API Docs (Swagger)** | http://localhost:8000/docs |
+
+---
 
 ### Docker Deployment (Optional)
 
@@ -134,13 +426,14 @@ docker-compose down
 
 ## 📚 Documentation
 
-Comprehensive documentation is available in the `docs/` folder:
-
-- **[Implementation Plan](docs/implementation-plan.md)** - Complete project roadmap, architecture, and team coordination
-- **[MongoDB Design Decision](docs/mongoDB-design-decision.md)** - Multi-collection vs single collection rationale
-- **[ChromaDB RAG Design](docs/chromadb-rag-design.md)** - Hybrid database approach and RAG benefits
-- **[LangSmith Observability Proposal](docs/langsmith-observability-proposal.md)** - Agent tracing and explainability
-- **[Project Structure Guide](docs/project-structure-guide.md)** - Folder structure, setup instructions, and sample code
+| Document | Description |
+|----------|-------------|
+| **[Implementation Plan](docs/implementation-plan.md)** | Complete project roadmap and architecture |
+| **[MongoDB Design](docs/mongoDB-design-decision.md)** | Database schema and design decisions |
+| **[ChromaDB RAG Design](docs/chromadb-rag-design.md)** | Hybrid database and RAG approach |
+| **[LangSmith Proposal](docs/langsmith-observability-proposal.md)** | Agent tracing and observability |
+| **[Project Structure](docs/project-structure-guide.md)** | Folder structure and setup guide |
+| **[Demo Cheat Sheet](demo/DEMO-CHEATSHEET.md)** | Demo queries and talking points |
 
 ---
 
@@ -148,52 +441,78 @@ Comprehensive documentation is available in the `docs/` folder:
 
 ```
 HON-hackathon-dynamic-pricing/
-├── backend/              # FastAPI application
-├── frontend/             # Next.js application
-├── workflows/            # n8n/MCP configurations
-├── data/                 # Data files and scripts
-│   ├── raw/              # Original CSV/TSV files
-│   ├── mongodb/          # MongoDB seed scripts
-│   ├── chromadb/         # ChromaDB seed scripts
-│   └── mock/             # Mock data for testing
-├── docs/                 # Documentation
-├── project-spec/         # Hackathon specifications
-├── Dockerfile.backend    # Backend Docker configuration
-├── Dockerfile.frontend   # Frontend Docker configuration
-├── docker-compose.yml    # Multi-container orchestration
-├── .dockerignore         # Docker ignore rules
-├── env.example           # Environment variables template
-└── README.md             # This file
+├── backend/                  # FastAPI application
+│   ├── routers/              # API endpoints (pricing, chat, health)
+│   ├── services/             # Business logic
+│   │   ├── langchain_service.py   # AI pricing reasoning
+│   │   ├── mongodb_service.py     # Database operations
+│   │   ├── chromadb_service.py    # RAG/semantic search
+│   │   └── chat_agent.py          # ChatBot AI agent
+│   ├── models/               # Pydantic data models
+│   ├── seed_chromadb.py      # ChromaDB seeding script
+│   └── main.py               # Application entry point
+├── frontend/                 # Next.js application
+│   ├── app/                  # App router pages
+│   ├── components/           # React components
+│   │   ├── ChatBot.tsx       # AI ChatBot with voice
+│   │   ├── PricingDisplay.tsx # Price display with voice playback
+│   │   └── ...               # Other UI components
+│   ├── lib/                  # Utilities
+│   └── hooks/                # Custom React hooks
+├── demo/                     # Demo resources
+│   └── DEMO-CHEATSHEET.md    # Demo script and queries
+├── testing_tool/             # GUI testing tracker
+├── docs/                     # Documentation
+├── data/                     # Data exports and scripts
+├── docker-compose.yml        # Container orchestration
+├── env.example               # Environment template
+└── README.md                 # This file
 ```
 
 ---
 
-## 🎯 Key Features
+## 🎯 Key Features (Implemented)
 
-### 1. **Agentic AI with LangChain ReAct**
-- Autonomous reasoning agent with 8+ custom tools
-- Explainable decision-making with full reasoning traces
-- LangSmith integration for observability and debugging
+### 1. **AI-Powered Dynamic Pricing** ✅
+- Real-time pricing calculation with LangChain AI agent
+- Multi-factor reasoning: demand, weather, time, location, loyalty
+- Explainable AI reasoning with numbered bullet points
+- Auto-save pricing decisions to MongoDB
 
-### 2. **Hybrid Database Architecture**
-- **MongoDB**: Structured data (rides, customers, drivers, pricing decisions)
-- **ChromaDB**: Vector database for RAG, semantic search, and contextual reasoning
+### 2. **Hybrid Database Architecture** ✅
+- **MongoDB Atlas**: Live structured data (988 rides, 500 customers)
+- **ChromaDB**: Local vector database for RAG semantic search
+- Live average price updates when new rides are calculated
 
-### 3. **Dynamic Pricing Engine**
-- Real-time pricing based on demand, supply, customer tier, and driver incentives
-- Loyalty rewards and asset quality considerations
-- Profitability optimization with explainability
+### 3. **Natural Language ChatBot** ✅
+- Query ride data: "Find Urban rides at Night"
+- Get statistics: "What's the average price?"
+- Semantic search via ChromaDB RAG
+- Weather queries: "What's the weather in Phoenix?"
 
-### 4. **Voice-Enabled Interface** (Extra Features)
-- 🎤 **Voice Input**: Speak queries to the AI bot
-- 🔊 **Voice Output**: Hear AI responses read aloud
+### 4. **Voice-Enabled Interface** ✅
+- 🔊 **Speaker Button** (green): Toggle text-to-speech
+- 🎤 **Microphone Button** (red): Voice input for queries
+- 🎵 **AI Reasoning Playback**: Play/Pause/Stop with highlighting
 
-### 5. **Workflow Automation**
-- n8n or MCP for orchestrating data pipelines and agent workflows
+### 5. **Real-Time Market Conditions** ✅
+- Live weather data from OpenWeatherMap API
+- Demand thermometer (Low/Medium/High/Surge)
+- City-specific pricing (NYC 1.35x, SF 1.30x, Chicago 1.20x)
 
-### 6. **Comprehensive Observability**
-- LangSmith traces for every agent decision
-- Real-time monitoring and debugging
+### 6. **Customer Loyalty Integration** ✅
+- Tier-based discounts: Gold (15%), Silver (10%), Bronze (5%)
+- Loyalty badges in UI
+- Discount reflected in AI reasoning
+
+### 7. **LangSmith Observability** ✅
+- Full agent tracing for every pricing decision
+- Real-time debugging and monitoring
+- Project: `honeygo-pricing`
+
+### 8. **Competitor Price Comparison** ✅
+- Compare with Uber, Lyft, Waymo
+- Show savings percentage
 
 ---
 
@@ -201,13 +520,13 @@ HON-hackathon-dynamic-pricing/
 
 | Date | Phase | Focus |
 |------|-------|-------|
-| **Nov 30** | Phase 1: Planning | Implementation plan, architecture design, team coordination |
-| **Dec 1** | Phase 2: Foundation | API contracts, MongoDB setup, LangSmith setup, agent skeleton |
-| **Dec 2** | Phase 3: Core Development | Backend integration, ChromaDB setup, agent tools, frontend components |
-| **Dec 3** | Phase 4: Integration | Full-stack integration, RAG implementation, voice features |
-| **Dec 4 AM** | Phase 5: Testing & Polish | Bug fixes, demo prep, Docker setup, final testing |
-| **Dec 4 Midday** | Submission Deadline | GitHub repo + presentation slides submitted |
-| **Dec 5** | Presentation Day | Live demo and Q&A |
+| **Nov 30** | Planning | Implementation plan, architecture |
+| **Dec 1** | Foundation | API contracts, MongoDB, LangSmith |
+| **Dec 2** | Core Dev | Backend, ChromaDB, agent tools |
+| **Dec 3** | Integration | Full-stack, RAG, voice features |
+| **Dec 4 AM** | Polish | Bug fixes, demo prep |
+| **Dec 4 PM** | Submission | GitHub + slides submitted |
+| **Dec 5** | Demo Day | Live presentation |
 
 ---
 
@@ -215,35 +534,36 @@ HON-hackathon-dynamic-pricing/
 
 | Criterion | Our Approach |
 |-----------|--------------|
-| **Innovation** | Agentic AI with RAG, hybrid database, voice features |
-| **Technical Depth** | LangChain ReAct, MongoDB + ChromaDB, LangSmith observability |
-| **Explainability** | Full reasoning traces, LangSmith dashboard, transparent pricing logic |
-| **Applicability to HON** | 6 specific recommendations for Honeywell B2B pricing |
-| **Presentation Quality** | Professional slides, live demo, backup video, key decision highlights |
+| **Innovation** | Agentic AI + RAG + hybrid database + voice |
+| **Technical Depth** | LangChain, MongoDB, ChromaDB, LangSmith |
+| **Explainability** | Numbered reasoning, voice playback, traces |
+| **Applicability** | B2B pricing recommendations for Honeywell |
+| **Presentation** | Live demo, cheat sheet, backup video |
 
 ---
 
 ## 📊 Deliverables
 
-- ✅ **GitHub Repository**: Clean, well-documented codebase
-- ✅ **Live Demo**: Functional application with AI agent reasoning
-- ✅ **Presentation Slides**: 16-slide deck with key decisions highlighted
-- ✅ **Demo Video**: Backup recording in case of technical issues
-- ✅ **Documentation**: Comprehensive guides and architecture diagrams
+- ✅ **GitHub Repository**: Clean, documented codebase
+- ✅ **Live Demo**: Functional AI-powered pricing
+- ✅ **Presentation Slides**: Key decisions highlighted
+- ✅ **Demo Video**: Backup recording
+- ✅ **Documentation**: Comprehensive guides
+- ✅ **Demo Cheat Sheet**: Query library and talking points
 
 ---
 
 ## 🔗 Links
 
-- **GitHub Repository**: [https://github.com/fly2safa/HON-hackathon-dynamic-pricing](https://github.com/fly2safa/HON-hackathon-dynamic-pricing)
-- **LangSmith Dashboard**: (Team access provided via `.env`)
-- **MongoDB Atlas**: (Connection string in `.env`)
+- **GitHub**: [github.com/fly2safa/HON-hackathon-dynamic-pricing](https://github.com/fly2safa/HON-hackathon-dynamic-pricing)
+- **LangSmith**: Team access via `.env`
+- **MongoDB Atlas**: Connection string in `.env`
 
 ---
 
 ## 📝 License
 
-This project is developed for the HON Dynamic Pricing Hackathon (Team #1).
+Developed for the HON Dynamic Pricing Hackathon (Team #1).
 
 ---
 
