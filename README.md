@@ -41,12 +41,9 @@
 - Steven J.
 
 ---
-**Presentation Slides:** 
-- Presentation Slides:  _(Coming soon)_
+**Presentation Slides and Video Link:** 
+- Presentation Slides:  https://www.canva.com/design/DAG6ggEpeDs/iwgUPgsXj_tuheET6iq8JA/edit
 - Demo video:  https://youtu.be/pzOuTo0tVZQ
-
-
-**Video Link:** _(Coming soon)_
 
 ---
 
