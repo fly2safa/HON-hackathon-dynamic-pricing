@@ -41,10 +41,12 @@
 **Company/Product name chosen by Contributors:** <span style="color: #FF6A13; font-weight: bold; font-size: 1.1em;">HoneyGo</span>
 
 **Project Contributors/Developers (Alphabetical Order):**
-- Darimar C.
-- Jason M.
-- Safa M.
-- Steven J.
+| Name | LinkedIn |
+|------|----------|
+| Darimar C. | [Connect](https://www.linkedin.com/in/daricaceres/) |
+| Jason M. | [Connect](https://www.linkedin.com/in/aztuxmann/) |
+| Safa M. | [Connect](https://www.linkedin.com/in/safa-matin-4177678/) |
+| Steven J. | [Connect](https://www.linkedin.com/in/YOUR-LINKEDIN/) |
 
 ---
 ---
