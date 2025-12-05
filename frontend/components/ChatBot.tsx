@@ -101,9 +101,12 @@ export default function ChatBot({ currentCity, currentWeather, isOpen = false, o
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   
-  // Use ref to always have latest weather value (avoids stale closure)
+  // Use refs to always have latest values (avoids stale closure in async callbacks)
   const weatherRef = useRef(currentWeather);
   weatherRef.current = currentWeather;
+  
+  const cityRef = useRef(currentCity);
+  cityRef.current = currentCity;
   
   // Voice features
   const [isListening, setIsListening] = useState(false);
@@ -214,7 +217,7 @@ export default function ChatBot({ currentCity, currentWeather, isOpen = false, o
       const response = await sendChatMessage({
         message: text,
         context: {
-          current_city: currentCity,
+          current_city: cityRef.current,
           current_weather: weatherContext
         }
       });

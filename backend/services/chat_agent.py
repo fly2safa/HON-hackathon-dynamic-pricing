@@ -760,7 +760,7 @@ class HoneyGoChatAgent:
         if not city:
             return external_data
         
-        # PRIORITY 1: Use weather from frontend context (this is the LIVE weather displayed in UI)
+        # PRIORITY 1: Use weather from frontend context (live weather from UI)
         if context_weather:
             external_data['weather'] = {
                 'conditions': context_weather.get('conditions', 'Unknown'),
@@ -772,7 +772,7 @@ class HoneyGoChatAgent:
             logger.info(f"✅ Using live weather from frontend for {city}: {external_data['weather']['conditions']}, {external_data['weather']['temperature']}°F")
             return external_data  # Skip other fetches since we have live data
         
-        # Try N8N service first for real-time data
+        # Try N8N service for real-time data (fallback)
         if self.n8n_service:
             try:
                 weather = await self.n8n_service.get_weather_data(city)
@@ -878,16 +878,27 @@ class HoneyGoChatAgent:
     ) -> Dict[str, Any]:
         """Handle general/unclassified queries using LLM with real-time data."""
         
-        # Get city from context or extract from message
-        city = context.get('current_city') if context else None
+        # Get context city (what's selected in UI dropdown)
+        context_city = context.get('current_city') if context else None
         context_weather = context.get('current_weather') if context else None
         
-        # Try to extract city from message if not in context
-        if not city:
-            city = self._extract_city_from_message(message)
+        # DEBUG
+        logger.info(f"🔍 DEBUG: context_city={context_city}, context_weather={context_weather}")
         
-        # Fetch external data for context (uses live weather from frontend if available)
-        external_data = await self._fetch_external_data(city, context_weather)
+        # Try to extract city from message (e.g., "What's the weather in NY?")
+        message_city = self._extract_city_from_message(message)
+        logger.info(f"🔍 DEBUG: message_city={message_city}")
+        
+        # Use message city if specified, otherwise fall back to context city
+        city = message_city or context_city
+        
+        # IMPORTANT: Only use context_weather if the city matches the context city
+        # If user asks about a different city, don't use the cached weather
+        use_context_weather = context_weather if (city == context_city or not message_city) else None
+        logger.info(f"🔍 DEBUG: city={city}, use_context_weather={use_context_weather is not None}")
+        
+        # Fetch external data for context
+        external_data = await self._fetch_external_data(city, use_context_weather)
         
         # Check if query is about traffic
         message_lower = message.lower()
