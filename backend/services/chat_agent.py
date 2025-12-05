@@ -105,6 +105,8 @@ class HoneyGoChatAgent:
         # Execute the appropriate query based on intent
         if intent['type'] == 'greeting':
             result = self._handle_greeting()
+        elif intent['type'] == 'datetime_query':
+            result = self._handle_datetime_query()
         elif intent['type'] == 'booking_request':
             result = self._handle_booking_request(message)
         elif intent['type'] == 'rides_query':
@@ -148,6 +150,12 @@ class HoneyGoChatAgent:
         booking_words = ['book', 'schedule', 'reserve', 'order', 'request a', 'get me a', 'i need a', 'i want a', 'call a', 'hail']
         if any(word in message_lower for word in booking_words):
             intent['type'] = 'booking_request'
+            return intent
+        
+        # Check for date/time queries - return actual current date
+        datetime_words = ['date', 'time', 'today', 'day is it', 'what day', 'current time', 'right now']
+        if any(word in message_lower for word in datetime_words):
+            intent['type'] = 'datetime_query'
             return intent
         
         # Pricing queries - CHECK FIRST (before rides, so "average price for rides" uses live data)
@@ -224,6 +232,34 @@ class HoneyGoChatAgent:
                 "How many Gold customers?",
                 "Find Urban rides at Night",
                 "What's the average price?",
+                "Show me overall statistics"
+            ],
+            'confidence': 1.0
+        }
+    
+    def _handle_datetime_query(self) -> Dict[str, Any]:
+        """
+        Handle date/time queries with the actual current date.
+        LLMs don't know the current date, so we provide it directly.
+        """
+        from datetime import datetime
+        now = datetime.now()
+        
+        # Format: "Friday, December 5, 2025 at 3:45 PM"
+        formatted_date = now.strftime("%A, %B %d, %Y")
+        formatted_time = now.strftime("%I:%M %p")
+        
+        return {
+            'response': f"📅 Today is {formatted_date}. The current time is {formatted_time}.",
+            'data': {
+                'type': 'datetime',
+                'date': now.strftime("%Y-%m-%d"),
+                'time': now.strftime("%H:%M:%S"),
+                'day_of_week': now.strftime("%A")
+            },
+            'suggestions': [
+                "What's the average price?",
+                "How many Gold customers?",
                 "Show me overall statistics"
             ],
             'confidence': 1.0

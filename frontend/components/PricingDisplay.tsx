@@ -50,8 +50,11 @@ export default function PricingDisplay({ result, ride }: PricingDisplayProps) {
       speakPoint(index + 1);
     };
 
-    utterance.onerror = (event) => {
-      console.error('Speech synthesis error:', event);
+    utterance.onerror = (event: SpeechSynthesisErrorEvent) => {
+      // Common browser TTS errors are usually recoverable - don't alarm users
+      if (event.error !== 'canceled' && event.error !== 'interrupted') {
+        console.warn('Speech synthesis issue:', event.error || 'unknown');
+      }
       setIsPlaying(false);
       setCurrentReadingIndex(-1);
     };
