@@ -7,7 +7,7 @@ from typing import Optional, List
 from datetime import datetime
 import asyncio
 
-router = APIRouter(prefix="/api/notifications", tags=["notifications"])
+router = APIRouter(prefix="/api/v1/n8n", tags=["notifications"])
 
 # In-memory store for alerts (use Redis in production)
 alert_store: List[dict] = []
@@ -119,6 +119,12 @@ async def stream_alerts():
 async def get_recent_alerts(limit: int = 10):
     """Get recent alerts (for clients that missed SSE broadcasts)."""
     return alert_store[-limit:]
+
+
+@router.get("/notifications")
+async def get_notifications(limit: int = 10):
+    """Get notifications in format expected by frontend hook."""
+    return {"notifications": alert_store[-limit:]}
 
 
 @router.post("/test")
