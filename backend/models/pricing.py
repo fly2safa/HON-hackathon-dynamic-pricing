@@ -27,6 +27,10 @@ class PricingRequest(BaseModel):
         None,
         description="Current weather condition (optional)"
     )
+    loyalty_tier: Optional[str] = Field(
+        default="new",
+        description="Customer loyalty tier: new, bronze, silver, gold, platinum"
+    )
     
     class Config:
         json_schema_extra = {

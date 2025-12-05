@@ -16,11 +16,13 @@ import { formatDistance } from '@/lib/formatUtils';
 interface CityComparisonModalProps {
   isOpen: boolean;
   onClose: () => void;
+  loyaltyTier?: string;
+  currentWeather?: string;  // Weather type from main UI (e.g., "clouds", "clear", "rain")
 }
 
 const CITIES = ['Phoenix', 'New York', 'San Francisco', 'Chicago', 'Orlando'];
 
-export default function CityComparisonModal({ isOpen, onClose }: CityComparisonModalProps) {
+export default function CityComparisonModal({ isOpen, onClose, loyaltyTier = 'new', currentWeather }: CityComparisonModalProps) {
   const [city1, setCity1] = useState('Phoenix');
   const [city2, setCity2] = useState('New York');
   const [distance, setDistance] = useState(10);
@@ -46,7 +48,7 @@ export default function CityComparisonModal({ isOpen, onClose }: CityComparisonM
         estimatedDuration: Math.round(distance * 2.5),
         requestTime: new Date().toISOString(),
         passengerCount: 1,
-        loyaltyTier: 'silver',
+        loyaltyTier: loyaltyTier as any,
       };
 
       const ride2: RideRequest = {
@@ -57,14 +59,14 @@ export default function CityComparisonModal({ isOpen, onClose }: CityComparisonM
         city: city2,
       };
 
-      // Get market conditions for both cities
-      const market1 = generateMarketConditions(city1);
-      const market2 = generateMarketConditions(city2);
+      // Use current weather from UI, or fall back to generated market conditions
+      const weatherType1 = currentWeather || generateMarketConditions(city1).weatherType;
+      const weatherType2 = currentWeather || generateMarketConditions(city2).weatherType;
 
       // Calculate pricing for both
       const [pricing1, pricing2] = await Promise.all([
-        calculatePricingWithBackend(ride1, market1.weatherType),
-        calculatePricingWithBackend(ride2, market2.weatherType),
+        calculatePricingWithBackend(ride1, weatherType1),
+        calculatePricingWithBackend(ride2, weatherType2),
       ]);
 
       setResult1(pricing1);
@@ -188,6 +190,11 @@ export default function CityComparisonModal({ isOpen, onClose }: CityComparisonM
           </button>
           {city1 === city2 && (
             <p className="text-sm text-red-600 mt-2 text-center">Please select different cities to compare</p>
+          )}
+          {loyaltyTier && loyaltyTier !== 'new' && (
+            <p className="text-sm text-purple-600 mt-2 text-center font-medium">
+              Using {loyaltyTier.toUpperCase()} tier discount
+            </p>
           )}
         </div>
 

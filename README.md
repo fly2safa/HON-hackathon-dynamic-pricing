@@ -41,7 +41,10 @@
 - Steven J.
 
 ---
-**Presentation Slides:** _(Coming soon)_
+**Presentation Slides:** 
+- Presentation Slides:  _(Coming soon)_
+- Demo video:  https://youtu.be/pzOuTo0tVZQ
+
 
 **Video Link:** _(Coming soon)_
 

@@ -163,8 +163,20 @@ async def calculate_pricing(request: PricingRequest) -> PricingResponse:
         
         surge_multiplier *= city_multiplier
         
-        # Calculate final price
-        final_price = base_price * surge_multiplier
+        # Calculate price before loyalty discount
+        price_before_discount = base_price * surge_multiplier
+        
+        # Apply loyalty tier discount
+        loyalty_discounts = {
+            "new": 0.0,
+            "bronze": 0.05,
+            "silver": 0.10,
+            "gold": 0.15,
+            "platinum": 0.20
+        }
+        loyalty_tier = (request.loyalty_tier or "new").lower()
+        loyalty_discount = loyalty_discounts.get(loyalty_tier, 0.0)
+        final_price = price_before_discount * (1 - loyalty_discount)
         
         # Calculate dynamic confidence score based on conditions
         confidence = calculate_confidence_score(
@@ -330,10 +342,11 @@ async def get_pricing_factors() -> Dict:
             "stormy": 1.4
         },
         "customer_tier_discounts": {
-            "bronze": 0.0,
-            "silver": 0.05,
-            "gold": 0.10,
-            "platinum": 0.15
+            "new": 0.0,
+            "bronze": 0.05,
+            "silver": 0.10,
+            "gold": 0.15,
+            "platinum": 0.20
         },
         "note": "Full AI agent with dynamic factors coming Dec 3"
     }

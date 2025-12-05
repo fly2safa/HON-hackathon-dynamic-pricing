@@ -13,6 +13,7 @@ export interface BackendPricingRequest {
   customer_id: string;
   time_of_day: string;  // "morning", "afternoon", "evening", "night"
   weather_condition?: string;
+  loyalty_tier?: string;  // "new", "bronze", "silver", "gold", "platinum"
 }
 
 export interface BackendPricingResponse {
