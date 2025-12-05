@@ -35,15 +35,18 @@
 **Company/Product name chosen by Contributors:** <span style="color: #FF6A13; font-weight: bold; font-size: 1.1em;">HoneyGo</span>
 
 **Project Contributors/Developers (Alphabetical Order):**
-- Darimar C.
-- Jason M.
-- Safa M.
-- Steven J.
+| Name | LinkedIn |
+|------|----------|
+| Darimar C. | [Connect](https://www.linkedin.com/in/daricaceres/) |
+| Jason M. | [Connect](https://www.linkedin.com/in/aztuxmann/) |
+| Safa M. | [Connect](https://www.linkedin.com/in/safa-matin-4177678/) |
+| Steven J. | [Connect](https://www.linkedin.com/in/YOUR-LINKEDIN/) |
 
 ---
 **Presentation Slides and Video Link:** 
-- Presentation Slides:  https://www.canva.com/design/DAG6ggEpeDs/iwgUPgsXj_tuheET6iq8JA/edit
-- Demo video:  https://youtu.be/pzOuTo0tVZQ
+- [Presentation Slides](https://www.canva.com/design/DAG6mrQ8m6o/DIbzwOQzS8fNMocYqRcpUA/watch)
+- [Presentation video](https://www.youtube.com/watch?v=XKJh-7hi7Ek)
+- [Demo Video](https://youtu.be/pzOuTo0tVZQ)
 
 ---
 
