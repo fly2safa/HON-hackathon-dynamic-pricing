@@ -150,8 +150,19 @@ class HoneyGoChatAgent:
             intent['type'] = 'booking_request'
             return intent
         
-        # Rides queries
-        if any(word in message_lower for word in ['ride', 'rides', 'trip', 'trips', 'journey']):
+        # Pricing queries - CHECK FIRST (before rides, so "average price for rides" uses live data)
+        if any(word in message_lower for word in ['price', 'pricing', 'cost', 'surge', 'fare']):
+            intent['type'] = 'pricing_query'
+            
+            if 'average' in message_lower or 'avg' in message_lower:
+                intent['aggregation'] = 'average'
+            elif 'highest' in message_lower or 'max' in message_lower:
+                intent['aggregation'] = 'max'
+            elif 'lowest' in message_lower or 'min' in message_lower:
+                intent['aggregation'] = 'min'
+        
+        # Rides queries (semantic search for similar rides)
+        elif any(word in message_lower for word in ['ride', 'rides', 'trip', 'trips', 'journey', 'similar', 'find']):
             intent['type'] = 'rides_query'
             
             # Extract location filter
@@ -185,17 +196,6 @@ class HoneyGoChatAgent:
                 intent['filters']['loyalty_status'] = 'Bronze'
             elif 'new' in message_lower or 'regular' in message_lower:
                 intent['filters']['loyalty_status'] = 'Regular'
-        
-        # Pricing queries
-        elif any(word in message_lower for word in ['price', 'pricing', 'cost', 'surge', 'fare']):
-            intent['type'] = 'pricing_query'
-            
-            if 'average' in message_lower or 'avg' in message_lower:
-                intent['aggregation'] = 'average'
-            elif 'highest' in message_lower or 'max' in message_lower:
-                intent['aggregation'] = 'max'
-            elif 'lowest' in message_lower or 'min' in message_lower:
-                intent['aggregation'] = 'min'
         
         # Statistics queries
         elif any(word in message_lower for word in ['statistic', 'stats', 'total', 'count', 'how many', 'summary']):
