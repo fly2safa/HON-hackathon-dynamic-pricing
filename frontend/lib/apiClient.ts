@@ -175,6 +175,12 @@ export interface ChatRequest {
   context?: {
     current_city?: string;
     current_ride?: string;
+    current_weather?: {
+      temperature: number;
+      conditions: string;
+      weather_type: string;
+      is_real_data: boolean;
+    };
   };
 }
 

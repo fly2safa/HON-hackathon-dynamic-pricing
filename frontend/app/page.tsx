@@ -596,7 +596,7 @@ export default function Home() {
       />
 
       {/* ChatBot - Floating Assistant */}
-      <ChatBot currentCity={selectedCity} />
+      <ChatBot currentCity={selectedCity} currentWeather={weather} />
 
       {/* N8n Notifications - Pop-out notifications for workflow events */}
       <N8nNotificationContainer />

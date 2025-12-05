@@ -489,9 +489,10 @@ class HoneyGoChatAgent:
         
         aggregation = intent.get('aggregation', 'average')
         city = context.get('current_city') if context else None
+        context_weather = context.get('current_weather') if context else None
         
         # Fetch real-time external data for pricing context
-        external_data = await self._fetch_external_data(city)
+        external_data = await self._fetch_external_data(city, context_weather)
         
         # Query MongoDB if available
         if self.mongodb_service and self.mongodb_service.connected:
@@ -733,12 +734,13 @@ class HoneyGoChatAgent:
             'confidence': 0.75
         }
     
-    async def _fetch_external_data(self, city: Optional[str] = None) -> Dict[str, Any]:
+    async def _fetch_external_data(self, city: Optional[str] = None, context_weather: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Fetch real-time external data (weather, events, traffic).
         
         Args:
             city: Optional city name for location-specific data
+            context_weather: Optional weather data passed from frontend (live weather)
             
         Returns:
             Dict with weather, events, and traffic data
@@ -751,6 +753,18 @@ class HoneyGoChatAgent:
         
         if not city:
             return external_data
+        
+        # PRIORITY 1: Use weather from frontend context (this is the LIVE weather displayed in UI)
+        if context_weather:
+            external_data['weather'] = {
+                'conditions': context_weather.get('conditions', 'Unknown'),
+                'temperature': context_weather.get('temperature', 0),
+                'weather_type': context_weather.get('weather_type', 'clear'),
+                'pricing_multiplier': 1.0 if context_weather.get('weather_type') in ['clear', 'clouds'] else 1.1,
+                'is_live': context_weather.get('is_real_data', False)
+            }
+            logger.info(f"✅ Using live weather from frontend for {city}: {external_data['weather']['conditions']}, {external_data['weather']['temperature']}°F")
+            return external_data  # Skip other fetches since we have live data
         
         # Try N8N service first for real-time data
         if self.n8n_service:
@@ -860,13 +874,14 @@ class HoneyGoChatAgent:
         
         # Get city from context or extract from message
         city = context.get('current_city') if context else None
+        context_weather = context.get('current_weather') if context else None
         
         # Try to extract city from message if not in context
         if not city:
             city = self._extract_city_from_message(message)
         
-        # Fetch external data for context
-        external_data = await self._fetch_external_data(city)
+        # Fetch external data for context (uses live weather from frontend if available)
+        external_data = await self._fetch_external_data(city, context_weather)
         
         # Check if query is about weather/conditions
         message_lower = message.lower()
