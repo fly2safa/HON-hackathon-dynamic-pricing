@@ -1,5 +1,11 @@
 # 🚖 HoneyGo: Intelligent Ride-Sharing Platform
 
+**Presentation Slides:** 
+- Presentation:  https://www.canva.com/design/DAG6ggEpeDs/iwgUPgsXj_tuheET6iq8JA/edit
+
+**Video Link:** 
+- Video:  https://www.youtube.com/watch?v=XKJh-7hi7Ek
+
 > **Agentic AI-Powered Dynamic Pricing for Honeywell's Ride-Sharing Division**
 
 [![Team](https://img.shields.io/badge/Team-%231-blue)]()
@@ -41,13 +47,6 @@
 - Steven J.
 
 ---
-**Presentation Slides:** 
-- Presentation Slides:  _(Coming soon)_
-- Demo video:  https://youtu.be/pzOuTo0tVZQ
-
-
-**Video Link:** _(Coming soon)_
-
 ---
 
 ## 👥 Team Roles
