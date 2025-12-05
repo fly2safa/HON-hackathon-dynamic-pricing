@@ -1,0 +1,57 @@
+{
+  "phoenix_normal": {
+    "city": "Phoenix",
+    "route": "Downtown to Airport",
+    "distance_miles": 12.5,
+    "base_duration_minutes": 18,
+    "current_duration_minutes": 22,
+    "traffic_level": "moderate",
+    "congestion_percentage": 22,
+    "pricing_multiplier": 1.1,
+    "reasoning": "Light traffic delay, minor adjustment"
+  },
+  "phoenix_rush_hour": {
+    "city": "Phoenix",
+    "route": "Scottsdale to Downtown",
+    "distance_miles": 15.0,
+    "base_duration_minutes": 20,
+    "current_duration_minutes": 45,
+    "traffic_level": "heavy",
+    "congestion_percentage": 125,
+    "pricing_multiplier": 1.35,
+    "reasoning": "Rush hour congestion on I-10, significant delays"
+  },
+  "new_york_manhattan": {
+    "city": "New York",
+    "route": "Times Square to JFK",
+    "distance_miles": 18.0,
+    "base_duration_minutes": 35,
+    "current_duration_minutes": 75,
+    "traffic_level": "severe",
+    "congestion_percentage": 114,
+    "pricing_multiplier": 1.5,
+    "reasoning": "Manhattan gridlock, tunnel delays"
+  },
+  "new_york_off_peak": {
+    "city": "New York",
+    "route": "Times Square to JFK",
+    "distance_miles": 18.0,
+    "base_duration_minutes": 35,
+    "current_duration_minutes": 40,
+    "traffic_level": "light",
+    "congestion_percentage": 14,
+    "pricing_multiplier": 1.05,
+    "reasoning": "Off-peak hours, minimal traffic"
+  },
+  "chicago_loop": {
+    "city": "Chicago",
+    "route": "O'Hare to Loop",
+    "distance_miles": 17.0,
+    "base_duration_minutes": 25,
+    "current_duration_minutes": 55,
+    "traffic_level": "heavy",
+    "congestion_percentage": 120,
+    "pricing_multiplier": 1.4,
+    "reasoning": "Kennedy Expressway congestion"
+  }
+}

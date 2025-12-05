@@ -1,0 +1,131 @@
+HONEYWELL DYNAMIC PRICING HACKATHON
+PRESENTER’S NAMEPRESENTER’S TITLE
+November 20, 2025
+1
+
+AGENDA
+Introduction to the complexities of HON catalog pricing
+Hackathon introduction
+2
+
+INTRODUCTION TO HON CATALOG PRICING CHALLENGE
+Objective of hackathon is to create innovative solutions that will address HON dynamic pricing needs
+3
+Customer | Channel
+
+Commercial Airline Operators
+
+Business & General Aviation (BGA)
+
+Authorized Channel Partners 
+
+Maintenance & Repair Operations (MRO)
+
+Defense & Space - International
+
+Defense & Space - US Gov
+
+
+Offerings
+
+Aftermarket Spare parts
+Avionics, Navigation, Sensors
+Engines, Power systems
+Engine & Motion control, Air & Thermal
+
+Spares Exchange (SPEX)
+
+Repair & Overhaul (R&O)
+Repair
+Overhaul
+Test
+Scrap
+
+Used Serviceable Market (USM)
+
+
+Catalog Pricing Model
+
+List Price ($) – Standard Discount (%)
+
+New Spares – Unconstrained
+
+New Spares – Constrained
+
+R&O Universal Flat Rate (UFR)
+
+R&O Spares Exchange (SPEX)
+
+R&O US Gov UFR – FAR compliant
+
+
+
+Dynamic Catalog - Price Optimization Challenge
+How do we ensure Catalog Prices are aligned to Market (considering external and internal factors like New Spare vs. USM)?
+How do we ensure Catalog Price hierarchy/integrity is maintained (New Spare > UFR > Contracted Repair)?
+How do we know we have truly optimized our prices to drive profitable growth?
+
+PROBLEM STATEMENT
+4
+Situation: Revenue is down at your ride share company.  The CEO has challenged the IT team to develop a dynamic pricing solution to maximize profits.  Your competitors have the same type of data as your company which does not give you a competitive advantage.  You are challenged to adopt new agenticAI technology to provide a competitive advantage in your dynamic pricing solution
+
+This situation has similarities to catalog demand pricing at HON with supply/demand, customer tier, and service level attributes
+
+
+https://www.kaggle.com/code/litvinenko630/ride-dynamic-pricing/notebook
+4
+
+DATA
+Be creative on how data related to Honeywell – think of additional data you can bring in
+5
+Data Element
+HON dynamic pricing similarity
+# of riders
+Demand for  HON catalog item
+# of drivers
+HON supply (Aero is a supply constraint industry)
+Location category
+Geographic regions
+Customer Loyalty Status
+HON has different tiers of customers based on the business volume
+Number of past rides
+Customer buying history
+Average ratings
+Time of booking
+Expected ride duration
+Base value of HON catalog item
+Vehicle type
+Quality of HON item (new, overhaul, repair) and pricing constraints
+Historical cost of ride
+Previous HON catalog prices
+
+JUDGING CRITERIA
+Creativity – 40%
+How novel was your agent's reasoning, and how well did it synthesize data points?
+Did you find and integrate unique live data sources that provided real business value?
+What innovative methods did you demonstrate that are relevant to HON?
+Explainability – 30%
+How clearly is the "why" behind a price surge explained to the end-user?
+How well did the team articulate their architecture and the agent's decision-making process during the demo?
+Technical implementation – 20%
+Was the full, required tech stack (Next.js, FastAPI, LangChain, n8n/MCP) successfully integrated & function smoothly?
+Visualization – 10%
+Does the user interface make it easy to understand the pricing and the reasoning at-a-glance?
+6
+
+HACKATHON LOGISTICS AND OTHER INFO
+Time bound – Presentations on 5th
+Team can add to the dataset to demonstrate agenticAI creativity
+Teams will be assigned by Charles
+Teams must us Next.js, FastAPI, LangChain, and n8n or MCP
+Teams must submit documentation, diagrams & a 10-min video recording of your work
+Presentation format
+Total time for presentation – 15 minutes (10 minutes presentation 5 minutes for questions)
+Presentation includes demo of UX
+Slides need to include:
+AI generated pricing strategy and goodness measure
+Architecture diagram
+Recommendations on how the solution can be applied to HON dynamic pricing
+
+
+7

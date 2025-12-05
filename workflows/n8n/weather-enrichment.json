@@ -1,0 +1,69 @@
+{
+  "name": "HoneyGo - Weather Enrichment",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "weather-data",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "honeygo-weather"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.openweathermap.org/data/2.5/weather?q={{ $json.body.city }}&appid={{ $env.WEATHER_API_KEY }}&units=imperial",
+        "options": {}
+      },
+      "id": "http-weather-api",
+      "name": "Get Weather",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Transform weather data for HoneyGo pricing\nconst weather = $input.first().json;\n\nlet multiplier = 1.0;\nlet reasoning = 'Normal weather conditions';\n\n// Temperature adjustments\nif (weather.main.temp > 100) {\n  multiplier += 0.15;\n  reasoning = 'Extreme heat increases demand';\n} else if (weather.main.temp < 32) {\n  multiplier += 0.1;\n  reasoning = 'Cold weather increases demand';\n}\n\n// Weather condition adjustments\nconst condition = weather.weather[0].main.toLowerCase();\nif (condition.includes('rain')) {\n  multiplier += 0.25;\n  reasoning = 'Rain increases ride demand';\n} else if (condition.includes('snow')) {\n  multiplier += 0.5;\n  reasoning = 'Snow significantly impacts driving';\n} else if (condition.includes('storm')) {\n  multiplier += 0.4;\n  reasoning = 'Storm conditions reduce driver availability';\n}\n\n// Visibility adjustments\nif (weather.visibility < 1000) {\n  multiplier += 0.2;\n  reasoning += ', low visibility';\n}\n\nreturn {\n  city: weather.name,\n  temperature_f: Math.round(weather.main.temp),\n  conditions: weather.weather[0].main,\n  description: weather.weather[0].description,\n  humidity: weather.main.humidity,\n  wind_mph: Math.round(weather.wind.speed),\n  visibility_miles: Math.round(weather.visibility / 1609),\n  pricing_multiplier: Math.round(multiplier * 100) / 100,\n  reasoning: reasoning,\n  timestamp: new Date().toISOString()\n};"
+      },
+      "id": "transform-weather",
+      "name": "Transform for Pricing",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "respond-webhook",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [850, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{"node": "Get Weather", "type": "main", "index": 0}]]
+    },
+    "Get Weather": {
+      "main": [[{"node": "Transform for Pricing", "type": "main", "index": 0}]]
+    },
+    "Transform for Pricing": {
+      "main": [[{"node": "Respond to Webhook", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": [{"name": "HoneyGo"}, {"name": "Weather"}]
+}

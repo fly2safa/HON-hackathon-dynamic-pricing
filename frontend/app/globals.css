@@ -1,0 +1,12 @@
+/**
+ * Global Styles
+ * 
+ * Main entry point for all application styles.
+ * Imports are ordered: TailwindCSS → Variables → Theme → Base → Animations
+ */
+
+@import "tailwindcss";
+@import "../styles/variables.css";
+@import "../styles/tailwind-theme.css";
+@import "../styles/base.css";
+@import "../styles/animations.css";
