@@ -158,6 +158,12 @@ class HoneyGoChatAgent:
             intent['type'] = 'datetime_query'
             return intent
         
+        # Check for "how does X work/affect" explanation questions - should be general, not data queries
+        if any(phrase in message_lower for phrase in ['how does', 'how do', 'what is', 'explain', 'tell me about']):
+            # These are explanation questions, let general handler deal with them
+            intent['type'] = 'general'
+            return intent
+        
         # Pricing queries - CHECK FIRST (before rides, so "average price for rides" uses live data)
         if any(word in message_lower for word in ['price', 'pricing', 'cost', 'surge', 'fare']):
             intent['type'] = 'pricing_query'
@@ -489,9 +495,10 @@ class HoneyGoChatAgent:
         
         aggregation = intent.get('aggregation', 'average')
         city = context.get('current_city') if context else None
+        context_weather = context.get('current_weather') if context else None
         
         # Fetch real-time external data for pricing context
-        external_data = await self._fetch_external_data(city)
+        external_data = await self._fetch_external_data(city, context_weather)
         
         # Query MongoDB if available
         if self.mongodb_service and self.mongodb_service.connected:
@@ -733,12 +740,13 @@ class HoneyGoChatAgent:
             'confidence': 0.75
         }
     
-    async def _fetch_external_data(self, city: Optional[str] = None) -> Dict[str, Any]:
+    async def _fetch_external_data(self, city: Optional[str] = None, context_weather: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
         Fetch real-time external data (weather, events, traffic).
         
         Args:
             city: Optional city name for location-specific data
+            context_weather: Optional weather data passed from frontend (live weather)
             
         Returns:
             Dict with weather, events, and traffic data
@@ -752,7 +760,19 @@ class HoneyGoChatAgent:
         if not city:
             return external_data
         
-        # Try N8N service first for real-time data
+        # PRIORITY 1: Use weather from frontend context (live weather from UI)
+        if context_weather:
+            external_data['weather'] = {
+                'conditions': context_weather.get('conditions', 'Unknown'),
+                'temperature': context_weather.get('temperature', 0),
+                'weather_type': context_weather.get('weather_type', 'clear'),
+                'pricing_multiplier': 1.0 if context_weather.get('weather_type') in ['clear', 'clouds'] else 1.1,
+                'is_live': context_weather.get('is_real_data', False)
+            }
+            logger.info(f"✅ Using live weather from frontend for {city}: {external_data['weather']['conditions']}, {external_data['weather']['temperature']}°F")
+            return external_data  # Skip other fetches since we have live data
+        
+        # Try N8N service for real-time data (fallback)
         if self.n8n_service:
             try:
                 weather = await self.n8n_service.get_weather_data(city)
@@ -858,19 +878,35 @@ class HoneyGoChatAgent:
     ) -> Dict[str, Any]:
         """Handle general/unclassified queries using LLM with real-time data."""
         
-        # Get city from context or extract from message
-        city = context.get('current_city') if context else None
+        # Get context city (what's selected in UI dropdown)
+        context_city = context.get('current_city') if context else None
+        context_weather = context.get('current_weather') if context else None
         
-        # Try to extract city from message if not in context
-        if not city:
-            city = self._extract_city_from_message(message)
+        # DEBUG
+        logger.info(f"🔍 DEBUG: context_city={context_city}, context_weather={context_weather}")
+        
+        # Try to extract city from message (e.g., "What's the weather in NY?")
+        message_city = self._extract_city_from_message(message)
+        logger.info(f"🔍 DEBUG: message_city={message_city}")
+        
+        # Use message city if specified, otherwise fall back to context city
+        city = message_city or context_city
+        
+        # IMPORTANT: Only use context_weather if the city matches the context city
+        # If user asks about a different city, don't use the cached weather
+        use_context_weather = context_weather if (city == context_city or not message_city) else None
+        logger.info(f"🔍 DEBUG: city={city}, use_context_weather={use_context_weather is not None}")
         
         # Fetch external data for context
-        external_data = await self._fetch_external_data(city)
+        external_data = await self._fetch_external_data(city, use_context_weather)
         
-        # Check if query is about weather/conditions
+        # Check if query is about traffic
         message_lower = message.lower()
-        if any(word in message_lower for word in ['weather', 'condition', 'rain', 'storm', 'temperature', 'forecast']):
+        if 'traffic' in message_lower:
+            return await self._handle_traffic_query(message, city, external_data)
+        
+        # Check if query is about weather (but not traffic conditions)
+        if any(word in message_lower for word in ['weather', 'rain', 'storm', 'temperature', 'forecast', 'sunny', 'cloudy']):
             return await self._handle_weather_query(message, city, external_data)
         
         if any(word in message_lower for word in ['event', 'concert', 'game', 'happening']):
@@ -983,6 +1019,53 @@ class HoneyGoChatAgent:
                 ],
                 'confidence': 0.5
             }
+    
+    async def _handle_traffic_query(
+        self,
+        message: str,
+        city: Optional[str],
+        external_data: Dict[str, Any]
+    ) -> Dict[str, Any]:
+        """Handle traffic-related queries."""
+        # Generate realistic traffic based on time of day
+        from datetime import datetime
+        current_hour = datetime.now().hour
+        
+        # Traffic patterns: rush hours have heavy traffic
+        if 7 <= current_hour <= 9 or 16 <= current_hour <= 19:
+            traffic_level = "Heavy"
+            multiplier = 1.3
+            description = "Rush hour traffic detected"
+        elif 10 <= current_hour <= 15:
+            traffic_level = "Moderate"
+            multiplier = 1.1
+            description = "Normal daytime traffic"
+        else:
+            traffic_level = "Light"
+            multiplier = 1.0
+            description = "Low traffic volume"
+        
+        response = f"🚗 Traffic in {city or 'your area'}: {traffic_level}. {description}. "
+        if multiplier > 1.0:
+            response += f"Expect a {multiplier}x pricing adjustment for longer ETAs."
+        else:
+            response += "Standard pricing applies with quick pickup times."
+        
+        return {
+            'response': response,
+            'data': {
+                'type': 'traffic',
+                'city': city,
+                'traffic_level': traffic_level,
+                'multiplier': multiplier
+            },
+            'suggestions': [
+                "Check weather conditions",
+                "What events are happening?",
+                "Calculate ride price"
+            ],
+            'confidence': 0.9
+        }
     
     async def _handle_events_query(
         self,

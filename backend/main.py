@@ -138,7 +138,7 @@ async def health_check():
 
 
 # Import and include routers
-from routers import health, pricing, rides, drivers, external_data, n8n, chat
+from routers import health, pricing, rides, drivers, external_data, n8n, chat, notifications
 
 app.include_router(health.router)
 app.include_router(pricing.router)
@@ -147,6 +147,7 @@ app.include_router(drivers.router)
 app.include_router(external_data.router)
 app.include_router(n8n.router)
 app.include_router(chat.router)
+app.include_router(notifications.router)
 
 
 if __name__ == "__main__":

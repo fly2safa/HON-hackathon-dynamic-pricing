@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import HeroSection from '@/components/HeroSection';
 import RideRequestCard from '@/components/RideRequestCard';
 import PricingDisplay from '@/components/PricingDisplay';
@@ -16,6 +17,8 @@ import AvailableDriversCard from '@/components/AvailableDriversCard';
 import DemandThermometer from '@/components/DemandThermometer';
 import DemandThermometerCard from '@/components/DemandThermometerCard';
 import ChatBot from '@/components/ChatBot';
+import N8nNotificationContainer from '@/components/N8nNotificationContainer';
+import ExecutiveAlertNotification, { ExecutiveAlertNotificationRef } from '@/components/ExecutiveAlertNotification';
 import { 
   mockRideRequests, 
   generateMarketConditions,
@@ -47,6 +50,7 @@ export default function Home() {
   const [scheduledDateTime, setScheduledDateTime] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
   const resultsSectionRef = useRef<HTMLDivElement>(null);
+  const executiveAlertRef = useRef<ExecutiveAlertNotificationRef>(null);
 
   // Fetch real-time weather for selected city
   const { weather, loading: weatherLoading, error: weatherError } = useRealWeather(selectedCity);
@@ -216,54 +220,84 @@ export default function Home() {
       )}
       
       {/* Header */}
-      <header className={`bg-black sticky ${headerTop} z-40 transition-all duration-300`}>
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300 ${isScrolled ? 'py-1' : 'py-4'}`}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-5">
+      <header className={`bg-black shadow-md sticky ${headerTop} z-40 transition-all duration-300`}>
+        <div className={`max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-2 sm:py-3'}`}>
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-shrink">
               <Image 
                 src="/images/honeygo-logo.png" 
                 alt="HoneyGo Logo" 
-                width={isScrolled ? 25 : 100} 
-                height={isScrolled ? 25 : 100}
-                className="rounded-lg transition-all duration-300"
+                width={isScrolled ? 32 : 40} 
+                height={isScrolled ? 32 : 40}
+                className="rounded-lg flex-shrink-0 transition-all duration-300 w-8 h-8 sm:w-10 sm:h-10"
               />
-              <div>
-                <div className="flex items-center gap-3">
-                  <h1 className={`font-bold text-white transition-all duration-300 ${isScrolled ? 'text-xl' : 'text-4xl'}`}>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <h1 className={`font-bold text-white transition-all duration-300 ${isScrolled ? 'text-lg sm:text-xl' : 'text-lg sm:text-xl md:text-2xl'} truncate`}>
                     HoneyGo
                   </h1>
-                  <span className={`px-2 font-semibold bg-[#FF6A13] text-white rounded-full transition-all duration-300 ${isScrolled ? 'py-0 text-[8px]' : 'py-0.5 text-xs'}`}>
-                    v1.0.0
-                  </span>
+                  {!isScrolled && (
+                    <span className="px-2 font-semibold bg-[#FF6A13] text-white rounded-full py-0.5 text-xs hidden sm:inline-block">
+                      v1.0.0
+                    </span>
+                  )}
                 </div>
                 {!isScrolled && (
-                  <p className="text-lg text-gray-400">
+                  <p className="text-xs sm:text-sm text-gray-400 hidden sm:block">
                     AI-Powered Pricing Platform
                   </p>
                 )}
               </div>
             </div>
-            {!isScrolled && (
-              <div className="text-right">
-                <p className="text-sm text-gray-400">Powered by</p>
-                <p className="text-xl font-semibold text-[#FF6A13]">
-                  Honeywell AI
-                </p>
-              </div>
-            )}
+            <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 flex-shrink-0">
+              {!isScrolled && (
+                <nav className="flex items-center gap-2 sm:gap-3 lg:gap-4">
+                  <Link
+                    href="/"
+                    className="text-sm sm:text-base text-white border-b-2 border-[#FF6A13] pb-0.5 sm:pb-1 transition-colors font-medium whitespace-nowrap"
+                  >
+                    Pricing
+                  </Link>
+                  <Link
+                    href="/surge-pricing"
+                    className="text-sm sm:text-base text-gray-300 hover:text-white transition-colors font-medium whitespace-nowrap"
+                  >
+                    Surge Pricing
+                  </Link>
+                </nav>
+              )}
+              {!isScrolled && (
+                <div className="text-right border-l border-gray-700 pl-2 sm:pl-4 lg:pl-6 hidden md:block">
+                  <p className="text-xs text-gray-400">Powered by</p>
+                  <p className="text-sm lg:text-base font-semibold text-[#FF6A13]">
+                    Honeywell AI
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
       {/* Content Area with Gradient Background */}
-      <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-24">
+      <div className="bg-gradient-to-br from-gray-50 via-white to-gray-100 pt-12 sm:pt-16 md:pt-20">
         {/* Hero Section */}
         <HeroSection />
 
         {/* Main Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Action Bar */}
-        <div className="mb-6 flex justify-end">
+        <div className="mb-6 flex justify-end items-center gap-3">
+          <button
+            onClick={() => executiveAlertRef.current?.triggerAlert()}
+            className="p-3 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 rounded-xl transition-all duration-300 flex items-center justify-center shadow-md hover:shadow-lg"
+            title="Trigger Executive Alert"
+            aria-label="Trigger Executive Alert"
+          >
+            <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </button>
           <button
             onClick={() => setShowCityComparison(true)}
             className="px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-bold rounded-xl hover:from-purple-700 hover:to-blue-700 transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl"
@@ -562,7 +596,25 @@ export default function Home() {
       />
 
       {/* ChatBot - Floating Assistant */}
-      <ChatBot currentCity={selectedCity} />
+      <ChatBot currentCity={selectedCity} currentWeather={weather} />
+
+      {/* N8n Notifications - Pop-out notifications for workflow events */}
+      <N8nNotificationContainer />
+
+      {/* Executive Alert Notification - n8n executive alerts */}
+      <ExecutiveAlertNotification ref={executiveAlertRef} />
+
+      {/* Test Alert Button - Demo trigger for executive notifications */}
+      <button
+        onClick={() => executiveAlertRef.current?.triggerAlert()}
+        className="fixed bottom-44 right-6 z-40 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center gap-2 group"
+        title="Trigger Demo Executive Alert"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
+        <span className="text-sm font-medium">Test Alert</span>
+      </button>
     </main>
   );
 }

@@ -75,13 +75,21 @@ interface Message {
   timestamp: Date;
 }
 
+interface WeatherInfo {
+  temperature: number;
+  condition: string;
+  weatherType: string;
+  isRealData: boolean;
+}
+
 interface ChatBotProps {
   currentCity?: string;
+  currentWeather?: WeatherInfo | null;
   isOpen?: boolean;
   onToggle?: () => void;
 }
 
-export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatBotProps) {
+export default function ChatBot({ currentCity, currentWeather, isOpen = false, onToggle }: ChatBotProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +100,13 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
   const [tempInput, setTempInput] = useState(''); // Store current input when navigating history
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  
+  // Use refs to always have latest values (avoids stale closure in async callbacks)
+  const weatherRef = useRef(currentWeather);
+  weatherRef.current = currentWeather;
+  
+  const cityRef = useRef(currentCity);
+  cityRef.current = currentCity;
   
   // Voice features
   const [isListening, setIsListening] = useState(false);
@@ -189,9 +204,22 @@ export default function ChatBot({ currentCity, isOpen = false, onToggle }: ChatB
     setIsLoading(true);
 
     try {
+      // Use ref to get latest weather (avoids stale closure in async callbacks)
+      const latestWeather = weatherRef.current;
+      
+      const weatherContext = latestWeather ? {
+        temperature: latestWeather.temperature,
+        conditions: latestWeather.condition,
+        weather_type: latestWeather.weatherType,
+        is_real_data: latestWeather.isRealData
+      } : undefined;
+      
       const response = await sendChatMessage({
         message: text,
-        context: currentCity ? { current_city: currentCity } : undefined
+        context: {
+          current_city: cityRef.current,
+          current_weather: weatherContext
+        }
       });
 
       const botMessage: Message = {
